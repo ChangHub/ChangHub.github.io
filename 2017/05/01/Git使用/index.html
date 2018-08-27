@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Git使用 | ChangKe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="ChangKe,ChangKe's Blog" />
+  
+  <meta name="description" content="Git是一个开源的分布式版本控制系统。为了帮组管理Linux内核开发而开发的一个开放源码的版本控制软件。">
+<meta name="keywords" content="软件使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git使用">
+<meta property="og:url" content="https://www.github.com/ChangHub/BlogImages/raw/master/2017/05/01/Git使用/index.html">
+<meta property="og:site_name" content="ChangKe">
+<meta property="og:description" content="Git是一个开源的分布式版本控制系统。为了帮组管理Linux内核开发而开发的一个开放源码的版本控制软件。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/Git%E5%AE%89%E8%A3%85%E5%9B%BE%E7%A4%BA.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/Git%E6%9F%A5%E7%9C%8B%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/Git%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/Git%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/Git%E5%91%BD%E4%BB%A4.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/GitHub%E7%94%A8%E6%88%B7%E9%85%8D%E7%BD%AE.jpg">
+<meta property="og:updated_time" content="2018-08-21T13:58:37.781Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git使用">
+<meta name="twitter:description" content="Git是一个开源的分布式版本控制系统。为了帮组管理Linux内核开发而开发的一个开放源码的版本控制软件。">
+<meta name="twitter:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/Git%E5%AE%89%E8%A3%85%E5%9B%BE%E7%A4%BA.jpg">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">ChangKe&#39;s Blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        ChangKe&#39;s Blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        一个专注 WEB 开发的技术博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="ChangKe" target="_blank" href="//changkehome.top">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/ChangHub">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" ">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" ">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-Git使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      Git使用
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/Git/">Git</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2017-05-01
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p>Git是一个开源的分布式版本控制系统。<br>为了帮组管理Linux内核开发而开发的一个开放源码的版本控制软件。<br><a id="more"></a></p>
+<h2 id="Git与SVN区别"><a href="#Git与SVN区别" class="headerlink" title="Git与SVN区别"></a>Git与SVN区别</h2><ul>
+<li>Git是分布式的版本控制系统，没有中央服务器。每个人的电脑就是一个版本库，工作不用联网，多人修改时可以互相推送。</li>
+<li>SVN是集中式版本控制系统，版本库放在中央服务器，因此每次都要从中央服务器中获取最新的版本，修改后再推送到服务器上，整个过程都要联网，受网络限制。<h2 id="Git使用"><a href="#Git使用" class="headerlink" title="Git使用"></a>Git使用</h2><h4 id="Git-安装（windows）"><a href="#Git-安装（windows）" class="headerlink" title="Git 安装（windows）"></a>Git 安装（windows）</h4></li>
+</ul>
+<p>官网下载对应系统版本的安装文件点击安装即可。如图：<br><img src="https://www.github.com/ChangHub/BlogImages/raw/master/Git%E5%AE%89%E8%A3%85%E5%9B%BE%E7%A4%BA.jpg" alt="Git Windwos 版安装图示" title="Git安装图示"><br>安装之后，会有两个工具Git GUI（基于图形界面）和Git Bash（基于命令行）。<br>对于熟悉SVN操作的，可以下载类型的工具TortoiseGit工具，类似的方便工具还有SourceTree等。</p>
+<h4 id="Git配置"><a href="#Git配置" class="headerlink" title="Git配置"></a>Git配置</h4><ul>
+<li>配置用户信息：Git使用用户名和邮箱作为一个标识。<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$git</span> config --global user<span class="selector-class">.name</span> <span class="string">'xxxxx'</span></span><br><span class="line"><span class="variable">$git</span> config --global user<span class="selector-class">.email</span> <span class="string">'xxxx@xxx.com'</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>使用–global选项，你所有的项目都会使用这个配置。如果要在某个特定的项目中使用其他的用户，只要去掉–global选项重新配置即可，新的配置保存在当前项目.git/config文件里。</p>
+<ul>
+<li>查看配置信息：<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$git</span><span class="built_in"> config </span>--list</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>显示如图所示：<br><img src="https://www.github.com/ChangHub/BlogImages/raw/master/Git%E6%9F%A5%E7%9C%8B%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF.jpg" alt="Git 查看配置信息" title="Git查看配置信息"></p>
+<h4 id="Git工作流程"><a href="#Git工作流程" class="headerlink" title="Git工作流程"></a>Git工作流程</h4><p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/Git%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.jpg" alt="Git 工作流程" title="Git工作流程"></p>
+<h4 id="Git基本概念"><a href="#Git基本概念" class="headerlink" title="Git基本概念"></a>Git基本概念</h4><ul>
+<li>工作区<br>电脑本地目录</li>
+<li>暂存区<br>英文叫做Stage或者index，存在”.git”目录下index文件中，有时把暂存区叫做索引</li>
+<li>版本库<br>工作区隐藏的目录”.git”<br><img src="https://www.github.com/ChangHub/BlogImages/raw/master/Git%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5.jpg" alt="Git 基本概念理" title="Git基本概念"><br>说明：</li>
+<li>“HEAD”指向master分支一个游标，命令中出现HEAD的地方可以用master代替。</li>
+<li>“Objects”标识区域为Git的对象库，位于”.git/objects”目录下，包含了创建的各种对象及其内容。</li>
+<li>当执行”git add .”命令时，同时该工作区的文件被写入对象库中的一个新对象中，该对象的ID被记录在暂存区文件索引中，暂存区的目录树被更新。【工作区=》暂存区】</li>
+<li>当执行”git commmit”命令时，暂存区目录树写到版本库（对象库）中，master分支做出相应的更新，即master的目录树，就是提交时暂存区的目录树。【暂存区=》master】</li>
+<li>当执行”git reset HEAD”命令时，暂存区的目录树被重写，被master分支目录树所替换，工作区不受影响。【master=》暂存区】</li>
+<li>当执行”git rm –cache <file>“命令时，会从暂存区删除文件，工作区不受影响。【暂存区】</file></li>
+<li>当执行”git checkout .”命令时，会用暂存区的文件替换工作区的文件，该操作很危险，会清除工作区未添加到暂存区的改动。</li>
+<li>当执行”git checkout HEAD .”命令时，会用master分支的文件，替换暂存区和工作区的文件，该操作更危险。</li>
+<li>Git的其他命令：<br><img src="https://www.github.com/ChangHub/BlogImages/raw/master/Git%E5%91%BD%E4%BB%A4.jpg" alt="Git 命令" title="Git命令"><ul>
+<li>Git status:查看版本库的状态。可以知道哪些文件发生变化，哪些文件没有添加到版本库中，建议每次commit命令之前，通过该命令确认库状态。</li>
+<li>Git log:查看历史记录。包含每次的版本变化，每次变化对应一个ID。</li>
+<li>Git merge:把服务器上下载的代码与本机代码合并，或者进行分支合并。</li>
+<li>Git diff:把本地的代码与index中的代码进行比较。<h4 id="创建仓库"><a href="#创建仓库" class="headerlink" title="创建仓库"></a>创建仓库</h4></li>
+</ul>
+</li>
+<li>Git initGit:使用”Git init”命令，初始化一个Git仓库，Git仓库会生成一个隐藏目录”.git”,该目录包含了资源的所有元数据。</li>
+<li>Git clone:从现有仓库中拷贝项目。<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="keyword">clone</span> <span class="title">&lt;repo</span>&gt; <span class="tag">&lt;dirctory&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>repo:Git 仓库；directory 本地目录；</p>
+<h4 id="Git分支管理"><a href="#Git分支管理" class="headerlink" title="Git分支管理"></a>Git分支管理</h4><p>使用分支意味着可以从开发主线上分离出来，在不影响主线的同时继续工作。</p>
+<ul>
+<li><p>创建分支：</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"><span class="meta-keyword">$git</span> branch (branchname)</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>切换分支：</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"><span class="meta-keyword">$git</span> checkout (branchname)</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>切换分支，用该分支最后提交的快照，替换你工作区的内容。</p>
+<ul>
+<li>合并分支：<figure class="highlight cos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$git</span> <span class="keyword">merge</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>多次合并到统一分支，也可以选择合并之后删除被并入的分支。</p>
+<ul>
+<li>列出分支<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"><span class="meta-keyword">$git</span> branch</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>当执行”git init”命令时，缺省情况下，Git会创建一个”master”分支。</p>
+<ul>
+<li>删除分支<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"><span class="meta-keyword">$git</span> branch -d (branchname)</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="Git-GitHub"><a href="#Git-GitHub" class="headerlink" title="Git GitHub"></a>Git GitHub</h4><p>Git 远程仓库（GitHub）</p>
+<ul>
+<li>添加远程仓库<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$git</span> remote <span class="builtin-name">add</span> [shortname] [url]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>由于本地Git库与远程仓库GitHub之间的传输是通过SSH加密的，所以需要验证配置信息：<br>使用一下命令生成SSH Key:<br><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$git-keygen -t rsa -C <span class="string">"youmail@example.com"</span></span><br></pre></td></tr></table></figure></p>
+<p>成功的话，会在本地用户目录下（如：C:\Users\Administrator\）生成”.ssh”文件夹，打开.id_rsa.pub,复制里面的key。<br>回到github，进入Account=&gt;setting。如图：<br><img src="https://www.github.com/ChangHub/BlogImages/raw/master/GitHub%E7%94%A8%E6%88%B7%E9%85%8D%E7%BD%AE.jpg" alt="GitHub 用户配置" title="GitHub用户配置"><br>左边选择”SSH and GPG Keys”,点击”New SSH Key”,粘贴刚刚生成的Key。<br>验证是否成功：<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ssh -T git<span class="symbol">@github</span>.com</span><br></pre></td></tr></table></figure></p>
+<p>然后可以创建仓库repository。</p>
+<ul>
+<li>本地仓库推送到远程仓库<ul>
+<li>git init（新建一个本地仓库）</li>
+<li>git add .(添加所有文件到本地仓库)</li>
+<li>git commit -m ‘first commit’(提交本地仓库)</li>
+<li>git remote add origin <a href="http://xxxxx/xxx.git" target="_blank" rel="noopener">http://xxxxx/xxx.git</a>(添加远程仓库，origin是别名）</li>
+<li>git push -u origin master(将本地仓库推送到远程仓库，并将origin设为默认的远程仓库）</li>
+</ul>
+</li>
+<li>远程仓库克隆到本地仓库<ul>
+<li>git remote -v(查看远程仓库)</li>
+<li>git fetch origin master(获取远程仓库最新版本到本地)</li>
+<li>git merge origin master(远程代码合并到本地仓库)</li>
+<li>git pull origin master(代替前面两步：fetch+merge)</li>
+</ul>
+</li>
+</ul>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2018年08月21日 21:58</p>
+        <p>原始链接： <a class="post-url" href="/2017/05/01/Git使用/" title="Git使用">https://www.github.com/ChangHub/BlogImages/raw/master/2017/05/01/Git使用/</a></p>
+        <footer>
+            <a href="https://www.github.com/ChangHub/BlogImages/raw/master">
+                <img src="/images/logo.png" alt="HongChangCui">
+                HongChangCui
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.github.com/ChangHub/BlogImages/raw/master/2017/05/01/Git使用/&title=《Git使用》 — ChangKe&pic=git.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.github.com/ChangHub/BlogImages/raw/master/2017/05/01/Git使用/&title=《Git使用》 — ChangKe&source=Git是一个开源的分布式版本控制系统。为了帮组管理Linux内核开发而开发的一个开放源码的版本控制软件。" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.github.com/ChangHub/BlogImages/raw/master/2017/05/01/Git使用/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Git使用》 — ChangKe&url=https://www.github.com/ChangHub/BlogImages/raw/master/2017/05/01/Git使用/&via=https://www.github.com/ChangHub/BlogImages/raw/master" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.github.com/ChangHub/BlogImages/raw/master/2017/05/01/Git使用/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.github.com/ChangHub/BlogImages/raw/master/2017/05/01/Git使用/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/软件使用/" class="color5">软件使用</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Git与SVN区别"><span class="post-toc-text">Git与SVN区别</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Git使用"><span class="post-toc-text">Git使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Git-安装（windows）"><span class="post-toc-text">Git 安装（windows）</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Git配置"><span class="post-toc-text">Git配置</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Git工作流程"><span class="post-toc-text">Git工作流程</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Git基本概念"><span class="post-toc-text">Git基本概念</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#创建仓库"><span class="post-toc-text">创建仓库</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Git分支管理"><span class="post-toc-text">Git分支管理</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Git-GitHub"><span class="post-toc-text">Git GitHub</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2017/05/04/NPM使用/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          NPM使用
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2017/04/04/右键生成时间命名的文件夹/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">右键生成时间命名的文件夹</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+		<section id="comments" class="comments">
+			<style>
+			  .comments{margin:30px;padding:10px;background:#fff}
+			  @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+			</style>
+			<div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage@latest/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js'></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "hrqbaUF8km11bv4h31Rhiyco-gzGzoHsz",
+            app_key: "nm5to078TvS7MzkXnO78DHpI",
+            placeholder: "~(≧▽≦)/~来呀！快活呀！",
+            avatar: "mm",
+            pageSize: 10
+    });
+	
+	$('#comments .info').css({"display":"none"});
+	
+</script>
+		</section>
+	
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2018 HongChangCui<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://www.github.com/ChangHub/BlogImages/raw/master",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/JavaScript/">JavaScript</a><a class="category-link" href="/categories/MySQL/">MySQL</a><a class="category-link" href="/categories/便捷工具/">便捷工具</a><a class="category-link" href="/categories/年会/">年会</a><a class="category-link" href="/categories/年度总结/">年度总结</a><a class="category-link" href="/categories/开源项目/">开源项目</a><a class="category-link" href="/categories/软件使用/">软件使用</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/CEF/" style="font-size: 10px;">CEF</a> <a href="/tags/CefSharp/" style="font-size: 10px;">CefSharp</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/年会/" style="font-size: 10px;">年会</a> <a href="/tags/总结/" style="font-size: 20px;">总结</a> <a href="/tags/文件夹/" style="font-size: 10px;">文件夹</a> <a href="/tags/软件使用/" style="font-size: 10px;">软件使用</a> <a href="/tags/软件安装/" style="font-size: 10px;">软件安装</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/CEF/" style="font-size: 10px;">CEF</a> <a href="/tags/CefSharp/" style="font-size: 10px;">CefSharp</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/年会/" style="font-size: 10px;">年会</a> <a href="/tags/总结/" style="font-size: 20px;">总结</a> <a href="/tags/文件夹/" style="font-size: 10px;">文件夹</a> <a href="/tags/软件使用/" style="font-size: 10px;">软件使用</a> <a href="/tags/软件安装/" style="font-size: 10px;">软件安装</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>

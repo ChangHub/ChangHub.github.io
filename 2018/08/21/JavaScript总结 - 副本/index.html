@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>JavaScript总结 | ChangKe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="ChangKe,ChangKe's Blog" />
+  
+  <meta name="description" content="JavaScirpt一种脚本语言，弱类型基于语言的语言，内置支持类型，其解释器被称为JavaScript引擎。由三部分组成：ECMAScript、DOM、BOM。">
+<meta name="keywords" content="总结,JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript总结">
+<meta property="og:url" content="https://www.github.com/ChangHub/BlogImages/raw/master/2018/08/21/JavaScript总结 - 副本/index.html">
+<meta property="og:site_name" content="ChangKe">
+<meta property="og:description" content="JavaScirpt一种脚本语言，弱类型基于语言的语言，内置支持类型，其解释器被称为JavaScript引擎。由三部分组成：ECMAScript、DOM、BOM。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-08-27T15:38:17.429Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript总结">
+<meta name="twitter:description" content="JavaScirpt一种脚本语言，弱类型基于语言的语言，内置支持类型，其解释器被称为JavaScript引擎。由三部分组成：ECMAScript、DOM、BOM。">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">ChangKe&#39;s Blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        ChangKe&#39;s Blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        一个专注 WEB 开发的技术博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="ChangKe" target="_blank" href="//changkehome.top">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/ChangHub">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" ">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" ">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-JavaScript总结 - 副本" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      JavaScript总结
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/JavaScript/">JavaScript</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2018-08-21
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p>JavaScirpt一种脚本语言，弱类型基于语言的语言，内置支持类型，其解释器被称为JavaScript引擎。由三部分组成：ECMAScript、DOM、BOM。</p>
+<a id="more"></a>
+<h1 id="JS模版"><a href="#JS模版" class="headerlink" title="JS模版"></a>JS模版</h1><h2 id="What-And-Why-JS模版"><a href="#What-And-Why-JS模版" class="headerlink" title="What And Why JS模版"></a>What And Why JS模版</h2><p>JavaScript模版是将HTML结构和具体内容相分离的一种手段。</p>
+<p>前端模版提高了前端开发的可维护性及可扩展性。如：Handlerbar.js</p>
+<h2 id="When-JS模版"><a href="#When-JS模版" class="headerlink" title="When JS模版"></a>When JS模版</h2><p>在JavaScript中需要写HTML时，就可以考虑使用JavaScript模拟。</p>
+<h2 id="How-JS模版"><a href="#How-JS模版" class="headerlink" title="How JS模版"></a>How JS模版</h2><p>本质上，就是利用正则表达式识别模版标识，并利用数据替换其中的标识符。</p>
+<p>工作原理简单可以分成两步：</p>
+<ul>
+<li>模版解析</li>
+</ul>
+<ul>
+<li>数据渲染</li>
+</ul>
+<p>模版大致可以分成三类：</p>
+<ul>
+<li>String-Based模版技术<br>基于字符串的Parse和Compile过程</li>
+<li>Dom-Based模版技术<br>基于Dom的link或者Complie过程</li>
+<li>Living Templating 技术<br>基于字符串的Parse和Dom的Compile过程</li>
+</ul>
+<h2 id="Where-JS模版"><a href="#Where-JS模版" class="headerlink" title="Where JS模版"></a>Where JS模版</h2><p><a href="http://www.cnblogs.com/guohu/p/3870677.html" target="_blank" rel="noopener">http://www.cnblogs.com/guohu/p/3870677.html</a></p>
+<h1 id="ECMA规范"><a href="#ECMA规范" class="headerlink" title="ECMA规范"></a>ECMA规范</h1><p>ECMA[Europen Computer Manufactures Association]:欧洲计算机制造协会。旨在建立统一的电脑操作格式标准–包括程序语言和输入输出组织。</p>
+<p><a href="http://www.ecma-international.org/publications/standards/Stnindex.htm" target="_blank" rel="noopener">http://www.ecma-international.org/publications/standards/Stnindex.htm</a></p>
+<ul>
+<li>ECMA-262：ECMAScript（脚本语言）</li>
+</ul>
+<ul>
+<li>ECMA-334：C#编程语言</li>
+</ul>
+<h1 id="JS线程"><a href="#JS线程" class="headerlink" title="JS线程"></a>JS线程</h1><h2 id="浏览器：多进程"><a href="#浏览器：多进程" class="headerlink" title="浏览器：多进程"></a>浏览器：多进程</h2><ul>
+<li>Browser进程 ：浏览器主进程，负责协调、调度。</li>
+</ul>
+<ul>
+<li>GPU进程：3D绘制等。</li>
+</ul>
+<ul>
+<li>插件进程：每种类型的插件对应一个进程</li>
+</ul>
+<ul>
+<li>浏览器渲染进程：浏览器内核</li>
+</ul>
+<h2 id="浏览器内核：多线程"><a href="#浏览器内核：多线程" class="headerlink" title="浏览器内核：多线程"></a>浏览器内核：多线程</h2><ul>
+<li><p>GUI渲染线程</p>
+<ul>
+<li>负责渲染浏览器界面，解析HTML,CSS,构建DOM树和RenderObject树</li>
+<li>界面重绘或者引发回流，该线程执行</li>
+<li>GUI渲染线程和JS引擎线程互斥 </li>
+</ul>
+</li>
+<li><p>JS引擎线程</p>
+<ul>
+<li>JS内核：负责处理JavaScript脚本程序</li>
+<li>JS引擎线程负责解析JavaScript脚本，运行代码</li>
+<li>GUI渲染线程和JS引擎线程互斥，JS执行时间过长，就会出现页面加载阻塞</li>
+</ul>
+</li>
+<li><p>事件触发线程</p>
+<ul>
+<li>控制事件循环</li>
+<li>当JS引擎执行代码块如setTimeOut、鼠标点击、AJAX异步请求等，会将对应的任务添加到事件线程中</li>
+<li>当对应的事件符合触发条件被触发时，该线程会把事件添加到待处理队列，等待JS引擎处理</li>
+<li>JS是单线程，所有队列中的事件需要排队等待</li>
+</ul>
+</li>
+<li>定时触发器线程<ul>
+<li>setInterval和setTimeOut所在的线程 </li>
+<li>浏览器定时器不是JS引擎处理的</li>
+</ul>
+</li>
+<li>异步Http请求线程<ul>
+<li>在XMLHttpRequest连接后，通过浏览器新开一个线程请求</li>
+<li>在检测到状态变更时，就会产生状态变更事件，将回调放入事件队列中，等待JS引擎执行<h2 id="JS：单线程"><a href="#JS：单线程" class="headerlink" title="JS：单线程"></a>JS：单线程</h2></li>
+</ul>
+</li>
+</ul>
+<p>由于JavaScript是可以操作DOM的，如果多线程，同时操作DOM,就会出现不可预期的结果，所有JS是单线程。</p>
+<p>由于GUI渲染线程和JS引擎互斥，JS引擎执行时GUI线程会被挂起，等待JS引擎线程空闲时执行，如果JS引擎进行大量计算，就会导致画面渲染阻塞，所以需要异步。</p>
+<h1 id="JS预编译"><a href="#JS预编译" class="headerlink" title="JS预编译"></a>JS预编译</h1><p>JS是解释型语言：预编译阶段和解释执行阶段。</p>
+<p>JavaScript代码在执行前，会先进行预编译，预编译的过程就是将变量声明和函数声明提前。</p>
+<h2 id="GO-Global-Object"><a href="#GO-Global-Object" class="headerlink" title="GO[Global Object]"></a>GO[Global Object]</h2><p>全局对象：window对象</p>
+<p>开始编译：</p>
+<ul>
+<li>查找变量声明，作为GO属性，值为undefined.</li>
+<li>查找函数声明，作为GO属性，值为函数体.</li>
+</ul>
+<h2 id="AO-Active-Object"><a href="#AO-Active-Object" class="headerlink" title="AO[Active Object]"></a>AO[Active Object]</h2><p>活动对象：执行函数</p>
+<ul>
+<li>查找形参和变量声明，作为AO属性，值为undefined.</li>
+<li>实参赋值给形参.</li>
+<li>查找函数声明，作为AO属性，值为函数体.</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(a)</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">123</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">    <span class="built_in">console</span>.log(b)</span><br><span class="line">    <span class="keyword">var</span> b = <span class="number">234</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(b)</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">b</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">    <span class="built_in">console</span>.log(a)</span><br><span class="line">    <span class="keyword">var</span> b = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">    <span class="built_in">console</span>.log(b)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test(<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+<p>上述函数执行打印的结果：</p>
+<p><strong>| ƒ a() {} | VM431:3   |</strong><br><strong>| ƒ b() {} | VM431:9   |</strong><br><strong>|   234     | VM431:13 |</strong><br><strong>|   123     | VM431:17 |</strong><br><strong>| ƒ () {}    | VM431:21 |</strong></p>
+<p>解析：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//预编译阶段：</span></span><br><span class="line">GO/<span class="built_in">window</span> = &#123;</span><br><span class="line">    test:<span class="function"><span class="keyword">function</span>(<span class="params">a,b</span>)</span>&#123;......&#125;</span><br><span class="line">&#125;</span><br><span class="line">AO = &#123;</span><br><span class="line">  	a:<span class="number">1</span>,</span><br><span class="line">  	b:<span class="literal">undefined</span>,</span><br><span class="line">  	a:<span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">  	b:<span class="function"><span class="keyword">function</span> <span class="title">b</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//解释执行阶段：</span></span><br><span class="line"><span class="comment">//console.log(a);===================function a()&#123;&#125;</span></span><br><span class="line"><span class="comment">//a = 123;</span></span><br><span class="line"><span class="comment">//console.log(b);===================function b()&#123;&#125;</span></span><br><span class="line"><span class="comment">//b = 234;</span></span><br><span class="line"><span class="comment">//console.log(b);===================234</span></span><br><span class="line"><span class="comment">//console.log(a);===================123</span></span><br><span class="line"><span class="comment">//b = function()&#123;&#125;</span></span><br><span class="line"><span class="comment">//console.log(b);===================function()&#123;&#125;</span></span><br></pre></td></tr></table></figure>
+<h1 id="JS作用域"><a href="#JS作用域" class="headerlink" title="JS作用域"></a>JS作用域</h1><ul>
+<li><p>变量作用域：全局作用域和局部作用域。</p>
+<p>没有用var声明的变量都是全部变量</p>
+</li>
+</ul>
+<ul>
+<li><p>JS的作用域是是相对于函数而言的，也可以成为函数作用域。</p>
+</li>
+<li><p>JS没有块级作用域，容易造成全局变量污染</p>
+<p>EF5可以通过IIFE解决</p>
+<p>EF6通过Let声明解决</p>
+</li>
+</ul>
+<h1 id="JS作用域链"><a href="#JS作用域链" class="headerlink" title="JS作用域链"></a>JS作用域链</h1><p><strong>作用域链：内部作用域可以访问外部变量的机制。</strong></p>
+<h1 id="JS闭包"><a href="#JS闭包" class="headerlink" title="JS闭包"></a>JS闭包</h1><p><strong>闭包：外部作用域可以访问内部变量的机制。</strong></p>
+<ul>
+<li>闭包一定是函数内嵌函数</li>
+<li>闭包是IIEF的写法，由于内部数据被全局所调用，延缓资源回收</li>
+</ul>
+<p>常见闭包写法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> i = <span class="number">1</span>;</span><br><span class="line">  <span class="built_in">window</span>.count = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> i++;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> count = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> i = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> i++;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<h1 id="JS包装类"><a href="#JS包装类" class="headerlink" title="JS包装类"></a>JS包装类</h1><ul>
+<li><strong>Number</strong></li>
+</ul>
+<ul>
+<li><strong>String</strong></li>
+<li><strong>Boolean</strong></li>
+</ul>
+<h1 id="JS对象"><a href="#JS对象" class="headerlink" title="JS对象"></a>JS对象</h1><ul>
+<li><strong>对象字面量</strong></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;<span class="attr">name</span>:<span class="string">"chc"</span>,<span class="attr">age</span>:<span class="number">18</span>&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>工厂模式</strong></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createPerson</span>(<span class="params">name, age</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> obj = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line">    obj.name = name;</span><br><span class="line">    obj.age = age;</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> person = createPerson(<span class="string">"chc"</span>, <span class="number">18</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>构造方法</strong></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name, age</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.age = age;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> Person(<span class="string">"chc"</span>, <span class="number">18</span>);</span><br></pre></td></tr></table></figure>
+<p>构造函数原理：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line">obj._proto_ = Person.prototype;</span><br><span class="line">Person.call(obj);</span><br><span class="line"><span class="keyword">return</span> obj;</span><br></pre></td></tr></table></figure>
+<h1 id="JS立即执行函数"><a href="#JS立即执行函数" class="headerlink" title="JS立即执行函数"></a>JS立即执行函数</h1><p><strong>IIFE(Immediately Invoked Function Express):立即执行函数表达式</strong></p>
+<ul>
+<li>定义函数后立即执行一次，没有函数名，无法再次调用</li>
+</ul>
+<ul>
+<li>可以实现块级作用域，解决运算过程中的全局污染问题</li>
+<li>执行一次之后，销毁，不会造成全局污染</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sum = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt;= <span class="number">100</span>; i++) &#123;</span><br><span class="line">  sum += i;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(sum); <span class="comment">//5050</span></span><br><span class="line"><span class="built_in">console</span>.log(i); <span class="comment">//101  </span></span><br><span class="line"></span><br><span class="line"><span class="comment">//i由于没有块级作用域是全局变量，会造成全部变量污染</span></span><br></pre></td></tr></table></figure>
+<p>使用IIFE:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sum = <span class="function"><span class="keyword">function</span> <span class="title">show</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">   <span class="keyword">var</span> sum = <span class="number">0</span>;</span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt;= <span class="number">100</span>; i++) &#123;</span><br><span class="line">     sum += i;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> sum;</span><br><span class="line"> &#125;();</span><br><span class="line"><span class="built_in">console</span>.log(sum);<span class="comment">//5050</span></span><br><span class="line"><span class="comment">//IIFE：立即执行函数表达式，解决上述问题</span></span><br><span class="line"><span class="comment">//函数变表达式：函数定义，前面添加+，-，！，()可以变成表达式</span></span><br><span class="line"><span class="comment">//表达式立即执行：表达式，后面加()</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//IIFE：经典写法：（function()&#123;&#125;）（）；</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt;= <span class="number">100</span>; i++) &#123;</span><br><span class="line">    sum += i;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">window</span>.sum = sum;</span><br><span class="line">&#125;)();</span><br><span class="line"><span class="built_in">console</span>.log(sum);<span class="comment">//5050</span></span><br></pre></td></tr></table></figure>
+<h1 id="JS原型"><a href="#JS原型" class="headerlink" title="JS原型"></a>JS原型</h1><p><strong>什么是原型？</strong></p>
+<p>原型就是prototype属性，所有function定义的函数都有这个属性，prototype属性是一个对象，可以添加属性和方法</p>
+<p><strong>原型的作用？</strong></p>
+<ul>
+<li>解决方法过载问题</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name, age</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.age = age;</span><br><span class="line">    <span class="keyword">this</span>.run = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">"Running"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> Person(<span class="string">"zhangsan"</span>, <span class="number">18</span>);</span><br><span class="line"><span class="keyword">var</span> p2 = <span class="keyword">new</span> Person(<span class="string">"lishi"</span>, <span class="number">19</span>);</span><br><span class="line"><span class="built_in">console</span>.log(p1);</span><br><span class="line"><span class="built_in">console</span>.log(p2);</span><br><span class="line"><span class="comment">//p1,p2是不同的对象，每个对象都会创建一个单独的方法，占据内存空间</span></span><br></pre></td></tr></table></figure>
+<p>将方法挂到原型上：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name, age</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.age = age;</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.run = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"> 	<span class="built_in">console</span>.log(<span class="string">"Running"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> Person(<span class="string">"zhangsan"</span>, <span class="number">18</span>);</span><br><span class="line"><span class="keyword">var</span> p2 = <span class="keyword">new</span> Person(<span class="string">"lishi"</span>, <span class="number">19</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>扩展类的功能</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//扩展String类，如查找字符串第一个字母</span></span><br><span class="line"><span class="built_in">String</span>.prototype.findFirst = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.substr(<span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> str = <span class="string">"cuihongchang"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(str.findFirst());<span class="comment">//c</span></span><br></pre></td></tr></table></figure>
+<p><strong><strong>_</strong>proto_</strong></p>
+<p>实际上就是对类的prototype属性的引用。</p>
+<p>prototype：类的属性</p>
+<p><strong>_</strong>proto_：对象的属性</p>
+<p>一切类都是Object的子类，一切皆对象，类也会有<strong>_</strong>proto_属性。</p>
+<h1 id="JS原型链"><a href="#JS原型链" class="headerlink" title="JS原型链"></a>JS原型链</h1><p>JS通过原型链实现类的继承</p>
+<ul>
+<li>将子类的prototype属性指向父类的对象</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Student.prototype = <span class="keyword">new</span> Preson();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>将子类的prototype属性指向父类的prototype创建的对象</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Student.prototype = <span class="built_in">Object</span>.create(Person.prototype);</span><br></pre></td></tr></table></figure>
+<h1 id="JS参数"><a href="#JS参数" class="headerlink" title="JS参数"></a>JS参数</h1><ul>
+<li>个数不一致<ul>
+<li>多的形参：undefined</li>
+<li>多的实参：忽略(实际存到arguments)</li>
+</ul>
+</li>
+<li>arguments<ul>
+<li>保存函数的实际所有参数</li>
+<li>函数内置对象，可以像数组一样使用</li>
+<li>arguments.callee指向函数本身</li>
+</ul>
+</li>
+</ul>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2018年08月27日 23:38</p>
+        <p>原始链接： <a class="post-url" href="/2018/08/21/JavaScript总结 - 副本/" title="JavaScript总结">https://www.github.com/ChangHub/BlogImages/raw/master/2018/08/21/JavaScript总结 - 副本/</a></p>
+        <footer>
+            <a href="https://www.github.com/ChangHub/BlogImages/raw/master">
+                <img src="/images/logo.png" alt="HongChangCui">
+                HongChangCui
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.github.com/ChangHub/BlogImages/raw/master/2018/08/21/JavaScript总结 - 副本/&title=《JavaScript总结》 — ChangKe&pic=JavaScript.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.github.com/ChangHub/BlogImages/raw/master/2018/08/21/JavaScript总结 - 副本/&title=《JavaScript总结》 — ChangKe&source=JavaScirpt一种脚本语言，弱类型基于语言的语言，内置支持类型，其解释器被称为JavaScript引擎。由三部分组成：ECMAScript、DOM、..." data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.github.com/ChangHub/BlogImages/raw/master/2018/08/21/JavaScript总结 - 副本/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript总结》 — ChangKe&url=https://www.github.com/ChangHub/BlogImages/raw/master/2018/08/21/JavaScript总结 - 副本/&via=https://www.github.com/ChangHub/BlogImages/raw/master" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.github.com/ChangHub/BlogImages/raw/master/2018/08/21/JavaScript总结 - 副本/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.github.com/ChangHub/BlogImages/raw/master/2018/08/21/JavaScript总结 - 副本/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/总结/" class="color3">总结</a>
+      
+    <a href="/tags/JavaScript/" class="color1">JavaScript</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#JS模版"><span class="post-toc-text">JS模版</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#What-And-Why-JS模版"><span class="post-toc-text">What And Why JS模版</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#When-JS模版"><span class="post-toc-text">When JS模版</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#How-JS模版"><span class="post-toc-text">How JS模版</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Where-JS模版"><span class="post-toc-text">Where JS模版</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#ECMA规范"><span class="post-toc-text">ECMA规范</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#JS线程"><span class="post-toc-text">JS线程</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#浏览器：多进程"><span class="post-toc-text">浏览器：多进程</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#浏览器内核：多线程"><span class="post-toc-text">浏览器内核：多线程</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#JS：单线程"><span class="post-toc-text">JS：单线程</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#JS预编译"><span class="post-toc-text">JS预编译</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#GO-Global-Object"><span class="post-toc-text">GO[Global Object]</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#AO-Active-Object"><span class="post-toc-text">AO[Active Object]</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#JS作用域"><span class="post-toc-text">JS作用域</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#JS作用域链"><span class="post-toc-text">JS作用域链</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#JS闭包"><span class="post-toc-text">JS闭包</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#JS包装类"><span class="post-toc-text">JS包装类</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#JS对象"><span class="post-toc-text">JS对象</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#JS立即执行函数"><span class="post-toc-text">JS立即执行函数</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#JS原型"><span class="post-toc-text">JS原型</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#JS原型链"><span class="post-toc-text">JS原型链</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#JS参数"><span class="post-toc-text">JS参数</span></a></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2018/08/21/JavaScript总结/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          JavaScript总结
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2018/08/20/Hexo+GitHub博客/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">Hexo+GitHub搭建个人博客</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+		<section id="comments" class="comments">
+			<style>
+			  .comments{margin:30px;padding:10px;background:#fff}
+			  @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+			</style>
+			<div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage@latest/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js'></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "hrqbaUF8km11bv4h31Rhiyco-gzGzoHsz",
+            app_key: "nm5to078TvS7MzkXnO78DHpI",
+            placeholder: "~(≧▽≦)/~来呀！快活呀！",
+            avatar: "mm",
+            pageSize: 10
+    });
+	
+	$('#comments .info').css({"display":"none"});
+	
+</script>
+		</section>
+	
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2018 HongChangCui<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://www.github.com/ChangHub/BlogImages/raw/master",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/JavaScript/">JavaScript</a><a class="category-link" href="/categories/MySQL/">MySQL</a><a class="category-link" href="/categories/便捷工具/">便捷工具</a><a class="category-link" href="/categories/年会/">年会</a><a class="category-link" href="/categories/年度总结/">年度总结</a><a class="category-link" href="/categories/开源项目/">开源项目</a><a class="category-link" href="/categories/软件使用/">软件使用</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/CEF/" style="font-size: 10px;">CEF</a> <a href="/tags/CefSharp/" style="font-size: 10px;">CefSharp</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/年会/" style="font-size: 10px;">年会</a> <a href="/tags/总结/" style="font-size: 20px;">总结</a> <a href="/tags/文件夹/" style="font-size: 10px;">文件夹</a> <a href="/tags/软件使用/" style="font-size: 10px;">软件使用</a> <a href="/tags/软件安装/" style="font-size: 10px;">软件安装</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/CEF/" style="font-size: 10px;">CEF</a> <a href="/tags/CefSharp/" style="font-size: 10px;">CefSharp</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/年会/" style="font-size: 10px;">年会</a> <a href="/tags/总结/" style="font-size: 20px;">总结</a> <a href="/tags/文件夹/" style="font-size: 10px;">文件夹</a> <a href="/tags/软件使用/" style="font-size: 10px;">软件使用</a> <a href="/tags/软件安装/" style="font-size: 10px;">软件安装</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>

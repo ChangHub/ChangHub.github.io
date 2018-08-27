@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>CefSharp的使用 | ChangKe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="ChangKe,ChangKe's Blog" />
+  
+  <meta name="description" content="CEF（Chrominu Embedded Framework）:基于Google Chrominu项目的一个开源项目，但与Google Chrominu项目不同，Google Chrominu关注于Google Chrome应用程序开发，而CEF关注于促进在第三方应用中嵌入浏览器。CEF支持各种语言的程序和操作系统，并能够很容易的与应用程序进行集成。 官网（https://bitbucket.o">
+<meta name="keywords" content="CEF,CefSharp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CefSharp的使用">
+<meta property="og:url" content="https://www.github.com/ChangHub/BlogImages/raw/master/2018/03/11/CefSharp的使用/index.html">
+<meta property="og:site_name" content="ChangKe">
+<meta property="og:description" content="CEF（Chrominu Embedded Framework）:基于Google Chrominu项目的一个开源项目，但与Google Chrominu项目不同，Google Chrominu关注于Google Chrome应用程序开发，而CEF关注于促进在第三方应用中嵌入浏览器。CEF支持各种语言的程序和操作系统，并能够很容易的与应用程序进行集成。 官网（https://bitbucket.o">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-08-21T13:58:30.243Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CefSharp的使用">
+<meta name="twitter:description" content="CEF（Chrominu Embedded Framework）:基于Google Chrominu项目的一个开源项目，但与Google Chrominu项目不同，Google Chrominu关注于Google Chrome应用程序开发，而CEF关注于促进在第三方应用中嵌入浏览器。CEF支持各种语言的程序和操作系统，并能够很容易的与应用程序进行集成。 官网（https://bitbucket.o">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">ChangKe&#39;s Blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        ChangKe&#39;s Blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        一个专注 WEB 开发的技术博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="ChangKe" target="_blank" href="//changkehome.top">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/ChangHub">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" ">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" ">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-CefSharp的使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      CefSharp的使用
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/开源项目/">开源项目</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2018-03-11
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p>CEF（Chrominu Embedded Framework）:基于Google Chrominu项目的一个开源项目，但与Google Chrominu项目不同，Google Chrominu关注于Google Chrome应用程序开发，而CEF关注于促进在第三方应用中嵌入浏览器。CEF支持各种语言的程序和操作系统，并能够很容易的与应用程序进行集成。</p>
+<p>官网（<a href="https://bitbucket.org/chromiumembedded/cef" target="_blank" rel="noopener">https://bitbucket.org/chromiumembedded/cef</a>）<br><a id="more"></a></p>
+<h2 id="CefSharp简介"><a href="#CefSharp简介" class="headerlink" title="CefSharp简介"></a>CefSharp简介</h2><p>CefSharp可以在.NET 应用程序嵌入谷歌浏览器。介绍:（<a href="https://github.com/cefsharp/CefSharp" target="_blank" rel="noopener">https://github.com/cefsharp/CefSharp</a>）</p>
+<h2 id="CefSharp示例"><a href="#CefSharp示例" class="headerlink" title="CefSharp示例"></a>CefSharp示例</h2><p>CefSharp提供了WPF和WinForm的web browser控件的实现。</p>
+<p>具体Demo:<br>CefSharp.Wpf:<a href="http://www.nuget.org/packages/CefSharp.Wpf/" target="_blank" rel="noopener">http://www.nuget.org/packages/CefSharp.Wpf/</a><br>CefSharp.WinForms:<a href="http://www.nuget.org/packages/CefSharp.WinForms/" target="_blank" rel="noopener">http://www.nuget.org/packages/CefSharp.WinForms/</a></p>
+<h2 id="CefSharp引用"><a href="#CefSharp引用" class="headerlink" title="CefSharp引用"></a>CefSharp引用</h2><p>通过Nuget控制台管理工具在项目中（WPF或者WinForm）引入所需要的包。<br>注意：如果不指定版本：Install-Package CefSharp.Wpf ，该命令下载的是最新包。不同的版本的包会有不同改变和要求。</p>
+<p>如现在最新版本为v57.0.0，在版本说明中（详见：<a href="https://github.com/cefsharp/CefSharp/releases/tag/v57.0.0" target="_blank" rel="noopener">https://github.com/cefsharp/CefSharp/releases/tag/v57.0.0</a>）</p>
+<p><strong>Breaking Changes:“CefSharp requires at least .Net 4.5.2 (Last version to support .Net 4.0 is 49)”,</strong>说明了其需求。</p>
+<h2 id="CefSharp使用"><a href="#CefSharp使用" class="headerlink" title="CefSharp使用"></a>CefSharp使用</h2><h3 id="初始化Chrome"><a href="#初始化Chrome" class="headerlink" title="初始化Chrome"></a>初始化Chrome</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var setting = new CefSharp.CefSettings();</span><br><span class="line">CefSharp.Cef.Initialize(setting,true,false);</span><br></pre></td></tr></table></figure>
+<p>setting变量是用来存放Chrome全局设置的地方，当需要进行设置时，只需要对其进行修改，如，修改缓存目录：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var setting = new CefSharp.CefSettings()</span><br><span class="line">&#123;</span><br><span class="line">   CachePah = Directory.GetCurrentDirectory() + @&quot;\Cache&quot;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<h3 id="实例化webBroswer"><a href="#实例化webBroswer" class="headerlink" title="实例化webBroswer"></a>实例化webBroswer</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CefSharp.Wpf.ChromiumWebBrowser webView = new CefSharp.Wpf.ChromiumWebBrowser();</span><br></pre></td></tr></table></figure>
+<h3 id="指定画面Address"><a href="#指定画面Address" class="headerlink" title="指定画面Address"></a>指定画面Address</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">webView.Address = &quot;xxxxxxxxx&quot;;</span><br></pre></td></tr></table></figure>
+<p>注意：webView加载到具体窗体上才能调用，否则调用js会出错：IBroswer为null，如WPF或者WinForm,可以在窗体页面上添加该webView;</p>
+<h3 id="与CefSharp交互"><a href="#与CefSharp交互" class="headerlink" title="与CefSharp交互"></a>与CefSharp交互</h3><h4 id="CefSharp对象调JS"><a href="#CefSharp对象调JS" class="headerlink" title="CefSharp对象调JS"></a>CefSharp对象调JS</h4><p>ExecuteScriptAsync:执行js，没有返回值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">webview.ExecuteScriptAsync(&quot;yyy()&quot;);//yyy是JS的方法名</span><br></pre></td></tr></table></figure>
+<p>EvaluateScriptAsync:执行js，有返回值【返回对象：CefSharp.JavaScriptResponse,返回内容：对象.Result.Result】</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Task&lt;CefSharp.JavaScriptResponse&gt; t = webView.EvaluateScriptAsync(&quot;yyy()&quot;);//yyy是JS方法名</span><br></pre></td></tr></table></figure>
+<p>问题：调用js方法，如何传参数？—<strong>参数只能是字符串？？？</strong></p>
+<ul>
+<li><p>单个字符串</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">string name=&quot;chc&quot;;  </span><br><span class="line">**yyy(&quot;\&quot;&quot;+name+&quot;\&quot;&quot;+&quot;)**</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>多个值，使用JSON转换成一个字符串</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">string response = JsonConvert.SerializeObject(new</span><br><span class="line">&#123;</span><br><span class="line">    name = &quot;cuihongchang&quot;,</span><br><span class="line">    sex = &quot;man&quot;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">yyy(&quot;+reponse+&quot;)  //js端会自动解析成对象，直接调用即可，如data.name等</span><br></pre></td></tr></table></figure>
+<h4 id="JS调CefSharp对象"><a href="#JS调CefSharp对象" class="headerlink" title="JS调CefSharp对象"></a>JS调CefSharp对象</h4><p>RegisterJsObject：将某个对象注册成js对象，可以在js画面上直接调用该对象的属性和方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public class JsEvent</span><br><span class="line">&#123;</span><br><span class="line">	public string MessageText = string.Empty;</span><br><span class="line">	public void ShowTest()</span><br><span class="line">	&#123;</span><br><span class="line">		MessageBox.Show(&quot;this in C#.\n\r&quot; + MessageText);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">webView.RegisterJsObject(&quot;jsObj&quot;,new JsEvent(),false);</span><br></pre></td></tr></table></figure>
+<p>在js画面就可以调用：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jsObj.MessageText = <span class="string">"hello"</span>;</span><br><span class="line">jsObj.ShowTest();</span><br></pre></td></tr></table></figure>
+<p>问题：</p>
+<p><strong>1.Browser is already initialized. RegisterJsObject must be called before the underlying CEF browser is created。</strong></p>
+<p>只能选择在代码中加载的方式，而不能使用控件方式，如下：【<strong>后来发现不是这样，I don’t know why</strong>】</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public void Initialize()</span><br><span class="line">&#123;</span><br><span class="line">	if (!Cef.Initialize(settings)) return;</span><br><span class="line"></span><br><span class="line">	ChromiumWebBrowser cefWebView = new ChromiumWebBrowser();</span><br><span class="line"></span><br><span class="line">	//注册类到js中</span><br><span class="line">	cefWebView.RegisterJsObject(&quot;WPFComm&quot;, new JSDoor(this));</span><br><span class="line"></span><br><span class="line">	BrowserContainer.Children.Add(cefWebView);</span><br><span class="line"></span><br><span class="line">	cefWebView.Load(App.Config.StartPage);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>2.注册js对象时，注意第三个参数，默认为true，表示调用的方法采用驼峰命名法，即首字母小写，反之，采用帕斯卡命名法，首字母大写</strong></p>
+<h2 id="CefSharp总结"><a href="#CefSharp总结" class="headerlink" title="CefSharp总结"></a>CefSharp总结</h2><h3 id="CefSharp初始化"><a href="#CefSharp初始化" class="headerlink" title="CefSharp初始化"></a>CefSharp初始化</h3><h4 id="利用控件"><a href="#利用控件" class="headerlink" title="利用控件"></a>利用控件</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">wpf:ChromiumWebBrowser</span> <span class="attr">x:Name</span>=<span class="string">"Browser"</span></span></span><br><span class="line"><span class="tag"><span class="attr">Address</span>=<span class="string">"&#123;Binding Text, ElementName=txtBoxAddress&#125;"</span>&gt;</span></span><br><span class="line">  </span><br><span class="line"><span class="tag">&lt;/<span class="name">wpf:ChromiumWebBrowser</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="利用代码"><a href="#利用代码" class="headerlink" title="利用代码"></a>利用代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public void Initialize()</span><br><span class="line">&#123;</span><br><span class="line">	if (!Cef.Initialize(settings)) return;</span><br><span class="line">	ChromiumWebBrowser cefWebView = new ChromiumWebBrowser();</span><br><span class="line">	BrowserContainer.Children.Add(cefWebView);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="CefSharp常用按钮"><a href="#CefSharp常用按钮" class="headerlink" title="CefSharp常用按钮"></a>CefSharp常用按钮</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//调试</span><br><span class="line">webView.GetBrowser().ShowDevTools();</span><br><span class="line">//刷新C</span><br><span class="line">webView.GetBrowser().Reload();</span><br><span class="line">//上一页</span><br><span class="line">webView.GetBrowser().GoBack();</span><br><span class="line">//下一页</span><br><span class="line">webView.GetBrowser().GoForward();</span><br></pre></td></tr></table></figure>
+<h3 id="CefSharp资源清理"><a href="#CefSharp资源清理" class="headerlink" title="CefSharp资源清理"></a>CefSharp资源清理</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">//浏览器本身处理</span><br><span class="line">static ChromiumWebBrowser()  </span><br><span class="line">&#123;  </span><br><span class="line">    if (CefSharpSettings.ShutdownOnExit)  </span><br><span class="line">    &#123;  </span><br><span class="line">    	Application.ApplicationExit += OnApplicationExit;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">private static void OnApplicationExit(object sender, EventArgs e)  </span><br><span class="line">&#123;  </span><br><span class="line">	Cef.Shutdown();  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">//需要关闭浏览器负载程序时操作</span><br><span class="line">try  </span><br><span class="line">&#123;  </span><br><span class="line">    browser.CloseDevTools();  </span><br><span class="line">    browser.GetBrowser().CloseBrowser(true);  </span><br><span class="line">&#125;  </span><br><span class="line">catch &#123; &#125;   </span><br><span class="line"></span><br><span class="line">try  </span><br><span class="line">&#123;  </span><br><span class="line">    if (browser != null)  </span><br><span class="line">    &#123;  </span><br><span class="line">	    browser.Dispose();  </span><br><span class="line">	    Cef.Shutdown();  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line">catch &#123; &#125;</span><br></pre></td></tr></table></figure>
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2018年08月21日 21:58</p>
+        <p>原始链接： <a class="post-url" href="/2018/03/11/CefSharp的使用/" title="CefSharp的使用">https://www.github.com/ChangHub/BlogImages/raw/master/2018/03/11/CefSharp的使用/</a></p>
+        <footer>
+            <a href="https://www.github.com/ChangHub/BlogImages/raw/master">
+                <img src="/images/logo.png" alt="HongChangCui">
+                HongChangCui
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.github.com/ChangHub/BlogImages/raw/master/2018/03/11/CefSharp的使用/&title=《CefSharp的使用》 — ChangKe&pic=Cef.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.github.com/ChangHub/BlogImages/raw/master/2018/03/11/CefSharp的使用/&title=《CefSharp的使用》 — ChangKe&source=CEF（Chrominu Embedded Framework）:基于Google Chrominu项目的一个开源项目，但与Google Chrominu..." data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.github.com/ChangHub/BlogImages/raw/master/2018/03/11/CefSharp的使用/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《CefSharp的使用》 — ChangKe&url=https://www.github.com/ChangHub/BlogImages/raw/master/2018/03/11/CefSharp的使用/&via=https://www.github.com/ChangHub/BlogImages/raw/master" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.github.com/ChangHub/BlogImages/raw/master/2018/03/11/CefSharp的使用/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.github.com/ChangHub/BlogImages/raw/master/2018/03/11/CefSharp的使用/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/CEF/" class="color4">CEF</a>
+      
+    <a href="/tags/CefSharp/" class="color4">CefSharp</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#CefSharp简介"><span class="post-toc-text">CefSharp简介</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#CefSharp示例"><span class="post-toc-text">CefSharp示例</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#CefSharp引用"><span class="post-toc-text">CefSharp引用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#CefSharp使用"><span class="post-toc-text">CefSharp使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#初始化Chrome"><span class="post-toc-text">初始化Chrome</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实例化webBroswer"><span class="post-toc-text">实例化webBroswer</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#指定画面Address"><span class="post-toc-text">指定画面Address</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#与CefSharp交互"><span class="post-toc-text">与CefSharp交互</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#CefSharp对象调JS"><span class="post-toc-text">CefSharp对象调JS</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#JS调CefSharp对象"><span class="post-toc-text">JS调CefSharp对象</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#CefSharp总结"><span class="post-toc-text">CefSharp总结</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CefSharp初始化"><span class="post-toc-text">CefSharp初始化</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#利用控件"><span class="post-toc-text">利用控件</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#利用代码"><span class="post-toc-text">利用代码</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CefSharp常用按钮"><span class="post-toc-text">CefSharp常用按钮</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CefSharp资源清理"><span class="post-toc-text">CefSharp资源清理</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2018/08/20/Hexo+GitHub博客/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          Hexo+GitHub搭建个人博客
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2018/02/05/2018年会/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">2018年会</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+		<section id="comments" class="comments">
+			<style>
+			  .comments{margin:30px;padding:10px;background:#fff}
+			  @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+			</style>
+			<div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage@latest/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js'></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "hrqbaUF8km11bv4h31Rhiyco-gzGzoHsz",
+            app_key: "nm5to078TvS7MzkXnO78DHpI",
+            placeholder: "~(≧▽≦)/~来呀！快活呀！",
+            avatar: "mm",
+            pageSize: 10
+    });
+	
+	$('#comments .info').css({"display":"none"});
+	
+</script>
+		</section>
+	
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2018 HongChangCui<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://www.github.com/ChangHub/BlogImages/raw/master",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/JavaScript/">JavaScript</a><a class="category-link" href="/categories/MySQL/">MySQL</a><a class="category-link" href="/categories/便捷工具/">便捷工具</a><a class="category-link" href="/categories/年会/">年会</a><a class="category-link" href="/categories/年度总结/">年度总结</a><a class="category-link" href="/categories/开源项目/">开源项目</a><a class="category-link" href="/categories/软件使用/">软件使用</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/CEF/" style="font-size: 10px;">CEF</a> <a href="/tags/CefSharp/" style="font-size: 10px;">CefSharp</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/年会/" style="font-size: 10px;">年会</a> <a href="/tags/总结/" style="font-size: 20px;">总结</a> <a href="/tags/文件夹/" style="font-size: 10px;">文件夹</a> <a href="/tags/软件使用/" style="font-size: 10px;">软件使用</a> <a href="/tags/软件安装/" style="font-size: 10px;">软件安装</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/CEF/" style="font-size: 10px;">CEF</a> <a href="/tags/CefSharp/" style="font-size: 10px;">CefSharp</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/年会/" style="font-size: 10px;">年会</a> <a href="/tags/总结/" style="font-size: 20px;">总结</a> <a href="/tags/文件夹/" style="font-size: 10px;">文件夹</a> <a href="/tags/软件使用/" style="font-size: 10px;">软件使用</a> <a href="/tags/软件安装/" style="font-size: 10px;">软件安装</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>
