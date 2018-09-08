@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>ASP.NET MVC 原理简析 | ChangKe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="ChangKe,ChangKe's Blog" />
+  
+  <meta name="description" content="ASP.NET MVC应用框架是通过扩展ASP.NET实现的。ASP.NET的扩展点体现在HttpModule和HttpHandler两个核心组件上，ASP.NET MVC框架就是通过自定义HttpModule（UrlRoutingModule）HttpHandler（MvcHandler）实现的。">
+<meta name="keywords" content="ASP.NET MVC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ASP.NET MVC 原理简析">
+<meta property="og:url" content="https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/07/ASP.NET MVC运行原理简析/index.html">
+<meta property="og:site_name" content="ChangKe">
+<meta property="og:description" content="ASP.NET MVC应用框架是通过扩展ASP.NET实现的。ASP.NET的扩展点体现在HttpModule和HttpHandler两个核心组件上，ASP.NET MVC框架就是通过自定义HttpModule（UrlRoutingModule）HttpHandler（MvcHandler）实现的。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-09-08T09:22:47.750Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ASP.NET MVC 原理简析">
+<meta name="twitter:description" content="ASP.NET MVC应用框架是通过扩展ASP.NET实现的。ASP.NET的扩展点体现在HttpModule和HttpHandler两个核心组件上，ASP.NET MVC框架就是通过自定义HttpModule（UrlRoutingModule）HttpHandler（MvcHandler）实现的。">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">ChangKe&#39;s Blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        ChangKe&#39;s Blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        一个专注 WEB 开发的技术博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="ChangKe" target="_blank" href="//changkehome.top">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/ChangHub">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" ">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" ">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-ASP.NET MVC运行原理简析" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      ASP.NET MVC 原理简析
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/原理/">原理</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2018-09-07
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p>ASP.NET MVC应用框架是通过扩展ASP.NET实现的。ASP.NET的扩展点体现在HttpModule和HttpHandler两个核心组件上，ASP.NET MVC框架就是通过自定义HttpModule（UrlRoutingModule）HttpHandler（MvcHandler）实现的。</p>
+<a id="more"></a>
+<h1 id="自定义HttpModule"><a href="#自定义HttpModule" class="headerlink" title="自定义HttpModule"></a>自定义HttpModule</h1><p><strong>UrlRouteModule==&gt;RouteTable==&gt;Route==&gt;RouteData</strong></p>
+<p>自定义Module:<code>UrlRouteModule</code></p>
+<p>解析HTTP请求获取一个以Controller和Action名称为核心的路由数据RouteData。</p>
+<h2 id="注册自定义Module"><a href="#注册自定义Module" class="headerlink" title="注册自定义Module"></a>注册自定义Module</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--在配置文件Web.Config中添加如下配置项：--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--自定义Module--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">system.webServer</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modules</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">add</span> <span class="attr">name</span>=<span class="string">"UrlRoutingModule"</span> <span class="attr">type</span>=<span class="string">"CHCMVC.Module.UrlRoutingModule"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">modules</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">system.webServer</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="注册Route对象"><a href="#注册Route对象" class="headerlink" title="注册Route对象"></a>注册Route对象</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//添加ASP.NET应用程序文件Global.asax</span><br><span class="line">//在Application_Start方法中注册Route</span><br><span class="line">protected void Application_Start(object sender, EventArgs e)</span><br><span class="line">&#123;</span><br><span class="line">	//添加路由对象到路由表中</span><br><span class="line">	RouteTable.Routes.Add(&quot;default&quot;, new Route.Route &#123; Url = &quot;&#123;controller&#125;/&#123;action&#125;&quot; &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="路由表RouteTable"><a href="#路由表RouteTable" class="headerlink" title="路由表RouteTable"></a>路由表RouteTable</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">//路由表：路由对象的集合，静态属性Routes,通过Global.asax文件已注册路由对象</span><br><span class="line">namespace CHCMVC.Route</span><br><span class="line">  &#123;</span><br><span class="line">      /// &lt;summary&gt;</span><br><span class="line">      /// 同一个Web应用可以采用不同的URL模式，所以需要注册多个路由对象，就组成了一个路由表</span><br><span class="line">      /// &lt;/summary&gt;</span><br><span class="line">      public class RouteTable</span><br><span class="line">      &#123;</span><br><span class="line">          /// &lt;summary&gt;</span><br><span class="line">          /// 路由对象列表</span><br><span class="line">          /// &lt;/summary&gt;</span><br><span class="line">          public static RouteDictionary Routes &#123; get; set; &#125;</span><br><span class="line">          static RouteTable()</span><br><span class="line">          &#123;</span><br><span class="line">            Routes = new RouteDictionary();</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//路由表中的静态属性Routes,通过遍历路由列表，</span><br><span class="line">//调用每个路由对象Route的GetRouteData方法可以获取与当前请求匹配的路由数据RouteData。</span><br><span class="line">namespace CHCMVC.Route</span><br><span class="line">&#123;</span><br><span class="line">    public class RouteDictionary : Dictionary&lt;string, RouteBase&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        /// &lt;summary&gt;</span><br><span class="line">        /// 获取与请求匹配的路由数据对象</span><br><span class="line">        /// &lt;/summary&gt;</span><br><span class="line">        /// &lt;param name=&quot;httpContext&quot;&gt;&lt;/param&gt;</span><br><span class="line">        /// &lt;returns&gt;&lt;/returns&gt;</span><br><span class="line">        public RouteData GetRouteData(HttpContextBase httpContext)</span><br><span class="line">        &#123;</span><br><span class="line">            foreach (var route in this.Values)</span><br><span class="line">            &#123;</span><br><span class="line">                RouteData routeData = route.GetRouteData(httpContext);</span><br><span class="line"></span><br><span class="line">                if (null != routeData)</span><br><span class="line">                &#123;</span><br><span class="line">                    return routeData;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="路由对象Route"><a href="#路由对象Route" class="headerlink" title="路由对象Route"></a>路由对象Route</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">//通过路由对象Route,可以获取该路由对象的路由数据RouteData。</span><br><span class="line">//RouteData继承抽象类RouteBase，实现抽象方法GetRouteData。</span><br><span class="line">namespace CHCMVC.Route</span><br><span class="line">&#123;</span><br><span class="line">    public abstract class RouteBase</span><br><span class="line">    &#123;</span><br><span class="line">        public abstract RouteData GetRouteData(HttpContextBase httpContext);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//将请求的URL与路由对象的URL（已在Global.asax文件中注册）匹配</span><br><span class="line">//路由对象里面的RouteHandler来源于自定义的Handler，MvcRouteHandler==&gt;MvcHandler会赋给RouteData。</span><br><span class="line">namespace CHCMVC.Route</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 路由数据RouteData里面的属性，来源于路由对象Route的同名属性</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class Route : RouteBase</span><br><span class="line">    &#123;</span><br><span class="line">        public IRouteHandler RouteHandler &#123; get; set; &#125;</span><br><span class="line">        /// &lt;summary&gt;</span><br><span class="line">        /// 当前请求的URL</span><br><span class="line">        /// &lt;/summary&gt;</span><br><span class="line">        public string Url &#123; get; set; &#125;</span><br><span class="line">        public IDictionary&lt;string, object&gt; DataTokens &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">        public Route()</span><br><span class="line">        &#123;</span><br><span class="line">            this.DataTokens = new Dictionary&lt;string, object&gt;();</span><br><span class="line">            this.RouteHandler = new MvcRouteHandler();//自定义Handler</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        /// &lt;summary&gt;</span><br><span class="line">        /// 通过HttpContextBase获取请求地址，创建RouteData对象</span><br><span class="line">        /// &lt;/summary&gt;</span><br><span class="line">        /// &lt;param name=&quot;httpContext&quot;&gt;&lt;/param&gt;</span><br><span class="line">        /// &lt;returns&gt;&lt;/returns&gt;</span><br><span class="line">        public override RouteData GetRouteData(HttpContextBase httpContext)</span><br><span class="line">        &#123;</span><br><span class="line">            IDictionary&lt;string, object&gt; variables;</span><br><span class="line">            if (this.Match(httpContext.Request.AppRelativeCurrentExecutionFilePath.Substring(2), out variables))</span><br><span class="line">            &#123;</span><br><span class="line">                RouteData routeData = new RouteData();</span><br><span class="line">                foreach (var item in variables)</span><br><span class="line">                &#123;</span><br><span class="line">                    routeData.Values.Add(item.Key, item.Value);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                foreach (var item in DataTokens)</span><br><span class="line">                &#123;</span><br><span class="line">                    routeData.DataTokens.Add(item.Key, item.Value);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                routeData.RouteHandler = this.RouteHandler;</span><br><span class="line"></span><br><span class="line">                return routeData;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        /// &lt;summary&gt;</span><br><span class="line">        /// 将请求的URL与路由对象Route中的URL比较,获取请求URL的Controller和Action</span><br><span class="line">        /// &lt;/summary&gt;</span><br><span class="line">        /// &lt;param name=&quot;requestUrl&quot;&gt;&lt;/param&gt;</span><br><span class="line">        /// &lt;param name=&quot;variables&quot;&gt;&lt;/param&gt;</span><br><span class="line">        /// &lt;returns&gt;&lt;/returns&gt;</span><br><span class="line">        protected bool Match(string requestUrl, out IDictionary&lt;string, object&gt; variables)</span><br><span class="line">        &#123;</span><br><span class="line">            variables = new Dictionary&lt;string, object&gt;();</span><br><span class="line">            string[] strArray1 = requestUrl.Split(&apos;/&apos;);</span><br><span class="line">            string[] strArray2 = this.Url.Split(&apos;/&apos;);</span><br><span class="line"></span><br><span class="line">            if (strArray1.Length != strArray2.Length)</span><br><span class="line">            &#123;</span><br><span class="line">                return false;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            for (int i = 0; i &lt; strArray2.Length; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                if (strArray2[i].StartsWith(&quot;&#123;&quot;) &amp;&amp; strArray2[i].EndsWith(&quot;&#125;&quot;))</span><br><span class="line">                &#123;</span><br><span class="line">                    variables.Add(strArray2[i].Trim(&quot;&#123;&#125;&quot;.ToArray()), strArray1[i]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="路由数据RouteData"><a href="#路由数据RouteData" class="headerlink" title="路由数据RouteData"></a>路由数据RouteData</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">//通过自定义HttpModule【UrlRouteModule】获得路由数据RouteData。</span><br><span class="line">//路由数据保存了对应的Controller和Action名称，通过反射实现激活。</span><br><span class="line">namespace CHCMVC.Route</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// ASP.NET MVC中的路由数据：RouteData,以Controller和Action名称为核心</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class RouteData</span><br><span class="line">    &#123;</span><br><span class="line">        /// &lt;summary&gt;</span><br><span class="line">        /// Values:从请求地址中解析出的变量==》来源于Route:Values</span><br><span class="line">        /// &lt;/summary&gt;</span><br><span class="line">        public IDictionary&lt;string, object&gt; Values &#123; get; set; &#125;</span><br><span class="line">        /// &lt;summary&gt;</span><br><span class="line">        /// DataTokes:其他变量==》来源于Route:DataTokens</span><br><span class="line">        /// &lt;/summary&gt;</span><br><span class="line">        public IDictionary&lt;string, object&gt; DataTokens &#123; get; set; &#125;</span><br><span class="line">        /// &lt;summary&gt;</span><br><span class="line">        /// 处理Http请求==》来源于Route:RouteHandler</span><br><span class="line">        /// &lt;/summary&gt;</span><br><span class="line">        public IRouteHandler RouteHandler &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        public RouteData()</span><br><span class="line">        &#123;</span><br><span class="line">            this.Values = new Dictionary&lt;string, object&gt;();</span><br><span class="line">            this.DataTokens = new Dictionary&lt;string, object&gt;();</span><br><span class="line">            this.DataTokens.Add(&quot;namespaces&quot;, new List&lt;string&gt;());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //从Values中获取Controller名称</span><br><span class="line">        public string Controller</span><br><span class="line">        &#123;</span><br><span class="line">            get</span><br><span class="line">            &#123;</span><br><span class="line">                object controllerName = string.Empty;</span><br><span class="line">                this.Values.TryGetValue(&quot;controller&quot;, out controllerName);</span><br><span class="line">                return controllerName.ToString();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        //从Values获取Action名称</span><br><span class="line">        public string Action</span><br><span class="line">        &#123;</span><br><span class="line">            get</span><br><span class="line">            &#123;</span><br><span class="line">                object actionName = string.Empty;</span><br><span class="line">                this.Values.TryGetValue(&quot;action&quot;, out actionName);</span><br><span class="line">                return actionName.ToString();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        //从DataTokens中获取Namespaces名称</span><br><span class="line">        public IEnumerable&lt;string&gt; Namespaces</span><br><span class="line">        &#123;</span><br><span class="line">            get</span><br><span class="line">            &#123;</span><br><span class="line">                return (IEnumerable&lt;string&gt;)this.DataTokens[&quot;namespaces&quot;];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="UrlRouteModule实现"><a href="#UrlRouteModule实现" class="headerlink" title="UrlRouteModule实现"></a>UrlRouteModule实现</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">//自定义的HttpModule，实现IHttpModule接口，在初始化方法Init中注册PostResolveRequestCache事件。</span><br><span class="line">//在事件中调用Route对象的GetRouteData方法获取路由数据RouteData。</span><br><span class="line">//将路由数据RouteData和Http请求上下文HttpContext封装一起，供Controller激活使用。</span><br><span class="line">//通过RouteHandler调用GetHttpHandler获取自定义的HandlerHandler</span><br><span class="line">//调用RemapHandler触发HttpHandler处理请求，激活Controller</span><br><span class="line">namespace CHCMVC.Module</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 自定义HttpModle：处理Http请求，解析出路由数据</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class UrlRoutingModule : IHttpModule</span><br><span class="line">    &#123;</span><br><span class="line">        public void Dispose()</span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public void Init(HttpApplication context)</span><br><span class="line">        &#123;</span><br><span class="line">            context.PostResolveRequestCache += context_PostResolveRequestCache;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        protected virtual void context_PostResolveRequestCache(object sender, EventArgs e)</span><br><span class="line">        &#123;</span><br><span class="line">            HttpContextWrapper httpContext = new HttpContextWrapper(HttpContext.Current);</span><br><span class="line">            //从路由表中获取路由数据</span><br><span class="line">            RouteData routeData = RouteTable.Routes.GetRouteData(httpContext);</span><br><span class="line">            if (null == routeData) return;</span><br><span class="line"></span><br><span class="line">            RequestContext requestContext = new RequestContext &#123; RouteData = routeData, HttpContext = httpContext &#125;;</span><br><span class="line"></span><br><span class="line">            IHttpHandler handler = routeData.RouteHandler.GetHttpHandler(requestContext);</span><br><span class="line">            httpContext.RemapHandler(handler);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//由于Controller激活需要用到路由数据RouteData，因此需要封装一起</span><br><span class="line">namespace CHCMVC.Context</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 当前请求上下文和路由数据RouteData的封装</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class RequestContext</span><br><span class="line">    &#123;</span><br><span class="line">        public virtual HttpContextBase HttpContext &#123; get; set; &#125;</span><br><span class="line">        public virtual RouteData RouteData &#123; get; set; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="自定义HttpHandler"><a href="#自定义HttpHandler" class="headerlink" title="自定义HttpHandler"></a>自定义HttpHandler</h1><p><strong>MvcRouteHandler==&gt;MvcHandler==&gt;ControllerFactory==&gt;Controller</strong></p>
+<p><strong>ControllerActionInvoker==&gt;ModelBinder==&gt;ActionResult</strong></p>
+<p>自定义Handler：<code>MvcRouteHandler</code></p>
+<p>根据Controller名称通过反射激活Controller，根据Action名称通过反射执行Action。</p>
+<h2 id="注册Controller默认工厂"><a href="#注册Controller默认工厂" class="headerlink" title="注册Controller默认工厂"></a>注册Controller默认工厂</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">//添加ASP.NET应用程序文件Global.asax</span><br><span class="line">//在Application_Start方法中注册Route</span><br><span class="line">protected void Application_Start(object sender, EventArgs e)</span><br><span class="line">&#123;</span><br><span class="line">	//添加路由对象到路由表中</span><br><span class="line">	RouteTable.Routes.Add(&quot;default&quot;, new Route.Route &#123; Url = &quot;&#123;controller&#125;/&#123;action&#125;&quot; &#125;);</span><br><span class="line">    //设置激活Controller的工厂</span><br><span class="line">    ControllerBuilder.Current.SetControllerFactory(new DefaultControllerFactory());</span><br><span class="line">    //设置激活Controller的命名空间</span><br><span class="line">    ControllerBuilder.Current.DefaultNamespaces.Add(&quot;CHCMVC.Controller&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//默认工厂的注册通过ControllerBuilder实现</span><br><span class="line">namespace CHCMVC.Controller</span><br><span class="line">&#123;</span><br><span class="line">    public class ControllerBuilder</span><br><span class="line">    &#123;</span><br><span class="line">        private Func&lt;IControllerFactory&gt; factoryThunk;</span><br><span class="line">        public HashSet&lt;string&gt; DefaultNamespaces &#123; get; set; &#125;</span><br><span class="line">        public static ControllerBuilder Current &#123; get; private set; &#125;</span><br><span class="line">        //单例 </span><br><span class="line">        static ControllerBuilder()</span><br><span class="line">        &#123;</span><br><span class="line">            Current = new ControllerBuilder();</span><br><span class="line">        &#125;</span><br><span class="line">        public ControllerBuilder()</span><br><span class="line">        &#123;</span><br><span class="line">            this.DefaultNamespaces = new HashSet&lt;string&gt;();</span><br><span class="line">        &#125;</span><br><span class="line">		//获取默认工厂</span><br><span class="line">        public IControllerFactory GetControllerFactory()</span><br><span class="line">        &#123;</span><br><span class="line">            return factoryThunk();</span><br><span class="line">        &#125;</span><br><span class="line">        //设置默认工厂</span><br><span class="line">        public void SetControllerFactory(IControllerFactory controllerFactory)</span><br><span class="line">        &#123;</span><br><span class="line">            factoryThunk = () =&gt; controllerFactory;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Controller工厂实现"><a href="#Controller工厂实现" class="headerlink" title="Controller工厂实现"></a>Controller工厂实现</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">//工厂接口</span><br><span class="line">namespace CHCMVC.Controller</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// Controller对象的激活是通过工厂模式实现的</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public interface IControllerFactory</span><br><span class="line">    &#123;</span><br><span class="line">        IController CreateController(RequestContext requestContext, string controllerName);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//工厂接口实现</span><br><span class="line">//工厂的默认实现已经在Global.asax文件中注册，保存了所有实现IController接口的Controller类型</span><br><span class="line">//工厂的CreateController用于Controller的创建</span><br><span class="line">namespace CHCMVC.Controller</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 激活Controller的默认工厂，通过反射创建Controller</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class DefaultControllerFactory : IControllerFactory</span><br><span class="line">    &#123;</span><br><span class="line">        private List&lt;Type&gt; controllerTypes = new List&lt;Type&gt;();</span><br><span class="line"></span><br><span class="line">        public DefaultControllerFactory()</span><br><span class="line">        &#123;</span><br><span class="line">            //通过BuildManager加载所有的程序集，并保存了实现了IController接口的类型</span><br><span class="line">            foreach (Assembly assembly in BuildManager.GetReferencedAssemblies())</span><br><span class="line">            &#123;</span><br><span class="line">                foreach (Type type in assembly.GetTypes().Where(type =&gt; typeof(IController).IsAssignableFrom(type)))</span><br><span class="line">                &#123;</span><br><span class="line">                    controllerTypes.Add(type);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        /// &lt;summary&gt;</span><br><span class="line">        /// 根据Controller名字，通过反射创建Controller</span><br><span class="line">        /// &lt;/summary&gt;</span><br><span class="line">        /// &lt;param name=&quot;requestContext&quot;&gt;&lt;/param&gt;</span><br><span class="line">        /// &lt;param name=&quot;controllerName&quot;&gt;&lt;/param&gt;</span><br><span class="line">        /// &lt;returns&gt;&lt;/returns&gt;</span><br><span class="line">        public IController CreateController(RequestContext requestContext, string controllerName)</span><br><span class="line">        &#123;</span><br><span class="line">            string typeName = controllerName + &quot;Controller&quot;;</span><br><span class="line"></span><br><span class="line">            List&lt;string&gt; namespaces = new List&lt;string&gt;();</span><br><span class="line"></span><br><span class="line">            namespaces.AddRange(requestContext.RouteData.Namespaces);</span><br><span class="line">            namespaces.AddRange(ControllerBuilder.Current.DefaultNamespaces);</span><br><span class="line"></span><br><span class="line">            foreach (var ns in namespaces)</span><br><span class="line">            &#123;</span><br><span class="line">                string controllerTypeName = string.Format(&quot;&#123;0&#125;.&#123;1&#125;&quot;, ns, typeName);</span><br><span class="line"></span><br><span class="line">                Type controllerType = controllerTypes.FirstOrDefault(type =&gt; string.Compare(type.FullName, controllerTypeName, true) == 0);</span><br><span class="line"></span><br><span class="line">                if (null != controllerType)</span><br><span class="line">                &#123;</span><br><span class="line">                    return (IController)Activator.CreateInstance(controllerType);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="MvcRouteHandler激活Controller"><a href="#MvcRouteHandler激活Controller" class="headerlink" title="MvcRouteHandler激活Controller"></a>MvcRouteHandler激活Controller</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">//MvcRouteHandler已经在路由对象Route中实例化</span><br><span class="line">//在自定义HttpModule中触发ProcessRequest方法，通过调用ControllerFactory创建Controller</span><br><span class="line">namespace CHCMVC.Handler</span><br><span class="line">&#123;</span><br><span class="line">    public class MvcRouteHandler : IRouteHandler</span><br><span class="line">    &#123;</span><br><span class="line">        public IHttpHandler GetHttpHandler(RequestContext requestContext)</span><br><span class="line">        &#123;</span><br><span class="line">            return new MvcHandler(requestContext);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//Controller创建（激活）在自定义HttpModule(UrlRouteModule)中触发</span><br><span class="line">//调用Controller工厂实现</span><br><span class="line">//MvcHandler调用ActionInvoker的Execute方法实现Action执行（激活）</span><br><span class="line">namespace CHCMVC.Handler</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 自定义Handler:实现对Controller激活和Action执行</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class MvcHandler : IHttpHandler</span><br><span class="line">    &#123;</span><br><span class="line">        public RequestContext RequestContext &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">        public MvcHandler(RequestContext requestContext)</span><br><span class="line">        &#123;</span><br><span class="line">            this.RequestContext = requestContext;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public bool IsReusable</span><br><span class="line">        &#123;</span><br><span class="line">            get &#123; return false; &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public void ProcessRequest(HttpContext context)</span><br><span class="line">        &#123;</span><br><span class="line">            string controllerName = this.RequestContext.RouteData.Controller;</span><br><span class="line">            IControllerFactory controllerFactory = ControllerBuilder.Current.GetControllerFactory();</span><br><span class="line"></span><br><span class="line">            IController controller = controllerFactory.CreateController(this.RequestContext, controllerName);</span><br><span class="line">            controller.Execute(this.RequestContext);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Action执行"><a href="#Action执行" class="headerlink" title="Action执行"></a>Action执行</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">//ControllerBase是请求Controller的基类</span><br><span class="line">//实例化ControllerActionInvoker</span><br><span class="line">//实现对Action的执行</span><br><span class="line">//由于Action的激活，离不开Controller，需要通过Controller反射方法，因此需要将Controller和RequestContext封装，供Action激活使用</span><br><span class="line">namespace CHCMVC.Controller</span><br><span class="line">&#123;</span><br><span class="line">    public class ControllerBase : IController</span><br><span class="line">    &#123;</span><br><span class="line">        protected IActionInvoker ActionInvoker &#123; get; set; &#125;</span><br><span class="line">        public ControllerBase()</span><br><span class="line">        &#123;</span><br><span class="line">            this.ActionInvoker = new ControllerActionInvoker();</span><br><span class="line">        &#125;</span><br><span class="line">        public void Execute(RequestContext requestContext)</span><br><span class="line">        &#123;</span><br><span class="line">            ControllerContext context = new ControllerContext &#123; RequestContext = requestContext, Controller = this &#125;;</span><br><span class="line"></span><br><span class="line">            string actionName = requestContext.RouteData.Action;</span><br><span class="line"></span><br><span class="line">            this.ActionInvoker.InvokeAction(context, actionName);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//Action的执行，可能Action拥有参数，因此需要参数绑定</span><br><span class="line">//Action执行之后，返回ActionResult，在View中显示</span><br><span class="line">namespace CHCMVC.Action</span><br><span class="line">&#123;</span><br><span class="line">    public class ControllerActionInvoker : IActionInvoker</span><br><span class="line">    &#123;</span><br><span class="line">        /// &lt;summary&gt;</span><br><span class="line">        /// 参数绑定</span><br><span class="line">        /// &lt;/summary&gt;</span><br><span class="line">        public IModelBinder ModelBinder &#123; get; private set; &#125;</span><br><span class="line">        public ControllerActionInvoker()</span><br><span class="line">        &#123;</span><br><span class="line">            this.ModelBinder = new DefaultModelBinder();</span><br><span class="line">        &#125;</span><br><span class="line">        public void InvokeAction(ControllerContext controllerContext, string actionName)</span><br><span class="line">        &#123;</span><br><span class="line">            MethodInfo method = controllerContext.Controller.GetType().GetMethods().First(m =&gt; string.Compare(actionName, m.Name, true) == 0);</span><br><span class="line"></span><br><span class="line">            List&lt;object&gt; parameters = new List&lt;object&gt;();</span><br><span class="line"></span><br><span class="line">            foreach (ParameterInfo parameter in method.GetParameters())</span><br><span class="line">            &#123;</span><br><span class="line">                parameters.Add(this.ModelBinder.BindModel(controllerContext, parameter.Name, parameter.ParameterType));</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            ActionResult actionResult = method.Invoke(controllerContext.Controller, parameters.ToArray()) as ActionResult;</span><br><span class="line"></span><br><span class="line">            actionResult.ExecuteResult(controllerContext);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Model绑定"><a href="#Model绑定" class="headerlink" title="Model绑定"></a>Model绑定</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line">//Model绑定接口</span><br><span class="line">namespace CHCMVC.Model</span><br><span class="line">&#123;</span><br><span class="line">    public interface IModelBinder</span><br><span class="line">    &#123;</span><br><span class="line">        object BindModel(ControllerContext controllerContext,string modelName,Type modelType);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//Model绑定接口实现</span><br><span class="line">namespace CHCMVC.Model</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 参数绑定：</span><br><span class="line">    /// 来源：HTTP-POST Form、 RouteData、DataTokens</span><br><span class="line">    /// 简单类型：匹配</span><br><span class="line">    /// 复杂类型：反射</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class DefaultModelBinder : IModelBinder</span><br><span class="line">    &#123;</span><br><span class="line">        public object BindModel(ControllerContext controllerContext, string modelName, Type modelType)</span><br><span class="line">        &#123;</span><br><span class="line">            if (modelType.IsValueType || typeof(string) == modelType)</span><br><span class="line">            &#123;</span><br><span class="line">                object instance;</span><br><span class="line"></span><br><span class="line">                if (GetValueTypeInstance(controllerContext, modelName, modelType, out instance))</span><br><span class="line">                &#123;</span><br><span class="line">                    return instance;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                return Activator.CreateInstance(modelType);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            object modelInstance = Activator.CreateInstance(modelType);</span><br><span class="line"></span><br><span class="line">            foreach (PropertyInfo property in modelType.GetProperties())</span><br><span class="line">            &#123;</span><br><span class="line">                if (!property.CanWrite || (!property.PropertyType.IsValueType &amp;&amp; property.PropertyType != typeof(string)))</span><br><span class="line">                &#123;</span><br><span class="line">                    continue;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                object propertyValue;</span><br><span class="line"></span><br><span class="line">                if (GetValueTypeInstance(controllerContext, property.Name, property.PropertyType, out propertyValue))</span><br><span class="line">                &#123;</span><br><span class="line">                    property.SetValue(modelInstance, propertyValue, null);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">            return modelInstance;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        private bool GetValueTypeInstance(ControllerContext controllerContex, string modelName, Type modelType, out object value)</span><br><span class="line">        &#123;</span><br><span class="line">            var form = HttpContext.Current.Request.Form;</span><br><span class="line"></span><br><span class="line">            string key;</span><br><span class="line">            //HTTPPOST Form</span><br><span class="line">            if (null != form)</span><br><span class="line">            &#123;</span><br><span class="line">                key = form.AllKeys.FirstOrDefault(k =&gt; string.Compare(k, modelName, true) == 0);</span><br><span class="line">                if (key != null)</span><br><span class="line">                &#123;</span><br><span class="line">                    value = Convert.ChangeType(form[key], modelType);</span><br><span class="line">                    return true;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            //RouteData.Values</span><br><span class="line">            key = controllerContex.RequestContext.RouteData.Values.Where(</span><br><span class="line">                item =&gt; string.Compare(item.Key, modelName, true) == 0).Select(item =&gt; item.Key).FirstOrDefault();</span><br><span class="line"></span><br><span class="line">            if (null != key)</span><br><span class="line">            &#123;</span><br><span class="line">                value = Convert.ChangeType(controllerContex.RequestContext.RouteData.Values[key], modelType);</span><br><span class="line">                return true;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            //RouteData.DataTokens</span><br><span class="line">            key = controllerContex.RequestContext.RouteData.DataTokens</span><br><span class="line">            .Where(item =&gt; string.Compare(item.Key, modelName, true) == 0)</span><br><span class="line">            .Select(item =&gt; item.Key).FirstOrDefault();</span><br><span class="line">            if (null != key)</span><br><span class="line">            &#123;</span><br><span class="line">                value = Convert.ChangeType(controllerContex.RequestContext.RouteData.DataTokens[key], modelType);</span><br><span class="line">                return true;</span><br><span class="line">            &#125;</span><br><span class="line">            value = null;</span><br><span class="line"></span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="View呈现"><a href="#View呈现" class="headerlink" title="View呈现"></a>View呈现</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">//View呈现抽象类</span><br><span class="line">namespace CHCMVC.View</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 响应输出</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public abstract class ActionResult</span><br><span class="line">    &#123;</span><br><span class="line">        public abstract void ExecuteResult(ControllerContext context);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//View呈现具体实现</span><br><span class="line">namespace CHCMVC.View</span><br><span class="line">&#123;</span><br><span class="line">    public class RawContentResult : ActionResult</span><br><span class="line">    &#123;</span><br><span class="line">        public string RowData &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">        public RawContentResult(string rowData)</span><br><span class="line">        &#123;</span><br><span class="line">            this.RowData = rowData;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        /// &lt;summary&gt;</span><br><span class="line">        /// 将内容输出到页面上</span><br><span class="line">        /// &lt;/summary&gt;</span><br><span class="line">        /// &lt;param name=&quot;context&quot;&gt;&lt;/param&gt;</span><br><span class="line">        public override void ExecuteResult(ControllerContext context)</span><br><span class="line">        &#123;</span><br><span class="line">            context.RequestContext.HttpContext.Response.Write(this.RowData);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="发起请求"><a href="#发起请求" class="headerlink" title="发起请求"></a>发起请求</h1><h2 id="请求Model"><a href="#请求Model" class="headerlink" title="请求Model"></a>请求Model</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">namespace CHCMVC.Model</span><br><span class="line">&#123;</span><br><span class="line">    public class SimpleModel</span><br><span class="line">    &#123;</span><br><span class="line">        public string Controller &#123; get; set; &#125;</span><br><span class="line">        public string Action &#123; get; set; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="请求Controller"><a href="#请求Controller" class="headerlink" title="请求Controller"></a>请求Controller</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">namespace CHCMVC.Controller</span><br><span class="line">&#123;</span><br><span class="line">    public class HomeController : ControllerBase</span><br><span class="line">    &#123;</span><br><span class="line">        public ActionResult Index(SimpleModel model)</span><br><span class="line">        &#123;</span><br><span class="line">            string content = string.Format(&quot;Controller: &#123;0&#125;&lt;br/&gt;Action:&#123;1&#125;&quot;, model.Controller, model.Action);</span><br><span class="line">            return new RawContentResult(content);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="请求地址"><a href="#请求地址" class="headerlink" title="请求地址"></a>请求地址</h2><p><a href="http://localhost:9077/Home/Index" target="_blank" rel="noopener">http://localhost:9077/Home/Index</a></p>
+<h2 id="请求结果"><a href="#请求结果" class="headerlink" title="请求结果"></a>请求结果</h2><p><code>Controller: Home</code><br><code>Action:Index</code></p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2018年09月08日 17:22</p>
+        <p>原始链接： <a class="post-url" href="/2018/09/07/ASP.NET MVC运行原理简析/" title="ASP.NET MVC 原理简析">https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/07/ASP.NET MVC运行原理简析/</a></p>
+        <footer>
+            <a href="https://www.github.com/ChangHub/BlogImages/raw/master">
+                <img src="/images/logo.png" alt="HongChangCui">
+                HongChangCui
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/07/ASP.NET MVC运行原理简析/&title=《ASP.NET MVC 原理简析》 — ChangKe&pic=AspnetMvc.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/07/ASP.NET MVC运行原理简析/&title=《ASP.NET MVC 原理简析》 — ChangKe&source=ASP.NET MVC应用框架是通过扩展ASP.NET实现的。ASP.NET的扩展点体现在HttpModule和HttpHandler两个核心组件上，AS..." data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/07/ASP.NET MVC运行原理简析/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ASP.NET MVC 原理简析》 — ChangKe&url=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/07/ASP.NET MVC运行原理简析/&via=https://www.github.com/ChangHub/BlogImages/raw/master" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/07/ASP.NET MVC运行原理简析/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/07/ASP.NET MVC运行原理简析/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/ASP.NETMVC/" class="color2">ASP.NET MVC</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#自定义HttpModule"><span class="post-toc-text">自定义HttpModule</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#注册自定义Module"><span class="post-toc-text">注册自定义Module</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#注册Route对象"><span class="post-toc-text">注册Route对象</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#路由表RouteTable"><span class="post-toc-text">路由表RouteTable</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#路由对象Route"><span class="post-toc-text">路由对象Route</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#路由数据RouteData"><span class="post-toc-text">路由数据RouteData</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#UrlRouteModule实现"><span class="post-toc-text">UrlRouteModule实现</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#自定义HttpHandler"><span class="post-toc-text">自定义HttpHandler</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#注册Controller默认工厂"><span class="post-toc-text">注册Controller默认工厂</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Controller工厂实现"><span class="post-toc-text">Controller工厂实现</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#MvcRouteHandler激活Controller"><span class="post-toc-text">MvcRouteHandler激活Controller</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Action执行"><span class="post-toc-text">Action执行</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Model绑定"><span class="post-toc-text">Model绑定</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#View呈现"><span class="post-toc-text">View呈现</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#发起请求"><span class="post-toc-text">发起请求</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#请求Model"><span class="post-toc-text">请求Model</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#请求Controller"><span class="post-toc-text">请求Controller</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#请求地址"><span class="post-toc-text">请求地址</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#请求结果"><span class="post-toc-text">请求结果</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+  
+    <a href="/2018/09/04/NET知识点：Global.asax/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">.NET知识点：Global.asax</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+		<section id="comments" class="comments">
+			<style>
+			  .comments{margin:30px;padding:10px;background:#fff}
+			  @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+			</style>
+			<div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage@latest/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js'></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "hrqbaUF8km11bv4h31Rhiyco-gzGzoHsz",
+            app_key: "nm5to078TvS7MzkXnO78DHpI",
+            placeholder: "~(≧▽≦)/~来呀！快活呀！",
+            avatar: "mm",
+            pageSize: 10
+    });
+	
+	$('#comments .info').css({"display":"none"});
+	
+</script>
+		</section>
+	
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2018 HongChangCui<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://www.github.com/ChangHub/BlogImages/raw/master",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/JavaScript/">JavaScript</a><a class="category-link" href="/categories/MySQL/">MySQL</a><a class="category-link" href="/categories/便捷工具/">便捷工具</a><a class="category-link" href="/categories/原理/">原理</a><a class="category-link" href="/categories/基础知识/">基础知识</a><a class="category-link" href="/categories/年会/">年会</a><a class="category-link" href="/categories/年度总结/">年度总结</a><a class="category-link" href="/categories/开源项目/">开源项目</a><a class="category-link" href="/categories/插件/">插件</a><a class="category-link" href="/categories/软件使用/">软件使用</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/NET/" style="font-size: 10px;">.NET</a> <a href="/tags/ASP-NET-MVC/" style="font-size: 10px;">ASP.NET MVC</a> <a href="/tags/CEF/" style="font-size: 10px;">CEF</a> <a href="/tags/CefSharp/" style="font-size: 10px;">CefSharp</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Jquery/" style="font-size: 10px;">Jquery</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/年会/" style="font-size: 10px;">年会</a> <a href="/tags/总结/" style="font-size: 20px;">总结</a> <a href="/tags/文件夹/" style="font-size: 10px;">文件夹</a> <a href="/tags/软件使用/" style="font-size: 10px;">软件使用</a> <a href="/tags/软件安装/" style="font-size: 10px;">软件安装</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/NET/" style="font-size: 10px;">.NET</a> <a href="/tags/ASP-NET-MVC/" style="font-size: 10px;">ASP.NET MVC</a> <a href="/tags/CEF/" style="font-size: 10px;">CEF</a> <a href="/tags/CefSharp/" style="font-size: 10px;">CefSharp</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Jquery/" style="font-size: 10px;">Jquery</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/年会/" style="font-size: 10px;">年会</a> <a href="/tags/总结/" style="font-size: 20px;">总结</a> <a href="/tags/文件夹/" style="font-size: 10px;">文件夹</a> <a href="/tags/软件使用/" style="font-size: 10px;">软件使用</a> <a href="/tags/软件安装/" style="font-size: 10px;">软件安装</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>
