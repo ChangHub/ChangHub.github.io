@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>ASP.NET WebAPI | ChangKe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="ChangKe,ChangKe's Blog" />
+  
+  <meta name="description" content="ASP.NET WebAPI适用于构建HTTP服务的框架，可以从任何客户端（包括浏览器和移动设备）访问它。 它是在.NET Framework上构建RESTful应用程序的理想平台。">
+<meta name="keywords" content="ASP.NET,WebAPI">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ASP.NET WebAPI">
+<meta property="og:url" content="https://www.github.com/ChangHub/BlogImages/raw/master/2017/09/08/ASP.NET MVC WebAPI/index.html">
+<meta property="og:site_name" content="ChangKe">
+<meta property="og:description" content="ASP.NET WebAPI适用于构建HTTP服务的框架，可以从任何客户端（包括浏览器和移动设备）访问它。 它是在.NET Framework上构建RESTful应用程序的理想平台。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/CreateWebAPIWithMVC.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/CreateWepAPI.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/WebAPIWithMVC配置.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/CreateWebAPIWithEmpty.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/WebAPI依赖包安装.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/WepAPI手动配置.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/WepAPI手动启动配置.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/手动创建WebAPI类.jpg">
+<meta property="og:updated_time" content="2018-09-10T15:29:41.268Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ASP.NET WebAPI">
+<meta name="twitter:description" content="ASP.NET WebAPI适用于构建HTTP服务的框架，可以从任何客户端（包括浏览器和移动设备）访问它。 它是在.NET Framework上构建RESTful应用程序的理想平台。">
+<meta name="twitter:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/CreateWebAPIWithMVC.jpg">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">ChangKe&#39;s Blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        ChangKe&#39;s Blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        一个专注 WEB 开发的技术博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="ChangKe" target="_blank" href="//changkehome.top">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/ChangHub">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" ">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" ">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-ASP.NET MVC WebAPI" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      ASP.NET WebAPI
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/ASP.NET/">ASP.NET</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2017-09-08
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p>ASP.NET WebAPI适用于构建HTTP服务的框架，可以从任何客户端（包括浏览器和移动设备）访问它。</p>
+<p>它是在.NET Framework上构建RESTful应用程序的理想平台。</p>
+<a id="more"></a>
+<h1 id="ASP-NET-Web-API初识"><a href="#ASP-NET-Web-API初识" class="headerlink" title="ASP.NET Web API初识"></a>ASP.NET Web API初识</h1><ul>
+<li>Web API：是一种使用HTTP协议访问的Web上的API（Application programing Interface），可以使用不同的技术（如Java、.NET等）构建Web API。</li>
+</ul>
+<ul>
+<li>ASP.NET Web API是一个可扩展的框架，用于构建基于HTTP的服务，可以在不同平台上访问，如Web、Window。</li>
+</ul>
+<ul>
+<li>工作方法与ASP.NET MVC Web Application类似，只不过它返回的是数据，而不是视图。</li>
+</ul>
+<ul>
+<li>它与Web Service和WCF类型，只不过它只能使用HTTP协议。</li>
+</ul>
+<h1 id="ASP-NET-Web-API特性"><a href="#ASP-NET-Web-API特性" class="headerlink" title="ASP.NET Web API特性"></a>ASP.NET Web API特性</h1><ol>
+<li>ASP.NET Web API构造在ASP.NET之上，支持ASP.NET请求/响应通道</li>
+<li>ASP.NET Web API将HTTP谓词映射到方法名称</li>
+<li>ASP.NET Web API支持不同格式的响应数据，内置支持JSON、XML、BSON格式</li>
+<li>ASP.NET Web API可以托管在IIS、自托管或支持.NET 4.0+的其他Web服务器</li>
+<li>ASP.NET Web API使用最新的HttpClient与Web API Server通信</li>
+</ol>
+<h1 id="ASP-NET-Web-API版本"><a href="#ASP-NET-Web-API版本" class="headerlink" title="ASP.NET Web API版本"></a>ASP.NET Web API版本</h1><table>
+<thead>
+<tr>
+<th>Web API Version</th>
+<th>Supported .NET Framewok</th>
+<th>Coincides with</th>
+<th>Supported in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Web API 1.0</td>
+<td>.NET Framework 4.0</td>
+<td>ASP.NET MVC 4</td>
+<td>VS2010</td>
+</tr>
+<tr>
+<td>Web API 2</td>
+<td>.NET Framework 4.5</td>
+<td>ASP.NET MVC 5</td>
+<td>VS2012 、VS2013</td>
+</tr>
+</tbody>
+</table>
+<h1 id="ASP-NET-Web-API与WCF"><a href="#ASP-NET-Web-API与WCF" class="headerlink" title="ASP.NET Web API与WCF"></a>ASP.NET Web API与WCF</h1><table>
+<thead>
+<tr>
+<th style="text-align:left">Web API</th>
+<th style="text-align:left">WCF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">开源并运行.NET框架</td>
+<td style="text-align:left">运行.NET框架</td>
+</tr>
+<tr>
+<td style="text-align:left">仅支持HTTP协议</td>
+<td style="text-align:left">支持HTTP、TCP、UDP和自定义协议</td>
+</tr>
+<tr>
+<td style="text-align:left">将HTTP谓词映射到方法</td>
+<td style="text-align:left">使用基于属性的编程模型</td>
+</tr>
+<tr>
+<td style="text-align:left">使用类似ASP.NET MVC路由和控制器概念</td>
+<td style="text-align:left">使用服务、操作、数据契约</td>
+</tr>
+<tr>
+<td style="text-align:left">不支持可靠的消息传递和事务</td>
+<td style="text-align:left">支持可靠的消息传递和事务</td>
+</tr>
+<tr>
+<td style="text-align:left">使用HttpConfiguration类配置Web API，不能在Web.config中配置</td>
+<td style="text-align:left">使用Web.config和属性配置服务</td>
+</tr>
+<tr>
+<td style="text-align:left">非常适合构建RestFul服务</td>
+<td style="text-align:left">支持构建RestFul服务，但有限制</td>
+</tr>
+</tbody>
+</table>
+<h2 id="选择Web-API"><a href="#选择Web-API" class="headerlink" title="选择Web API"></a>选择Web API</h2><blockquote>
+<ul>
+<li>使用.NET Framework 4.0或者更高版本</li>
+<li>构建仅支持HTTP协议的服务</li>
+<li>构建基于RestFul HTTP服务</li>
+<li>熟悉ASP.NET MVC</li>
+</ul>
+</blockquote>
+<h2 id="选择WCF"><a href="#选择WCF" class="headerlink" title="选择WCF"></a>选择WCF</h2><blockquote>
+<ul>
+<li>使用.NET Framework 3.5</li>
+<li>服务需要支持多种协议</li>
+<li>使用WS-*标准构建服务</li>
+<li>使用Request-Reply、One Way和Duplex message exchange</li>
+</ul>
+</blockquote>
+<h1 id="ASP-NET-Web-API创建"><a href="#ASP-NET-Web-API创建" class="headerlink" title="ASP.NET Web API创建"></a>ASP.NET Web API创建</h1><h2 id="Web-API-With-MVC-Project"><a href="#Web-API-With-MVC-Project" class="headerlink" title="Web API With MVC Project"></a>Web API With MVC Project</h2><p><strong>ASP.NET Web Application==&gt;Web API</strong></p>
+<ol>
+<li>New Project–&gt;ASP.NET Web Application–&gt;Web API</li>
+</ol>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/CreateWebAPIWithMVC.jpg" alt="CreateWebAPIWithMVC.jpg"></p>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/CreateWepAPI.jpg" alt="CreateWepAPI.jpg"></p>
+<ol start="2">
+<li><p>自动生成配置App_Start：WebApiConfig.cs </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">//配置访问路由</span><br><span class="line">namespace MyWepAPIWithMVC</span><br><span class="line">&#123;</span><br><span class="line">    public static class WebApiConfig</span><br><span class="line">    &#123;</span><br><span class="line">        public static void Register(HttpConfiguration config)</span><br><span class="line">        &#123;</span><br><span class="line">            // Web API configuration and services</span><br><span class="line"></span><br><span class="line">            // Web API routes</span><br><span class="line">            config.MapHttpAttributeRoutes();</span><br><span class="line"></span><br><span class="line">            config.Routes.MapHttpRoute(</span><br><span class="line">                name: &quot;DefaultApi&quot;,</span><br><span class="line">                routeTemplate: &quot;api/&#123;controller&#125;/&#123;id&#125;&quot;,</span><br><span class="line">                defaults: new &#123; id = RouteParameter.Optional &#125;</span><br><span class="line">            );</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>自动生成WebApi类：ValuesController.cs</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">//继承ApiController抽象类</span><br><span class="line">//默认方法映射Http谓词，如Get,Post,Put,Delete等</span><br><span class="line">namespace MyWepAPIWithMVC.Controllers</span><br><span class="line">&#123;</span><br><span class="line">    public class ValuesController : ApiController</span><br><span class="line">    &#123;</span><br><span class="line">        // GET api/values</span><br><span class="line">        public IEnumerable&lt;string&gt; Get()</span><br><span class="line">        &#123;</span><br><span class="line">            return new string[] &#123; &quot;value1&quot;, &quot;value2&quot; &#125;;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // GET api/values/5</span><br><span class="line">        public string Get(int id)</span><br><span class="line">        &#123;</span><br><span class="line">            return &quot;value&quot;;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // POST api/values</span><br><span class="line">        public void Post([FromBody]string value)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // PUT api/values/5</span><br><span class="line">        public void Put(int id, [FromBody]string value)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // DELETE api/values/5</span><br><span class="line">        public void Delete(int id)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/WebAPIWithMVC配置.jpg" alt="WebAPIWithMVC配置.jpg"></p>
+</li>
+<li><p>自动注册：Global.asax</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">namespace MyWepAPIWithMVC</span><br><span class="line">&#123;</span><br><span class="line">    public class WebApiApplication : System.Web.HttpApplication</span><br><span class="line">    &#123;</span><br><span class="line">        protected void Application_Start()</span><br><span class="line">        &#123;</span><br><span class="line">            AreaRegistration.RegisterAllAreas();</span><br><span class="line">            //启动配置WepAPI</span><br><span class="line">            GlobalConfiguration.Configure(WebApiConfig.Register);</span><br><span class="line">            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);</span><br><span class="line">            RouteConfig.RegisterRoutes(RouteTable.Routes);</span><br><span class="line">            BundleConfig.RegisterBundles(BundleTable.Bundles);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Stand-alone-Web-API-Projcet"><a href="#Stand-alone-Web-API-Projcet" class="headerlink" title="Stand-alone Web API Projcet"></a>Stand-alone Web API Projcet</h2><p><strong>ASP.NET Web Application==&gt;Empty</strong></p>
+<ol>
+<li><p>New Project–&gt;ASP.NET Web Application–&gt;Empty</p>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/CreateWebAPIWithEmpty.jpg" alt="CreateWebAPIWithEmpty.jpg"></p>
+</li>
+<li><p>手动配置</p>
+<ul>
+<li><p>安装WebAPI类库：<code>Micresoft ASP.NET Web API 2.2</code></p>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/WebAPI依赖包安装.jpg" alt="WebAPI依赖包安装.jpg"></p>
+</li>
+<li><p>添加Configuration文件夹，创建配置类</p>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/WepAPI手动配置.jpg" alt="WepAPI手动配置.jpg"></p>
+</li>
+<li><p>添加应用程序类Global.asax，启动配置</p>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/WepAPI手动启动配置.jpg" alt="WepAPI手动启动配置.jpg"></p>
+</li>
+</ul>
+</li>
+<li><p>手动创建WebAPI类</p>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/手动创建WebAPI类.jpg" alt="手动创建WebAPI类.jpg"></p>
+</li>
+</ol>
+<h1 id="ASP-NET-Web-API测试"><a href="#ASP-NET-Web-API测试" class="headerlink" title="ASP.NET Web API测试"></a>ASP.NET Web API测试</h1><h2 id="Fiddler"><a href="#Fiddler" class="headerlink" title="Fiddler"></a>Fiddler</h2><h2 id="Postman"><a href="#Postman" class="headerlink" title="Postman"></a>Postman</h2><h1 id="ASP-NET-Web-API配置"><a href="#ASP-NET-Web-API配置" class="headerlink" title="ASP.NET Web API配置"></a>ASP.NET Web API配置</h1><p>Web API支持基于代码的配置，无法在配置文件如，Web.config中配置。</p>
+<h2 id="启动配置"><a href="#启动配置" class="headerlink" title="启动配置"></a>启动配置</h2><p>​    <code>GlobalConfiguration.Configure(WebApiConfig.Register);</code></p>
+<h2 id="路由配置"><a href="#路由配置" class="headerlink" title="路由配置"></a>路由配置</h2><p>​    <code>WebApiConfigure.Register(config)-&gt;config.Routes</code></p>
+<h1 id="ASP-NET-Web-API路由"><a href="#ASP-NET-Web-API路由" class="headerlink" title="ASP.NET Web API路由"></a>ASP.NET Web API路由</h1><h2 id="Convention-based-Routing（基于约定）"><a href="#Convention-based-Routing（基于约定）" class="headerlink" title="Convention-based Routing（基于约定）"></a>Convention-based Routing（基于约定）</h2><ul>
+<li>使用路由模板决定执行哪个Controller和Action。</li>
+<li>路由表里面至少添加一个路由模板</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">//多种路由，会按照先后顺序匹配</span><br><span class="line">//一般将默认路由，放在最下面</span><br><span class="line">namespace MyWepAPIWithMVC</span><br><span class="line">&#123;</span><br><span class="line">    public static class WebApiConfig</span><br><span class="line">    &#123;</span><br><span class="line">        public static void Register(HttpConfiguration config)</span><br><span class="line">        &#123;</span><br><span class="line">           //1.使用路由模板通过MapHttpRoute方法创建一个新的路由对象，添加到路由表中</span><br><span class="line">            config.Routes.MapHttpRoute(</span><br><span class="line">                name: &quot;DefaultApi&quot;,</span><br><span class="line">                routeTemplate: &quot;api/&#123;controller&#125;/&#123;id&#125;&quot;,</span><br><span class="line">                defaults: new &#123; id = RouteParameter.Optional &#125;</span><br><span class="line">            );</span><br><span class="line">          //2.自定义路由对象，添加到路由表中</span><br><span class="line">             IHttpRoute defaultRoute = config.Routes.CreateRoute(&quot;api/&#123;controller&#125;/&#123;id&#125;&quot;, new &#123; id = RouteParameter.Optional &#125;, null);</span><br><span class="line">            config.Routes.Add(&quot;DefultApi&quot;, defaultRoute);</span><br><span class="line">        &#125;</span><br><span class="line">          //3.配置多种路由，添加到路由表中</span><br><span class="line">       		//School Route</span><br><span class="line">             config.Routes.MapHttpRoute(</span><br><span class="line">                name: &quot;School&quot;,</span><br><span class="line">                routeTemplate: &quot;api/myschoole/&#123;id&#125;&quot;,</span><br><span class="line">                defaults: new &#123; controller = &quot;school&quot;, id = RouteParameter.Optional &#125;,</span><br><span class="line">                constraints: new &#123; id = &quot;/d+&quot; &#125;</span><br><span class="line">                );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Attribute-Routing（基于属性）"><a href="#Attribute-Routing（基于属性）" class="headerlink" title="Attribute Routing（基于属性）"></a>Attribute Routing（基于属性）</h2><ul>
+<li>使用路由属性[Route(“xxx”)]定义路由，可以配置Controller或Action上</li>
+<li>使用路由属性必须启用：config.MapHttpAttributeRoutes();</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[Route(&quot;api/MyWebAPI/MyGet&quot;)]</span><br><span class="line">public string GetMy()</span><br><span class="line">&#123;</span><br><span class="line">    return &quot;It&apos;s My Get By Route Attribute&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="ASP-NET-Web-API参数"><a href="#ASP-NET-Web-API参数" class="headerlink" title="ASP.NET Web API参数"></a>ASP.NET Web API参数</h1><h2 id="primitive-type（原始类型）"><a href="#primitive-type（原始类型）" class="headerlink" title="primitive type（原始类型）"></a>primitive type（原始类型）</h2><p>参数值来源于：query string</p>
+<h2 id="complex-type（复杂类型）"><a href="#complex-type（复杂类型）" class="headerlink" title="complex type（复杂类型）"></a>complex type（复杂类型）</h2><p>参数值来源于：request body</p>
+<h2 id="参数默认绑定规则"><a href="#参数默认绑定规则" class="headerlink" title="参数默认绑定规则"></a>参数默认绑定规则</h2><table>
+<thead>
+<tr>
+<th>HTTP Method</th>
+<th>Query String</th>
+<th>Request Body</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>Primitive Type,Complex Type</td>
+<td>NA</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>Primitive Type</td>
+<td>Complex Type</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td>Primitive Type</td>
+<td>Complex Type</td>
+</tr>
+<tr>
+<td>PATCH</td>
+<td>Primitive Type</td>
+<td>Complext Type</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>Primitive Type,Complex Type</td>
+<td>NA</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>GET请求</strong></li>
+</ul>
+<p>参数顺序和大小写无关，名称要相同</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">//WebAPI</span><br><span class="line">public class StudentController : ApiController</span><br><span class="line">&#123;</span><br><span class="line">    //1.GET请求</span><br><span class="line">    public Student Get(int id) </span><br><span class="line">    &#123;</span><br><span class="line">              </span><br><span class="line">    &#125;</span><br><span class="line">    //2.GET请求</span><br><span class="line">    public Student Get(int id,string anme) </span><br><span class="line">    &#123;</span><br><span class="line">              </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//1.GET请求：</span><br><span class="line">//http://localhost/api/student?id=1</span><br><span class="line">//http://localhost/api/student?ID=1</span><br><span class="line"></span><br><span class="line">//2.GET请求：</span><br><span class="line">//http://localhost/api/student?id=1&amp;name=steve</span><br><span class="line">//http://localhost/api/student?ID=1&amp;NAME=steve</span><br><span class="line">//http://localhost/api/student?name=steve&amp;id=1</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>POST请求</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">public class StudentController : ApiController</span><br><span class="line">&#123;</span><br><span class="line">	//1.POST请求：原始类型</span><br><span class="line">    public Student Post(id id, string name)</span><br><span class="line">    &#123;</span><br><span class="line">           </span><br><span class="line">    &#125;</span><br><span class="line">    //2.POST请求：复杂类型</span><br><span class="line">    public class StudentController : ApiController</span><br><span class="line">    &#123;</span><br><span class="line">        public Student Post(Student stud)</span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Student</span><br><span class="line">&#123;</span><br><span class="line">    public int Id &#123; get; set; &#125;</span><br><span class="line">    public string Name &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//1.POST请求：从Query String获取参数值</span><br><span class="line">//http://localhost/api/student?id=1&amp;name=steve</span><br><span class="line">//2.POST请求：从Request Body获取参数值</span><br><span class="line">//http://localhost/api/student</span><br></pre></td></tr></table></figure>
+<h2 id="参数默认规则修改"><a href="#参数默认规则修改" class="headerlink" title="参数默认规则修改"></a>参数默认规则修改</h2><ul>
+<li><p><strong>[FormUri]</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class StudentController : ApiController</span><br><span class="line">&#123;</span><br><span class="line">    public Student Post([FromUri]Student stud)</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//Web API从请求字符串(Query String)中解析参数，而不是请求体（Request Body）</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>[FormBody]</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class StudentController : ApiController</span><br><span class="line">&#123;</span><br><span class="line">    public Student Post([FromBody]string name)</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//Web API从请求体（Request Body）中解析参数，而不是请求字符串（Query String）</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="ASP-NET-Web-API返回类型"><a href="#ASP-NET-Web-API返回类型" class="headerlink" title="ASP.NET Web API返回类型"></a>ASP.NET Web API返回类型</h1><ul>
+<li><strong>Void</strong></li>
+<li><strong>Primitive type or Complex type</strong></li>
+<li><strong>HttpResponseMessage</strong></li>
+<li><strong>IHttpActionResult</strong></li>
+</ul>
+<h1 id="Web-API-Controller"><a href="#Web-API-Controller" class="headerlink" title="Web API Controller"></a>Web API Controller</h1><p>Web API 控制器是一个类，名称必须以Controller结尾，且从System.Web.Http.ApiController派生。所有公共方法都称为操作方法。</p>
+<ul>
+<li><p>默认操作方法，与HTTP谓词匹配</p>
+<ul>
+<li>GET / POST / PUT / PATCH / DELETE</li>
+<li>方法名与HTTP谓词相同，或者以谓词开头</li>
+</ul>
+<p>| HTTP Method | Possible Action Name                   | Usage                    |<br>| ———– | ————————————– | ———————— |<br>| GET         | Get()、get()、GET()、GetXXX()             | Retrieves data           |<br>| POST        | Post()、post()、POST()、PostXXX()         | Insert new record        |<br>| PUT         | Put()、put()、PUT()、PutXXX()             | udpates existing record  |<br>| PATCH       | Patch()、patch()、PATCH()、PatchXXX()     | updates record partially |<br>| DELETE      | Delete()、delete()、DELETE()、DeleteXXX() | delete record            |</p>
+</li>
+<li><p>自定义方法名，使用HTTP谓词属性</p>
+<ul>
+<li><p>HttpGet，HttpPost，HttpPut，HttpDelete等</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[HttpGet]</span><br><span class="line">public string Value(int id)</span><br><span class="line">&#123;</span><br><span class="line">    return &quot;value&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="ASP-NET-Web-API-过滤器"><a href="#ASP-NET-Web-API-过滤器" class="headerlink" title="ASP.NET Web API 过滤器"></a>ASP.NET Web API 过滤器</h1><p>Web API 过滤器用于在执行操作方法之前或者之后添加额外逻辑。如日志记录、异常处理、性能测量、身份验证和授权。</p>
+<p>过滤器实际上是应用在Web API Controller或者action上的属性。每一个Filter必须实现System.Web.Http.Filters.IFilter接口。</p>
+<p>重要的Filter接口：</p>
+<table>
+<thead>
+<tr>
+<th>Filter Type</th>
+<th>Interfacce</th>
+<th>Class</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Simple Filter</td>
+<td>IFilter</td>
+<td>-</td>
+<td>Defines the methods that are used in a filter</td>
+</tr>
+<tr>
+<td>Action Filter</td>
+<td>IActionFilter</td>
+<td>ActionFilterAttribute</td>
+<td>Used to add extra logic before or after action methods execute</td>
+</tr>
+<tr>
+<td>Authentication Filter</td>
+<td>IAuthenticationFilter</td>
+<td>-</td>
+<td>Used to force users or clients to be authenticated before action methods execute</td>
+</tr>
+<tr>
+<td>Authorization Filter</td>
+<td>IAuthorizationFilter</td>
+<td>AuthorizationFilterAttribute</td>
+<td>Used to restrict access to action methods to specific users or groups</td>
+</tr>
+<tr>
+<td>Exception Filter</td>
+<td>IExceptionFilter</td>
+<td>ExceptionFilterAttribute</td>
+<td>Used to handle all unhandled exception in Web API</td>
+</tr>
+<tr>
+<td>Override Filter</td>
+<td>IOverrideFilter</td>
+<td>-</td>
+<td>Used to customize the behavior of othe filter for individual action method</td>
+</tr>
+</tbody>
+</table>
+<p>接口：需要自己实现，抽象类：需要自己重写。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">//LogAttribute继承抽象类ActionFilterAttribute</span><br><span class="line">//重写OnActionExecuting方法和OnActionExecuted方法</span><br><span class="line">namespace MyWebAPIWithNone.Filter</span><br><span class="line">&#123;</span><br><span class="line">    public class LogAttirbute : ActionFilterAttribute</span><br><span class="line">    &#123;</span><br><span class="line">        public LogAttirbute()</span><br><span class="line">        &#123; &#125;</span><br><span class="line"></span><br><span class="line">        public override void OnActionExecuting(HttpActionContext actionContext)</span><br><span class="line">        &#123;</span><br><span class="line">            Trace.WriteLine(string.Format(&quot;Action Method &#123;0&#125; executing at&#123;1&#125;&quot;, actionContext.ActionDescriptor.ActionName, DateTime.Now.ToShortDateString()), &quot;Web API Logs&quot;);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)</span><br><span class="line">        &#123;</span><br><span class="line">            Trace.WriteLine(string.Format(&quot;Action Method &#123;0&#125; executed at&#123;1&#125;&quot;, actionExecutedContext.ActionContext.ActionDescriptor.ActionName, DateTime.Now.ToShortDateString()), &quot;Web API Logs&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">//Log2Attribute继承Attribute抽象类，并实现IActionFilter接口</span><br><span class="line">namespace MyWebAPIWithNone.Filter</span><br><span class="line">&#123;</span><br><span class="line">    public class Log2Attribute : Attribute, IActionFilter</span><br><span class="line">    &#123;</span><br><span class="line">        public Log2Attribute()</span><br><span class="line">        &#123; &#125;</span><br><span class="line">        public Task&lt;HttpResponseMessage&gt; ExecuteActionFilterAsync(HttpActionContext actionContext, CancellationToken cancellationToken, Func&lt;Task&lt;HttpResponseMessage&gt;&gt; continuation)</span><br><span class="line">        &#123;</span><br><span class="line">            Trace.WriteLine(string.Format(&quot;Action Method &#123;0&#125; executing at&#123;1&#125;&quot;, actionContext.ActionDescriptor.ActionName, DateTime.Now.ToShortDateString()), &quot;Web API Logs&quot;);</span><br><span class="line"></span><br><span class="line">            var result = continuation();</span><br><span class="line"></span><br><span class="line">            result.Wait();</span><br><span class="line"></span><br><span class="line">            Trace.WriteLine(string.Format(&quot;Action Method &#123;0&#125; executed at&#123;1&#125;&quot;, actionContext.ActionDescriptor.ActionName, DateTime.Now.ToShortDateString()), &quot;Web API Logs&quot;);</span><br><span class="line"></span><br><span class="line">            return result;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public bool AllowMultiple</span><br><span class="line">        &#123;</span><br><span class="line">            get &#123; return true; &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">namespace MyWebAPIWithNone.Controller</span><br><span class="line">&#123;</span><br><span class="line">    public class MyWebAPIController : ApiController</span><br><span class="line">    &#123;</span><br><span class="line">        [Log]</span><br><span class="line">        public string Get()</span><br><span class="line">        &#123;</span><br><span class="line">            return &quot;It&apos;s My Web API&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">        [Log2]</span><br><span class="line">        [Route(&quot;api/MyWebAPI/MyGet&quot;)]</span><br><span class="line">        public string GetMy()</span><br><span class="line">        &#123;</span><br><span class="line">            return &quot;It&apos;s My Get By Route Attribute&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//执行输出：</span><br><span class="line">//Web API Logs: Action Method Get executing at2018/9/10</span><br><span class="line">//Web API Logs: Action Method Get executed at2018/9/10</span><br><span class="line">//Web API Logs: Action Method GetMy executing at2018/9/10</span><br><span class="line">//Web API Logs: Action Method GetMy executed at2018/9/10</span><br></pre></td></tr></table></figure>
+<h1 id="ASP-NET-Web-API-通信"><a href="#ASP-NET-Web-API-通信" class="headerlink" title="ASP.NET Web API 通信"></a>ASP.NET Web API 通信</h1><h2 id="WebClient"><a href="#WebClient" class="headerlink" title="WebClient"></a>WebClient</h2><p>​    .NET 2.0 使用WebClient与Web Server通信</p>
+<h2 id="HttpClient"><a href="#HttpClient" class="headerlink" title="HttpClient"></a>HttpClient</h2><p>​    .NET 4.5 使用HttpClient与Web Server通信</p>
+<h2 id="HttpClient方法"><a href="#HttpClient方法" class="headerlink" title="HttpClient方法"></a>HttpClient方法</h2><p>详见：<a href="https://msdn.microsoft.com/en-us/library/system.net.http.httpclient(v=vs.118" target="_blank" rel="noopener">HttpClient</a>.aspx)</p>
+<table>
+<thead>
+<tr>
+<th>Method Name</th>
+<th>Descirption</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GetAsync</td>
+<td>Sends a GET request to the specified Uri as an asynchronous operation</td>
+</tr>
+<tr>
+<td>GetByteArrayAsync</td>
+<td>Sends a GET request to the specified Uri and returns the response body as a byte array in an asynchronous operation</td>
+</tr>
+<tr>
+<td>GetStreamAsync</td>
+<td>Sends a GET request to the specified Uri and returns the response body as a stream in an asynchronous operation</td>
+</tr>
+<tr>
+<td>GetStringAsync</td>
+<td>Sends a GET request to the specified Uri and returns the response body as a string in an asynchronous operation</td>
+</tr>
+<tr>
+<td>PostAsync</td>
+<td>Sends a POST request to the specified Uri as an asynchronous operation</td>
+</tr>
+<tr>
+<td>PostAsJsonAsync</td>
+<td>Sends a POST request as an asynchronous operation to the specified Uri with given value serialized as JSON</td>
+</tr>
+<tr>
+<td>PostAsXmlAsync</td>
+<td>Sends a POST request as an asynchronous operation to the specified Uri with given value serialized as XML</td>
+</tr>
+<tr>
+<td>PutAsync</td>
+<td>Sends a PUT request to the specified Uri as an asynchronous operation</td>
+</tr>
+<tr>
+<td>PutAsJsonAsync</td>
+<td>Sends a PUT request as an asynchronous operation to the specified Uri with the given value serialized as JSON</td>
+</tr>
+<tr>
+<td>PutAsXmlAsync</td>
+<td>Sends a PUT request as an asynchronous operation to the specified Uri with the given value serialized as XML</td>
+</tr>
+<tr>
+<td>DeletelAsync</td>
+<td>Sends a DELETE request to the specified Uri as an asynchronous operation</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">//例如获取学生信息</span><br><span class="line">using(var client = new HttpClient())</span><br><span class="line">&#123;</span><br><span class="line">  client.BaseAddress = new Uri(&quot;http://localhost/api&quot;);</span><br><span class="line">  </span><br><span class="line">  var responseTask = client.GetAsync(&quot;student&quot;);</span><br><span class="line">  responseTask.Wait();</span><br><span class="line">  </span><br><span class="line">  var result = responseTask.Result;</span><br><span class="line">  if(result.IsSuccessStatusCode)</span><br><span class="line">  &#123;</span><br><span class="line">    var readTask = result.Content.ReadAsync&lt;Student&gt;();</span><br><span class="line">    readTask.Wait();</span><br><span class="line">    </span><br><span class="line">    var student = readTask.Result;</span><br><span class="line">    </span><br><span class="line">    ......</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="ASP-NET-Web-API-Hosting"><a href="#ASP-NET-Web-API-Hosting" class="headerlink" title="ASP.NET Web API Hosting"></a>ASP.NET Web API Hosting</h1><h2 id="IIS-Hosting"><a href="#IIS-Hosting" class="headerlink" title="IIS Hosting"></a>IIS Hosting</h2><h2 id="Self-Hosting"><a href="#Self-Hosting" class="headerlink" title="Self Hosting"></a>Self Hosting</h2>
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2018年09月10日 23:29</p>
+        <p>原始链接： <a class="post-url" href="/2017/09/08/ASP.NET MVC WebAPI/" title="ASP.NET WebAPI">https://www.github.com/ChangHub/BlogImages/raw/master/2017/09/08/ASP.NET MVC WebAPI/</a></p>
+        <footer>
+            <a href="https://www.github.com/ChangHub/BlogImages/raw/master">
+                <img src="/images/logo.png" alt="HongChangCui">
+                HongChangCui
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.github.com/ChangHub/BlogImages/raw/master/2017/09/08/ASP.NET MVC WebAPI/&title=《ASP.NET WebAPI》 — ChangKe&pic=AspnetWebAPI.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.github.com/ChangHub/BlogImages/raw/master/2017/09/08/ASP.NET MVC WebAPI/&title=《ASP.NET WebAPI》 — ChangKe&source=ASP.NET WebAPI适用于构建HTTP服务的框架，可以从任何客户端（包括浏览器和移动设备）访问它。
+它是在.NET Framework上构建RES..." data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.github.com/ChangHub/BlogImages/raw/master/2017/09/08/ASP.NET MVC WebAPI/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ASP.NET WebAPI》 — ChangKe&url=https://www.github.com/ChangHub/BlogImages/raw/master/2017/09/08/ASP.NET MVC WebAPI/&via=https://www.github.com/ChangHub/BlogImages/raw/master" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.github.com/ChangHub/BlogImages/raw/master/2017/09/08/ASP.NET MVC WebAPI/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.github.com/ChangHub/BlogImages/raw/master/2017/09/08/ASP.NET MVC WebAPI/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/ASP.NET/" class="color3">ASP.NET</a>
+      
+    <a href="/tags/WebAPI/" class="color2">WebAPI</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#ASP-NET-Web-API初识"><span class="post-toc-text">ASP.NET Web API初识</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#ASP-NET-Web-API特性"><span class="post-toc-text">ASP.NET Web API特性</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#ASP-NET-Web-API版本"><span class="post-toc-text">ASP.NET Web API版本</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#ASP-NET-Web-API与WCF"><span class="post-toc-text">ASP.NET Web API与WCF</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#选择Web-API"><span class="post-toc-text">选择Web API</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#选择WCF"><span class="post-toc-text">选择WCF</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#ASP-NET-Web-API创建"><span class="post-toc-text">ASP.NET Web API创建</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Web-API-With-MVC-Project"><span class="post-toc-text">Web API With MVC Project</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Stand-alone-Web-API-Projcet"><span class="post-toc-text">Stand-alone Web API Projcet</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#ASP-NET-Web-API测试"><span class="post-toc-text">ASP.NET Web API测试</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Fiddler"><span class="post-toc-text">Fiddler</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Postman"><span class="post-toc-text">Postman</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#ASP-NET-Web-API配置"><span class="post-toc-text">ASP.NET Web API配置</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#启动配置"><span class="post-toc-text">启动配置</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#路由配置"><span class="post-toc-text">路由配置</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#ASP-NET-Web-API路由"><span class="post-toc-text">ASP.NET Web API路由</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Convention-based-Routing（基于约定）"><span class="post-toc-text">Convention-based Routing（基于约定）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Attribute-Routing（基于属性）"><span class="post-toc-text">Attribute Routing（基于属性）</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#ASP-NET-Web-API参数"><span class="post-toc-text">ASP.NET Web API参数</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#primitive-type（原始类型）"><span class="post-toc-text">primitive type（原始类型）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#complex-type（复杂类型）"><span class="post-toc-text">complex type（复杂类型）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参数默认绑定规则"><span class="post-toc-text">参数默认绑定规则</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参数默认规则修改"><span class="post-toc-text">参数默认规则修改</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#ASP-NET-Web-API返回类型"><span class="post-toc-text">ASP.NET Web API返回类型</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Web-API-Controller"><span class="post-toc-text">Web API Controller</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#ASP-NET-Web-API-过滤器"><span class="post-toc-text">ASP.NET Web API 过滤器</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#ASP-NET-Web-API-通信"><span class="post-toc-text">ASP.NET Web API 通信</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#WebClient"><span class="post-toc-text">WebClient</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#HttpClient"><span class="post-toc-text">HttpClient</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#HttpClient方法"><span class="post-toc-text">HttpClient方法</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#ASP-NET-Web-API-Hosting"><span class="post-toc-text">ASP.NET Web API Hosting</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#IIS-Hosting"><span class="post-toc-text">IIS Hosting</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Self-Hosting"><span class="post-toc-text">Self Hosting</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2018/01/28/2017年总结/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          2017年总结
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2017/05/04/NPM使用/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">NPM使用</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+		<section id="comments" class="comments">
+			<style>
+			  .comments{margin:30px;padding:10px;background:#fff}
+			  @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+			</style>
+			<div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage@latest/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js'></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "hrqbaUF8km11bv4h31Rhiyco-gzGzoHsz",
+            app_key: "nm5to078TvS7MzkXnO78DHpI",
+            placeholder: "~(≧▽≦)/~来呀！快活呀！",
+            avatar: "mm",
+            pageSize: 10
+    });
+	
+	$('#comments .info').css({"display":"none"});
+	
+</script>
+		</section>
+	
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2018 HongChangCui<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://www.github.com/ChangHub/BlogImages/raw/master",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/ASP-NET/">ASP.NET</a><a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/JavaScript/">JavaScript</a><a class="category-link" href="/categories/MySQL/">MySQL</a><a class="category-link" href="/categories/便捷工具/">便捷工具</a><a class="category-link" href="/categories/原理/">原理</a><a class="category-link" href="/categories/基础知识/">基础知识</a><a class="category-link" href="/categories/年会/">年会</a><a class="category-link" href="/categories/年度总结/">年度总结</a><a class="category-link" href="/categories/开源项目/">开源项目</a><a class="category-link" href="/categories/插件/">插件</a><a class="category-link" href="/categories/软件使用/">软件使用</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/NET/" style="font-size: 10px;">.NET</a> <a href="/tags/ASP-NET/" style="font-size: 15px;">ASP.NET</a> <a href="/tags/CEF/" style="font-size: 10px;">CEF</a> <a href="/tags/CefSharp/" style="font-size: 10px;">CefSharp</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Jquery/" style="font-size: 10px;">Jquery</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/WebAPI/" style="font-size: 10px;">WebAPI</a> <a href="/tags/年会/" style="font-size: 10px;">年会</a> <a href="/tags/总结/" style="font-size: 20px;">总结</a> <a href="/tags/文件夹/" style="font-size: 10px;">文件夹</a> <a href="/tags/软件使用/" style="font-size: 10px;">软件使用</a> <a href="/tags/软件安装/" style="font-size: 10px;">软件安装</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/NET/" style="font-size: 10px;">.NET</a> <a href="/tags/ASP-NET/" style="font-size: 15px;">ASP.NET</a> <a href="/tags/CEF/" style="font-size: 10px;">CEF</a> <a href="/tags/CefSharp/" style="font-size: 10px;">CefSharp</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Jquery/" style="font-size: 10px;">Jquery</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/WebAPI/" style="font-size: 10px;">WebAPI</a> <a href="/tags/年会/" style="font-size: 10px;">年会</a> <a href="/tags/总结/" style="font-size: 20px;">总结</a> <a href="/tags/文件夹/" style="font-size: 10px;">文件夹</a> <a href="/tags/软件使用/" style="font-size: 10px;">软件使用</a> <a href="/tags/软件安装/" style="font-size: 10px;">软件安装</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>
