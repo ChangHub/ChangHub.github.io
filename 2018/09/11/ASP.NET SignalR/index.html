@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>ASP.NET SignalR | ChangKe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="ChangKe,ChangKe's Blog" />
+  
+  <meta name="description" content="ASP.NET SignalR 是ASP.NET开发库，简化了向应用程序添加实时Web功能的过程。实时Web功能是指服务器代码在连接的客户端可用时立即将内容推送到连接的客户端，而不是让服务器等待客户端请求新数据。">
+<meta name="keywords" content="ASP.NET,SignalR">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ASP.NET SignalR">
+<meta property="og:url" content="https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/11/ASP.NET SignalR/index.html">
+<meta property="og:site_name" content="ChangKe">
+<meta property="og:description" content="ASP.NET SignalR 是ASP.NET开发库，简化了向应用程序添加实时Web功能的过程。实时Web功能是指服务器代码在连接的客户端可用时立即将内容推送到连接的客户端，而不是让服务器等待客户端请求新数据。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/SignalRCommunication.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/SignalRArchitecture.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/SignalR1.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/SignalRSendmessage.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/SignalR2.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/SignalR2Sendmessage.jpg">
+<meta property="og:updated_time" content="2018-09-16T07:29:41.163Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ASP.NET SignalR">
+<meta name="twitter:description" content="ASP.NET SignalR 是ASP.NET开发库，简化了向应用程序添加实时Web功能的过程。实时Web功能是指服务器代码在连接的客户端可用时立即将内容推送到连接的客户端，而不是让服务器等待客户端请求新数据。">
+<meta name="twitter:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/SignalRCommunication.jpg">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">ChangKe&#39;s Blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        ChangKe&#39;s Blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        一个专注 WEB 开发的技术博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="ChangKe" target="_blank" href="//changkehome.top">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/ChangHub">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" ">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" ">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-ASP.NET SignalR" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      ASP.NET SignalR
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/ASP.NET/">ASP.NET</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2018-09-11
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p><a href="https://www.asp.net/signalr" target="_blank" rel="noopener">ASP.NET SignalR</a> 是ASP.NET开发库，简化了向应用程序添加实时Web功能的过程。实时Web功能是指服务器代码在连接的客户端可用时立即将内容推送到连接的客户端，而不是让服务器等待客户端请求新数据。</p>
+<a id="more"></a>
+<h1 id="SignalR简介"><a href="#SignalR简介" class="headerlink" title="SignalR简介"></a>SignalR简介</h1><ul>
+<li>ASP.NET SignalR用于向ASP.NET应用程序添加任何类型的“实时”Web功能。</li>
+<li>每当用户刷新网页以查看新数据，或者页面实现长轮询以检索新数据时，它都是使用SignalR的候选者。示例：仪表板和监视应用程序，协作应用程序，作业进度更新和实时表单。</li>
+<li>SignalR提供一个简单的API，用于创建从服务端.NET代码调用客户端浏览器（或其他客户端平台）中的JavaScript函数的服务端到客户端的远程过程调用（RPC）。</li>
+<li>SignalR也提供了用于连接管理的API及分组连接。</li>
+<li>SignalR自动处理连接管理，并允许同时向所有的客户端广播消息，也支持向特定客户端发送消息。客户端和服务端之间的连接是持久的，不向传统的HTTP连接，每次通信重新建立。</li>
+<li>SignalR支持“服务推送”功能，即服务器代码使用远程过程调用（RPC）调用浏览器中的客户端代码，而不是请求-响应模型。</li>
+<li>SignalR应用程序可以使用Service Bus，SQL Server或者Redis扩展到数千个客户端。</li>
+</ul>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/SignalRCommunication.jpg" alt="SignalRCommunication.jpg"></p>
+<h1 id="SignalR-and-WebSocket"><a href="#SignalR-and-WebSocket" class="headerlink" title="SignalR and WebSocket"></a>SignalR and WebSocket</h1><p>SignalR在可用的情况下使用新的WebSocket传输，并在必要时回退到旧的传输。</p>
+<p>虽然可以直接使用WebSocket编写应用程序，但SignalR已经为你完成了许多额外的功能。</p>
+<p>SignalR不必担心WebSocket更新，SignalR将更新以支持底层传输的更改。</p>
+<h1 id="Transports-and-fallbacks"><a href="#Transports-and-fallbacks" class="headerlink" title="Transports and fallbacks"></a>Transports and fallbacks</h1><p>SignalR是对客户端和服务器之间进行实时工作所需的一些传输的抽象，连接开始以HTTP启动，然后在可用时提升为WebSocket。</p>
+<p>WebSocket传输有严格要求：服务器使用Windows Server2012或者Window 8以及.NET Framework 4.5。如果不满足这些要求，SignalR将尝试使用其他传输来建立连接。</p>
+<ul>
+<li><p>HTML5 transports</p>
+<ul>
+<li>WebSocket</li>
+<li>Server Sent Events</li>
+</ul>
+</li>
+<li><p>Comet transports</p>
+<ul>
+<li><p>Forever Frame</p>
+<p>仅适用于Internet Explorer，创建一个隐藏的IFrame，向服务器上端点发出请求，然后，服务器不断的向客户端发送脚本，该脚本立即执行，提供了从服务器到客户端的单向实时连接。</p>
+</li>
+<li><p>Ajax long polling</p>
+<p>长轮询，不会创建持久连接，而是使用一个保持打开的请求轮询服务器，直到服务器响应，此时关闭连接，并立即请求新连接。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Connections-and-Hubs"><a href="#Connections-and-Hubs" class="headerlink" title="Connections and Hubs"></a>Connections and Hubs</h1><p>SignalR API包含两种模式用于在客户端和服务端的通信：</p>
+<ul>
+<li>持久连接（Persistent Connections）</li>
+<li>集线器（Hubs)</li>
+</ul>
+<p>大部分应用程序都使用Hubs API。</p>
+<p>Hubs工作原理：</p>
+<p>当服务端代码在客户端上调用方法时，将通过活动传输发送数据包，该数据包包含要调用的方法的名称和参数（当对象作为方法参数发送时，使用JSON进行序列化）。然后，客户端将方法名称与客户端代码中定义的方法进行匹配，如果匹配，则将参数反序列化，执行客户端方法。</p>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/SignalRArchitecture.jpg" alt="SignalRArchitecture.jpg"></p>
+<h1 id="SignalR-1-X"><a href="#SignalR-1-X" class="headerlink" title="SignalR 1.X"></a>SignalR 1.X</h1><p>SignalR简化了构建实时应用程序的过程。它包括一个ASP.NET服务器库和一个JavaScript刻客户端库。</p>
+<p>聊天演示：</p>
+<ul>
+<li><p>新建ASP.NET Empty Web Application</p>
+</li>
+<li><p>Install-Package Microsoft.AspNet.SignalR -Version 1.1.3</p>
+</li>
+<li><p>项目自动生成Scripts文件夹，里面包含jQuery和SignalR脚本</p>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/SignalR1.jpg" alt="SignalR1.jpg"></p>
+</li>
+<li><p>新建SignalR Hub类，继承Microsoft.AspNet.SignalR抽象类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">namespace SignalR1</span><br><span class="line">&#123;</span><br><span class="line">    public class ChatHub : Hub</span><br><span class="line">    &#123;</span><br><span class="line">        public void Send(string name, string message)</span><br><span class="line">        &#123;</span><br><span class="line">       	    //将消息发送给客户端</span><br><span class="line">            Clients.All.Hello(name, message);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加全局应用程序类Global.asax文件，注册默认Hub 路由</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">namespace SignalR1</span><br><span class="line">&#123;</span><br><span class="line">    public class Global : System.Web.HttpApplication</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        protected void Application_Start(object sender, EventArgs e)</span><br><span class="line">        &#123;</span><br><span class="line">        	//注册默认hubs route:~/signalr/hubs</span><br><span class="line">            RouteTable.Routes.MapHubs();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        protected void Session_Start(object sender, EventArgs e)</span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        protected void Application_BeginRequest(object sender, EventArgs e)</span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        protected void Application_AuthenticateRequest(object sender, EventArgs e)</span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        protected void Application_Error(object sender, EventArgs e)</span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        protected void Session_End(object sender, EventArgs e)</span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        protected void Application_End(object sender, EventArgs e)</span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加客户端页面ChatPage.html，</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/1999/xhtml"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=utf-8"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>SignalR Simple Chat<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">        <span class="selector-class">.container</span> &#123;</span></span><br><span class="line"><span class="css">            <span class="selector-tag">background-color</span>: <span class="selector-id">#99ccff</span>;</span></span><br><span class="line"><span class="css">            <span class="selector-tag">border</span>: <span class="selector-tag">thick</span> <span class="selector-tag">solid</span> <span class="selector-id">#808080</span>;</span></span><br><span class="line"><span class="undefined">            padding: 20px;</span></span><br><span class="line"><span class="undefined">            margin: 20px;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"message"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">id</span>=<span class="string">"sendmessage"</span> <span class="attr">value</span>=<span class="string">"Send"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">id</span>=<span class="string">"displayname"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"discussion"</span>&gt;</span><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--jQuery脚本引入--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"Scripts/jquery-1.6.4.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--SignalR脚本引入--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"Scripts/jquery.signalR-1.1.4.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--自动生成的SignalR Hub脚本引入--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"/signalr/hubs"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--发送消息--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">        $(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="actionscript">            <span class="comment">//声明一个hub代理，默认引用hub类的驼峰名</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> chat = $.connection.chatHub;</span></span><br><span class="line"><span class="actionscript">            <span class="comment">//创建hub广播消息的方法，回调方法，hub类调用此方法将内容推送到每个客户端</span></span></span><br><span class="line"><span class="actionscript">            chat.client.Hello = <span class="function"><span class="keyword">function</span> <span class="params">(name, message)</span> </span>&#123;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> encodeName = $(<span class="string">'&lt;div /&gt;'</span>).text(name).html();</span></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> encodeMsg = $(<span class="string">'&lt;div /&gt;'</span>).text(message).html();</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">                $(<span class="string">"#discussion"</span>).append(<span class="string">'&lt;li&gt;&lt;strong&gt;'</span> + encodeName + <span class="string">'&lt;/strong&gt;:&amp;nbsp;&amp;nbsp;'</span> + encodeMsg + <span class="string">'&lt;/li&gt;'</span>);</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="javascript">            $(<span class="string">"#displayname"</span>).val(prompt(<span class="string">"Enter you name:"</span>, <span class="string">""</span>));</span></span><br><span class="line"><span class="javascript">            $(<span class="string">"#message"</span>).focus();</span></span><br><span class="line"><span class="actionscript">		   <span class="comment">//启动连接	</span></span></span><br><span class="line"><span class="javascript">            $.connection.hub.start().done(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">                $(<span class="string">'#sendmessage'</span>).click(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="actionscript">                    <span class="comment">//调用hub上的Send方法</span></span></span><br><span class="line"><span class="javascript">                    chat.server.send($(<span class="string">'#displayname'</span>).val(), $(<span class="string">'#message'</span>).val());</span></span><br><span class="line"><span class="javascript">                    $(<span class="string">"#message"</span>).val(<span class="string">''</span>).focus();</span></span><br><span class="line"><span class="undefined">                &#125;);</span></span><br><span class="line"><span class="undefined">            &#125;);</span></span><br><span class="line"><span class="undefined">        &#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>调用过程</p>
+</li>
+<li><ul>
+<li>hub类声明公共方法，以便客户端调用它们</li>
+<li>使用Microsoft.AspNet.SignalR.Hub.Clients动态属性可以访问所有连接到hub类的客户端</li>
+<li>在客户端上调用jQuery函数来更新客户端</li>
+</ul>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/SignalRSendmessage.jpg" alt="SignalRSendmessage.jpg"></p>
+<h1 id="SignalR-2"><a href="#SignalR-2" class="headerlink" title="SignalR 2"></a>SignalR 2</h1></li>
+</ul>
+<p>聊天演示：</p>
+<ul>
+<li>将SignalR库添加到ASP.NET Web应用程序</li>
+<li>创建Hub类将内容推送到客户端</li>
+<li>创建OWIN启动类以配置应用程序</li>
+<li>网页中使用SignalR jQuery库从Hub类发送消息和显示更新</li>
+</ul>
+<ol>
+<li><p>创建ASP.NET Empty Web应用程序</p>
+</li>
+<li><p>添加SignalR2 Hub Class(V2),自动生成SignalR Hub类和脚本</p>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/SignalR2.jpg" alt="SignalR2.jpg"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">namespace SignalRChat</span><br><span class="line">&#123;</span><br><span class="line">    public class ChatHub : Hub</span><br><span class="line">    &#123;</span><br><span class="line">        public void Hello(string name, string message)</span><br><span class="line">        &#123;</span><br><span class="line">            Clients.All.hello(name, message);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加OWIN Startup Class</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">namespace SignalRChat</span><br><span class="line">&#123;</span><br><span class="line">    public class Startup</span><br><span class="line">    &#123;</span><br><span class="line">        public void Configuration(IAppBuilder app)</span><br><span class="line">        &#123;</span><br><span class="line">            // 有关如何配置应用程序的详细信息，请访问 http://go.microsoft.com/fwlink/?LinkID=316888</span><br><span class="line">            app.MapSignalR();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加页面ChatPage.html</p>
+ <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/1999/xhtml"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=utf-8"</span> /&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">title</span>&gt;</span>SignalR Simple Chat<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">     <span class="selector-class">.container</span> &#123;</span></span><br><span class="line"><span class="css">         <span class="selector-tag">background-color</span>: <span class="selector-id">#99CCFF</span>;</span></span><br><span class="line"><span class="css">         <span class="selector-tag">border</span>: <span class="selector-tag">thick</span> <span class="selector-tag">solid</span> <span class="selector-id">#808080</span>;</span></span><br><span class="line"><span class="undefined">         padding: 20px;</span></span><br><span class="line"><span class="undefined">         margin: 20px;</span></span><br><span class="line"><span class="undefined">     &#125;</span></span><br><span class="line"><span class="undefined"> </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"message"</span> /&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">id</span>=<span class="string">"sendmessage"</span> <span class="attr">value</span>=<span class="string">"Send"</span> /&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">id</span>=<span class="string">"displayname"</span> /&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"discussion"</span>&gt;</span><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"> <span class="comment">&lt;!--Script references--&gt;</span></span><br><span class="line"> <span class="comment">&lt;!--Reference the jQuery library--&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"Scripts/jquery-1.6.4.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"> <span class="comment">&lt;!--Reference the SignalR library--&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"Scripts/jquery.signalR-2.3.0.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"> <span class="comment">&lt;!--Reference the autogenerated SignalR hub script--&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"signalr/hubs"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"> <span class="comment">&lt;!--add script to update the page and send message--&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">     <span class="comment">//Declare a proxy to reference the hub</span></span></span><br><span class="line"><span class="javascript">     <span class="keyword">var</span> chat = $.connection.chatHub;</span></span><br><span class="line"><span class="actionscript">     <span class="comment">//Create a function that the hub can call to broadcast message</span></span></span><br><span class="line"><span class="actionscript">     chat.client.hello = <span class="function"><span class="keyword">function</span> <span class="params">(name, message)</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">         <span class="comment">// Html encode display name and message.</span></span></span><br><span class="line"><span class="javascript">         <span class="keyword">var</span> encodedName = $(<span class="string">'&lt;div /&gt;'</span>).text(name).html();</span></span><br><span class="line"><span class="javascript">         <span class="keyword">var</span> encodedMsg = $(<span class="string">'&lt;div /&gt;'</span>).text(message).html();</span></span><br><span class="line"><span class="actionscript">         <span class="comment">// Add the message to the page.</span></span></span><br><span class="line"><span class="javascript">         $(<span class="string">'#discussion'</span>).append(<span class="string">'&lt;li&gt;&lt;strong&gt;'</span> + encodedName</span></span><br><span class="line"><span class="actionscript">             + <span class="string">'&lt;/strong&gt;:&amp;nbsp;&amp;nbsp;'</span> + encodedMsg + <span class="string">'&lt;/li&gt;'</span>);</span></span><br><span class="line"><span class="undefined">     &#125;</span></span><br><span class="line"><span class="actionscript">     <span class="comment">//Get the username and store it to prepend to message</span></span></span><br><span class="line"><span class="javascript">     $(<span class="string">'#displayname'</span>).val(prompt(<span class="string">'Enter your name:'</span>, <span class="string">''</span>));</span></span><br><span class="line"><span class="actionscript">     <span class="comment">// Set initial focus to message input box.</span></span></span><br><span class="line"><span class="javascript">     $(<span class="string">'#message'</span>).focus();</span></span><br><span class="line"><span class="actionscript">     <span class="comment">//Start the connection</span></span></span><br><span class="line"><span class="javascript">     $.connection.hub.start().done(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">         $(<span class="string">'#sendmessage'</span>).click(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="actionscript">             <span class="comment">//Call the Hello method on the hub</span></span></span><br><span class="line"><span class="javascript">             chat.server.hello($(<span class="string">'#displayname'</span>).val(), $(<span class="string">'#message'</span>).val());</span></span><br><span class="line"><span class="actionscript">             <span class="comment">//Clear text box and reset focus for next comment</span></span></span><br><span class="line"><span class="javascript">             $(<span class="string">'#message'</span>).val(<span class="string">''</span>).focus();</span></span><br><span class="line"><span class="undefined">         &#125;);</span></span><br><span class="line"><span class="undefined">     &#125;);</span></span><br><span class="line"><span class="undefined"> </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/SignalR2Sendmessage.jpg" alt="SignalR2Sendmessage.jpg"></p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2018年09月16日 15:29</p>
+        <p>原始链接： <a class="post-url" href="/2018/09/11/ASP.NET SignalR/" title="ASP.NET SignalR">https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/11/ASP.NET SignalR/</a></p>
+        <footer>
+            <a href="https://www.github.com/ChangHub/BlogImages/raw/master">
+                <img src="/images/logo.png" alt="HongChangCui">
+                HongChangCui
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/11/ASP.NET SignalR/&title=《ASP.NET SignalR》 — ChangKe&pic=AspNetSignalR.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/11/ASP.NET SignalR/&title=《ASP.NET SignalR》 — ChangKe&source=ASP.NET SignalR 是ASP.NET开发库，简化了向应用程序添加实时Web功能的过程。实时Web功能是指服务器代码在连接的客户端可用时立即将内..." data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/11/ASP.NET SignalR/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ASP.NET SignalR》 — ChangKe&url=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/11/ASP.NET SignalR/&via=https://www.github.com/ChangHub/BlogImages/raw/master" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/11/ASP.NET SignalR/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/11/ASP.NET SignalR/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/ASP.NET/" class="color3">ASP.NET</a>
+      
+    <a href="/tags/SignalR/" class="color3">SignalR</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#SignalR简介"><span class="post-toc-text">SignalR简介</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#SignalR-and-WebSocket"><span class="post-toc-text">SignalR and WebSocket</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Transports-and-fallbacks"><span class="post-toc-text">Transports and fallbacks</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Connections-and-Hubs"><span class="post-toc-text">Connections and Hubs</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#SignalR-1-X"><span class="post-toc-text">SignalR 1.X</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#SignalR-2"><span class="post-toc-text">SignalR 2</span></a></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+  
+    <a href="/2018/09/08/ASP.NET MVC WebAPI/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">ASP.NET WebAPI</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+		<section id="comments" class="comments">
+			<style>
+			  .comments{margin:30px;padding:10px;background:#fff}
+			  @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+			</style>
+			<div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage@latest/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js'></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "hrqbaUF8km11bv4h31Rhiyco-gzGzoHsz",
+            app_key: "nm5to078TvS7MzkXnO78DHpI",
+            placeholder: "~(≧▽≦)/~来呀！快活呀！",
+            avatar: "mm",
+            pageSize: 10
+    });
+	
+	$('#comments .info').css({"display":"none"});
+	
+</script>
+		</section>
+	
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2018 HongChangCui<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://www.github.com/ChangHub/BlogImages/raw/master",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/ASP-NET/">ASP.NET</a><a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/JavaScript/">JavaScript</a><a class="category-link" href="/categories/MySQL/">MySQL</a><a class="category-link" href="/categories/便捷工具/">便捷工具</a><a class="category-link" href="/categories/原理/">原理</a><a class="category-link" href="/categories/基础知识/">基础知识</a><a class="category-link" href="/categories/年会/">年会</a><a class="category-link" href="/categories/年度总结/">年度总结</a><a class="category-link" href="/categories/开源项目/">开源项目</a><a class="category-link" href="/categories/插件/">插件</a><a class="category-link" href="/categories/软件使用/">软件使用</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/NET/" style="font-size: 10px;">.NET</a> <a href="/tags/ASP-NET/" style="font-size: 20px;">ASP.NET</a> <a href="/tags/CEF/" style="font-size: 10px;">CEF</a> <a href="/tags/CefSharp/" style="font-size: 10px;">CefSharp</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Jquery/" style="font-size: 10px;">Jquery</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/SignalR/" style="font-size: 10px;">SignalR</a> <a href="/tags/WebAPI/" style="font-size: 10px;">WebAPI</a> <a href="/tags/年会/" style="font-size: 10px;">年会</a> <a href="/tags/总结/" style="font-size: 20px;">总结</a> <a href="/tags/文件夹/" style="font-size: 10px;">文件夹</a> <a href="/tags/软件使用/" style="font-size: 10px;">软件使用</a> <a href="/tags/软件安装/" style="font-size: 10px;">软件安装</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/NET/" style="font-size: 10px;">.NET</a> <a href="/tags/ASP-NET/" style="font-size: 20px;">ASP.NET</a> <a href="/tags/CEF/" style="font-size: 10px;">CEF</a> <a href="/tags/CefSharp/" style="font-size: 10px;">CefSharp</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Jquery/" style="font-size: 10px;">Jquery</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/SignalR/" style="font-size: 10px;">SignalR</a> <a href="/tags/WebAPI/" style="font-size: 10px;">WebAPI</a> <a href="/tags/年会/" style="font-size: 10px;">年会</a> <a href="/tags/总结/" style="font-size: 20px;">总结</a> <a href="/tags/文件夹/" style="font-size: 10px;">文件夹</a> <a href="/tags/软件使用/" style="font-size: 10px;">软件使用</a> <a href="/tags/软件安装/" style="font-size: 10px;">软件安装</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>
