@@ -871,7 +871,6 @@ body {
   }
 }
 .body-wrap {
-  margin-left: 100px;
   margin-bottom: 30px;
   min-height: calc(100vh - 530px);
 }

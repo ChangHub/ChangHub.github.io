@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>RabbitMQ | ChangKe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="ChangKe,ChangKe's Blog" />
+  
+  <meta name="description" content="RabbitMQ是AMQP（Advanced Message Queuing Protocol）的开源实现，由以高性能、健壮以及可伸缩出名的Erlang写成的开源消息代理。MQ消息队列，是消费-生产者模型的一个典型代表，一端往消息队列中写入消息，另一端读取或者订阅队列中的消息。">
+<meta name="keywords" content="MQ,消息队列">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RabbitMQ">
+<meta property="og:url" content="https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/20/RabbitMQ/index.html">
+<meta property="og:site_name" content="ChangKe">
+<meta property="og:description" content="RabbitMQ是AMQP（Advanced Message Queuing Protocol）的开源实现，由以高性能、健壮以及可伸缩出名的Erlang写成的开源消息代理。MQ消息队列，是消费-生产者模型的一个典型代表，一端往消息队列中写入消息，另一端读取或者订阅队列中的消息。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ启动.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ状态.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ停止.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ可视化.jpg">
+<meta property="og:image" content="htps://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ登陆.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ可视化查看.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ机制1.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ-helloWrold.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ机制2.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ-WorkQueue.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ机制3.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ-Exchanges.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ-P_S.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ机制4.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ-Routing.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ机制5.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ-topics.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ机制6.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ-RPC.jpg">
+<meta property="og:updated_time" content="2018-09-23T06:29:56.597Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RabbitMQ">
+<meta name="twitter:description" content="RabbitMQ是AMQP（Advanced Message Queuing Protocol）的开源实现，由以高性能、健壮以及可伸缩出名的Erlang写成的开源消息代理。MQ消息队列，是消费-生产者模型的一个典型代表，一端往消息队列中写入消息，另一端读取或者订阅队列中的消息。">
+<meta name="twitter:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ启动.jpg">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">ChangKe&#39;s Blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        ChangKe&#39;s Blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        一个专注 WEB 开发的技术博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="ChangKe" target="_blank" href="//changkehome.top">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/ChangHub">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" ">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" ">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-RabbitMQ" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      RabbitMQ
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/MQ/">MQ</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2018-09-20
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p><a href="https://www.rabbitmq.com/" target="_blank" rel="noopener">RabbitMQ</a>是AMQP（Advanced Message Queuing Protocol）的开源实现，由以高性能、健壮以及可伸缩出名的Erlang写成的开源消息代理。MQ消息队列，是消费-生产者模型的一个典型代表，一端往消息队列中写入消息，另一端读取或者订阅队列中的消息。<br><a id="more"></a></p>
+<h1 id="RabbitMQ安装"><a href="#RabbitMQ安装" class="headerlink" title="RabbitMQ安装"></a>RabbitMQ安装</h1><h2 id="安装Erlang"><a href="#安装Erlang" class="headerlink" title="安装Erlang"></a><a href="http://www.erlang.org/downloads" target="_blank" rel="noopener">安装Erlang</a></h2><h2 id="安装RabbitMQ"><a href="#安装RabbitMQ" class="headerlink" title="安装RabbitMQ"></a><a href="https://www.rabbitmq.com/install-windows.html" target="_blank" rel="noopener">安装RabbitMQ</a></h2><h1 id="RabbitMQ节点"><a href="#RabbitMQ节点" class="headerlink" title="RabbitMQ节点"></a>RabbitMQ节点</h1><p>节点用来指代RabbitMQ服务器实例，节点描述的是一个Erlang节点运行着一个Erlang应用程序。Erlang有虚拟机，而虚拟机的每个实例称之为节点，多个Erlang应用程序可以运行在一个节点上，节点之间可以进行本地通信。</p>
+<ul>
+<li><p>启动节点</p>
+<p><code>rabbitmq-server</code></p>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ启动.jpg" alt="RabbitMQ启动.jpg"></p>
+</li>
+<li><p>查看状态</p>
+<p><code>rabbitmqctl status</code></p>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ状态.jpg" alt="RabbitMQ状态.jpg"></p>
+</li>
+<li><p>关闭节点</p>
+<p><code>rabbitmqctl stop</code></p>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ停止.jpg" alt="RabbitMQ停止.jpg"></p>
+</li>
+</ul>
+<h1 id="RabbitMQ可视化"><a href="#RabbitMQ可视化" class="headerlink" title="RabbitMQ可视化"></a>RabbitMQ可视化</h1><ul>
+<li><p>启动可视化插件</p>
+<p><code>rabbitmq-plugins enable rabbitmq_management</code></p>
+</li>
+</ul>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ可视化.jpg" alt="RabbitMQ可视化.jpg"></p>
+<ul>
+<li><p>登陆网页查看</p>
+<ul>
+<li><p>网址：<a href="http://localhost:15672" target="_blank" rel="noopener">http://localhost:15672</a></p>
+</li>
+<li><p>账号：guest;密码：guest</p>
+<p><img src="htps://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ登陆.jpg" alt="RabbitMQ登陆.jpg"></p>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ可视化查看.jpg" alt="RabbitMQ可视化查看.jpg"></p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="RabbitMQ实践"><a href="#RabbitMQ实践" class="headerlink" title="RabbitMQ实践"></a>RabbitMQ实践</h1><h2 id="HelloWorld"><a href="#HelloWorld" class="headerlink" title="HelloWorld"></a>HelloWorld</h2><p>RabbitMQ是一个消息代理：接受和转发消息。可以比作一个邮局，将要发布的邮件放在邮箱中，并确定谁会发送邮件给谁，在这里，RabbitMQ是邮箱，邮局和邮递员。与邮局不同的是，RabbitMQ接受、存储和转发的是二进制Blob数据-消息。</p>
+<ul>
+<li><p>Producer：消息发送者</p>
+</li>
+<li><p>Queue：消息接收、存储、转发的队列</p>
+</li>
+<li><p>Consumer：消息接受者</p>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ机制1.jpg" alt="RabbitMQ机制1.jpg"></p>
+</li>
+</ul>
+<ol>
+<li><p>创建生产者Send类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">namespace Send</span><br><span class="line">&#123;</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        //消息发送者：Producer</span><br><span class="line">        public static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            //在本地创建一个消息代理连接，如果要连接到不同机器上的消息代理，可以使用IP地址</span><br><span class="line">            var factory = new ConnectionFactory &#123; HostName = &quot;localhost&quot; &#125;;</span><br><span class="line"></span><br><span class="line">            using (var connection = factory.CreateConnection())</span><br><span class="line">            &#123;</span><br><span class="line">                //创建一个管道，里面包含所有操作的API</span><br><span class="line">                using (var channel = connection.CreateModel())</span><br><span class="line">                &#123;</span><br><span class="line">                    //声明一个消息队列</span><br><span class="line">                    channel.QueueDeclare(</span><br><span class="line">                        queue: &quot;hello&quot;,//队列名称</span><br><span class="line">                        durable: false,//是否持久</span><br><span class="line">                        exclusive: false,//是否专一</span><br><span class="line">                        autoDelete: false,//是否自动删除</span><br><span class="line">                        arguments: null//参数</span><br><span class="line">                        );</span><br><span class="line">                    string message = &quot;Hello World&quot;;//定义发送的消息</span><br><span class="line">                    var body = Encoding.UTF8.GetBytes(message);//由于发送的消息是二进制，所以需要经过编码</span><br><span class="line"></span><br><span class="line">                    //发送消息</span><br><span class="line">                    channel.BasicPublish(</span><br><span class="line">                        exchange: &quot;&quot;,</span><br><span class="line">                        routingKey: &quot;hello&quot;,</span><br><span class="line">                        basicProperties: null,</span><br><span class="line">                        body: body</span><br><span class="line">                        );</span><br><span class="line">                    //输出发送的消息</span><br><span class="line">                    Console.WriteLine(&quot;[P] Sent &#123;0&#125;&quot;, message);</span><br><span class="line">                &#125;</span><br><span class="line">                Console.WriteLine(&quot;Press [Enter] to exist.&quot;);</span><br><span class="line">                Console.ReadLine();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建消费者Receive类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">namespace Receive</span><br><span class="line">&#123;</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        //消息接受者：Consumer，与发布者不同，消费者会持续运行以监听消息</span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            //本地建立连接</span><br><span class="line">            var faction = new ConnectionFactory() &#123; HostName = &quot;localhost&quot; &#125;;</span><br><span class="line">            using (var connection = faction.CreateConnection())</span><br><span class="line">            &#123;</span><br><span class="line">                //创建通道</span><br><span class="line">                using (var channel = connection.CreateModel())</span><br><span class="line">                &#123;</span><br><span class="line">                    //声明一个队列，要与发布者的队列匹配</span><br><span class="line">                    //由于发布者可能没有启动，这里声明是确保队列存在</span><br><span class="line">                    channel.QueueDeclare(</span><br><span class="line">                        queue: &quot;hello&quot;,</span><br><span class="line">                        exclusive: false,</span><br><span class="line">                        autoDelete: false,</span><br><span class="line">                        arguments: null</span><br><span class="line">                        );</span><br><span class="line">                    //由于服务器是异步的发送消息，因此需要提供回调</span><br><span class="line">                    //实例化一个消费者</span><br><span class="line">                    var consumer = new EventingBasicConsumer(channel);</span><br><span class="line">                    consumer.Received += (model, ea) =&gt;</span><br><span class="line">                    &#123;</span><br><span class="line">                        //获取消息</span><br><span class="line">                        var body = ea.Body;</span><br><span class="line">                        var message = Encoding.UTF8.GetString(body);</span><br><span class="line">                        //输出接收的消息</span><br><span class="line">                        Console.WriteLine(&quot;[C] Received &#123;0&#125;&quot;, message);</span><br><span class="line">                    &#125;;</span><br><span class="line">                    //启动消费者</span><br><span class="line">                    channel.BasicConsume(</span><br><span class="line">                        queue: &quot;hello&quot;,</span><br><span class="line">                        autoAck: true,</span><br><span class="line">                        consumer: consumer</span><br><span class="line">                        );</span><br><span class="line">                    Console.WriteLine(&quot;Press [Enter] to exist.&quot;);</span><br><span class="line">                    Console.ReadLine();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行生产者和消费者</p>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ-helloWrold.jpg" alt="RabbitMQ-helloWrold.jpg"></p>
+</li>
+</ol>
+<h2 id="Work-Queues"><a href="#Work-Queues" class="headerlink" title="Work Queues"></a>Work Queues</h2><p>多个消费者之间分配耗时任务，工作队列（Work Queues）思想：避免立即执行资源密集型任务等待。多个工作进程之间共享任务。</p>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ机制2.jpg" alt="RabbitMQ机制2.jpg"></p>
+<ol>
+<li><p>消息生产者NewTask</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">namespace NewTask</span><br><span class="line">&#123;</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        public static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            //通过工厂模式创建连接</span><br><span class="line">            var factory = new ConnectionFactory() &#123; HostName = &quot;localhost&quot; &#125;;</span><br><span class="line"></span><br><span class="line">            using (var connection = factory.CreateConnection())</span><br><span class="line">            &#123;</span><br><span class="line">                //通过连接创建通道</span><br><span class="line">                using (var channel = connection.CreateModel())</span><br><span class="line">                &#123;</span><br><span class="line">                    //通过通道声明队列</span><br><span class="line">                    channel.QueueDeclare(</span><br><span class="line">                        queue: &quot;task_queue&quot;,</span><br><span class="line">                        exclusive: false,</span><br><span class="line">                        autoDelete: false,</span><br><span class="line">                        arguments: null</span><br><span class="line">                        );</span><br><span class="line"></span><br><span class="line">                    //编码发送的消息</span><br><span class="line">                    var message1 = &quot;First message.&quot;;</span><br><span class="line">                    var body1 = Encoding.UTF8.GetBytes(message1);</span><br><span class="line"></span><br><span class="line">                    var message2 = &quot;Second message..&quot;;</span><br><span class="line">                    var body2 = Encoding.UTF8.GetBytes(message2);</span><br><span class="line"></span><br><span class="line">                    var message3 = &quot;Third message...&quot;;</span><br><span class="line">                    var body3 = Encoding.UTF8.GetBytes(message3);</span><br><span class="line"></span><br><span class="line">                    //设置持久连接</span><br><span class="line">                    var properties = channel.CreateBasicProperties();</span><br><span class="line">                    properties.Persistent = true;</span><br><span class="line"></span><br><span class="line">                    //发布消息到消息队列</span><br><span class="line">                    //发送消息1</span><br><span class="line">                    channel.BasicPublish(</span><br><span class="line">                        exchange: &quot;&quot;,</span><br><span class="line">                        routingKey: &quot;task_queue&quot;,</span><br><span class="line">                        basicProperties: properties,</span><br><span class="line">                        body: body1</span><br><span class="line">                        );</span><br><span class="line">                    Console.WriteLine(&quot;[P] Sent &#123;0&#125;&quot;, message1);</span><br><span class="line">				   //发送消息2</span><br><span class="line">                    channel.BasicPublish(</span><br><span class="line">                        exchange: &quot;&quot;,</span><br><span class="line">                        routingKey: &quot;task_queue&quot;,</span><br><span class="line">                        basicProperties: properties,</span><br><span class="line">                        body: body2</span><br><span class="line">                        );</span><br><span class="line">                    Console.WriteLine(&quot;[P] Sent &#123;0&#125;&quot;, message2);</span><br><span class="line">				   //发送消息3</span><br><span class="line">                    channel.BasicPublish(</span><br><span class="line">                        exchange: &quot;&quot;,</span><br><span class="line">                        routingKey: &quot;task_queue&quot;,</span><br><span class="line">                        basicProperties: properties,</span><br><span class="line">                        body: body3</span><br><span class="line">                        );</span><br><span class="line">                    Console.WriteLine(&quot;[P] Sent &#123;0&#125;&quot;, message3);</span><br><span class="line">                &#125;</span><br><span class="line">                Console.WriteLine(&quot; Press [enter] to exit.&quot;);</span><br><span class="line">                Console.ReadLine();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>消息消费者Worker</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">namespace Worker</span><br><span class="line">&#123;</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        public static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            //通过工厂模式创建连接</span><br><span class="line">            var factory = new ConnectionFactory() &#123; HostName = &quot;localhost&quot; &#125;;</span><br><span class="line">            using (var connection = factory.CreateConnection())</span><br><span class="line">            &#123;</span><br><span class="line">                //通过连接创建通道</span><br><span class="line">                using (var channel = connection.CreateModel())</span><br><span class="line">                &#123;</span><br><span class="line">                    //声明队列</span><br><span class="line">                    channel.QueueDeclare(</span><br><span class="line">                        queue: &quot;task_queue&quot;,</span><br><span class="line">                        durable: false,</span><br><span class="line">                        exclusive: false,</span><br><span class="line">                        autoDelete: false,</span><br><span class="line">                        arguments: null</span><br><span class="line">                        );</span><br><span class="line"></span><br><span class="line">                    //配置Qos参数</span><br><span class="line">                    channel.BasicQos(prefetchSize: 0, prefetchCount: 1, global: false);</span><br><span class="line">                    Console.WriteLine(&quot;[*] Waiting for message.&quot;);</span><br><span class="line"></span><br><span class="line">                    //声明消费者</span><br><span class="line">                    var consumer = new EventingBasicConsumer(channel);</span><br><span class="line"></span><br><span class="line">                    //接收消息回调</span><br><span class="line">                    consumer.Received += (model, ea) =&gt;</span><br><span class="line">                    &#123;</span><br><span class="line">                        var body = ea.Body;</span><br><span class="line">                        var message = Encoding.UTF8.GetString(body);</span><br><span class="line"></span><br><span class="line">                        Console.WriteLine(&quot;[C] Received &#123;0&#125;&quot;, message);</span><br><span class="line"></span><br><span class="line">                        int dots = message.Split(&apos;.&apos;).Length - 1;</span><br><span class="line"></span><br><span class="line">                        Thread.Sleep(dots * 1000);</span><br><span class="line"></span><br><span class="line">                        Console.WriteLine(&quot;[C] Done&quot;);</span><br><span class="line">                        //消息确认</span><br><span class="line">                        channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);</span><br><span class="line">                    &#125;;</span><br><span class="line"></span><br><span class="line">                    //启动消费者获取消息</span><br><span class="line">                    channel.BasicConsume(</span><br><span class="line">                        queue: &quot;task_queue&quot;,</span><br><span class="line">                        autoAck: false,</span><br><span class="line">                        consumer: consumer</span><br><span class="line">                        );</span><br><span class="line">                    Console.WriteLine(&quot; Press [enter] to exit.&quot;);</span><br><span class="line">                    Console.ReadLine();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行</p>
+<p>默认，RabbitMQ会按顺序发送每个消息到下一个消费者，平均，每个消费者将获得同样数量的消息，这种分发方法称为循环法。</p>
+<p>如果关闭一个Worker，就会丢失他处理的消息，及分发给它未处理的消息，为了确保消息永不丢失，RabbitMQ支持消息确认（message acknowledgment）。当消费者关闭，RabbMQ将重新发布消息。</p>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ-WorkQueue.jpg" alt="RabbitMQ-WorkQueue.jpg"></p>
+<h2 id="Publish-Subscribe"><a href="#Publish-Subscribe" class="headerlink" title="Publish/Subscribe"></a>Publish/Subscribe</h2></li>
+</ol>
+<ul>
+<li>Exchange</li>
+</ul>
+<p>RabbitMQ中消息传递模型的核心思想：生产者永远不会将消息直接发送给队列。实际上，生产者通常不知道消息是否被传递到任何队列。</p>
+<p>生产者向Exchange 发送消息，由Exchange推送给队列。</p>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ机制3.jpg" alt="RabbitMQ机制3.jpg"></p>
+<ul>
+<li><p>Exchanges</p>
+<p><code>rabbitmqctl list_exchanges</code>服务器上的echanges列表。</p>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ-Exchanges.jpg" alt="RabbitMQ-Exchanges.jpg"></p>
+</li>
+</ul>
+<ol>
+<li><p>消息发送者</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">namespace EmitLog</span><br><span class="line">&#123;</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        public static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            var factory = new ConnectionFactory() &#123; HostName = &quot;localhost&quot; &#125;;</span><br><span class="line">            using (var connection = factory.CreateConnection())</span><br><span class="line">            &#123;</span><br><span class="line">                using (var channel = connection.CreateModel())</span><br><span class="line">                &#123;</span><br><span class="line">                    //声明Exchange</span><br><span class="line">                    channel.ExchangeDeclare(</span><br><span class="line">                        exchange: &quot;logs&quot;,</span><br><span class="line">                        type: &quot;fanout&quot;</span><br><span class="line">                        );</span><br><span class="line"></span><br><span class="line">                    //消息</span><br><span class="line">                    var message = &quot;Hello Wrold&quot;;</span><br><span class="line">                    var body = Encoding.UTF8.GetBytes(message);</span><br><span class="line"></span><br><span class="line">                    //发送消息到Exchange</span><br><span class="line">                    channel.BasicPublish(</span><br><span class="line">                        exchange: &quot;logs&quot;,</span><br><span class="line">                        routingKey: &quot;&quot;,</span><br><span class="line">                        basicProperties: null,</span><br><span class="line">                        body: body</span><br><span class="line">                        );</span><br><span class="line"></span><br><span class="line">                    Console.WriteLine(&quot; [C] Sent &#123;0&#125;&quot;, message);</span><br><span class="line">                &#125;</span><br><span class="line">                Console.WriteLine(&quot; Press [enter] to exit.&quot;);</span><br><span class="line">                Console.ReadLine();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>消息接收者</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">namespace ReceiveLog</span><br><span class="line">&#123;</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        public static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            var factory = new ConnectionFactory() &#123; HostName = &quot;localhost&quot; &#125;;</span><br><span class="line">            using (var connection = factory.CreateConnection())</span><br><span class="line">            &#123;</span><br><span class="line">                using (var channel = connection.CreateModel())</span><br><span class="line">                &#123;</span><br><span class="line">                    //声明Exchange</span><br><span class="line">                    channel.ExchangeDeclare(</span><br><span class="line">                        exchange: &quot;logs&quot;,</span><br><span class="line">                        type: &quot;fanout&quot;</span><br><span class="line">                        );</span><br><span class="line"></span><br><span class="line">                    //随机队列名</span><br><span class="line">                    var queueName = channel.QueueDeclare().QueueName;</span><br><span class="line">                    //将Exchange与队列绑定</span><br><span class="line">                    channel.QueueBind(</span><br><span class="line">                        queue: queueName,</span><br><span class="line">                        exchange: &quot;logs&quot;,</span><br><span class="line">                        routingKey: &quot;&quot;</span><br><span class="line">                        );</span><br><span class="line"></span><br><span class="line">                    Console.WriteLine(&quot; [*] Waiting for logs.&quot;);</span><br><span class="line">				  //消费者</span><br><span class="line">                    var consumer = new EventingBasicConsumer(channel);</span><br><span class="line">                    consumer.Received += (model, ea) =&gt;</span><br><span class="line">                    &#123;</span><br><span class="line">                        var body = ea.Body;</span><br><span class="line">                        var message = Encoding.UTF8.GetString(body);</span><br><span class="line"></span><br><span class="line">                        Console.WriteLine(&quot; [x] &#123;0&#125;&quot;, message);</span><br><span class="line">                    &#125;;</span><br><span class="line">                    //启动</span><br><span class="line">                    channel.BasicConsume(</span><br><span class="line">                        queue: queueName,</span><br><span class="line">                        autoAck: true,</span><br><span class="line">                        consumer: consumer</span><br><span class="line">                        );</span><br><span class="line"></span><br><span class="line">                    Console.WriteLine(&quot; Press [enter] to exit.&quot;);</span><br><span class="line">                    Console.ReadLine();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行</p>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ-P_S.jpg" alt="RabbitMQ-P_S.jpg"></p>
+</li>
+</ol>
+<h2 id="Routing"><a href="#Routing" class="headerlink" title="Routing"></a>Routing</h2><p>Exchange 类型设置为”fanout”,Exchange会将消息发送个每个队列，本次通过设置Exchange类型为”direct”,将消息发送到指定的队列。</p>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ机制4.jpg" alt="RabbitMQ机制4.jpg"></p>
+<ol>
+<li><p>消息生产者</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">namespace EmitLogDirect</span><br><span class="line">&#123;</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        public static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            var factory = new ConnectionFactory() &#123; HostName = &quot;localhost&quot; &#125;;</span><br><span class="line">            using (var connection = factory.CreateConnection())</span><br><span class="line">            &#123;</span><br><span class="line">                using (var channel = connection.CreateModel())</span><br><span class="line">                &#123;</span><br><span class="line">                    //声明Exchange</span><br><span class="line">                    channel.ExchangeDeclare(exchange: &quot;direct_logs&quot;, type: &quot;direct&quot;);</span><br><span class="line"></span><br><span class="line">                    var serverity = &quot;info&quot;;</span><br><span class="line"></span><br><span class="line">                    var message = &quot;Hello World&quot;;</span><br><span class="line">                    var body = Encoding.UTF8.GetBytes(message);</span><br><span class="line">                    //发送消息到Exchange</span><br><span class="line">                    channel.BasicPublish(</span><br><span class="line">                        exchange: &quot;direct_logs&quot;,</span><br><span class="line">                        routingKey: serverity,//与队列绑定的key匹配</span><br><span class="line">                        basicProperties: null,</span><br><span class="line">                        body: body</span><br><span class="line">                        );</span><br><span class="line"></span><br><span class="line">                    Console.WriteLine(&quot; [x] Sent &apos;&#123;0&#125;&apos;:&apos;&#123;1&#125;&apos;&quot;, serverity, message);</span><br><span class="line">                &#125;</span><br><span class="line">                Console.WriteLine(&quot; Press [enter] to exit.&quot;);</span><br><span class="line">                Console.ReadLine();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>消息接收者</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">namespace ReceiveLogDirect</span><br><span class="line">&#123;</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        public static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            var factory = new ConnectionFactory() &#123; HostName = &quot;localhost&quot; &#125;;</span><br><span class="line">            using (var connection = factory.CreateConnection())</span><br><span class="line">            &#123;</span><br><span class="line">                using (var channel = connection.CreateModel())</span><br><span class="line">                &#123;</span><br><span class="line">                    channel.ExchangeDeclare(exchange: &quot;direct_logs&quot;, type: &quot;direct&quot;);</span><br><span class="line"></span><br><span class="line">                    var queueName = channel.QueueDeclare().QueueName;</span><br><span class="line"></span><br><span class="line">                    var serverity = &quot;info&quot;;</span><br><span class="line">                    //var serverity=&quot;error&quot;;</span><br><span class="line"></span><br><span class="line">                    //将Exhange与队列绑定</span><br><span class="line">                    channel.QueueBind(</span><br><span class="line">                        queue: queueName,</span><br><span class="line">                        exchange: &quot;direct_logs&quot;,</span><br><span class="line">                        routingKey: serverity //Exchange会将消息发送到匹配key的队列上</span><br><span class="line">                        );</span><br><span class="line"></span><br><span class="line">                    Console.WriteLine(&quot; [*] Waiting for messages.&quot;);</span><br><span class="line"></span><br><span class="line">                    var consumer = new EventingBasicConsumer(channel);</span><br><span class="line"></span><br><span class="line">                    consumer.Received += (model, ea) =&gt;</span><br><span class="line">                    &#123;</span><br><span class="line">                        var body = ea.Body;</span><br><span class="line">                        var message = Encoding.UTF8.GetString(body);</span><br><span class="line"></span><br><span class="line">                        var routingKey = ea.RoutingKey;</span><br><span class="line"></span><br><span class="line">                        Console.WriteLine(&quot; [x] Received &apos;&#123;0&#125;&apos;:&apos;&#123;1&#125;&apos;&quot;,</span><br><span class="line">                                  routingKey, message);</span><br><span class="line">                    &#125;;</span><br><span class="line"></span><br><span class="line">                    channel.BasicConsume(</span><br><span class="line">                        queue: queueName,</span><br><span class="line">                        autoAck: true,</span><br><span class="line">                        consumer: consumer</span><br><span class="line">                        );</span><br><span class="line"></span><br><span class="line">                    Console.WriteLine(&quot; Press [enter] to exit.&quot;);</span><br><span class="line">                    Console.ReadLine();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行</p>
+<p>只有routingKey匹配队列才会接收Exchange发送的消息。</p>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ-Routing.jpg" alt="RabbitMQ-Routing.jpg"></p>
+</li>
+</ol>
+<h2 id="Topics"><a href="#Topics" class="headerlink" title="Topics"></a>Topics</h2><p>Exchange类型是”direct”,只能匹配到固定的key的队列，为了更加灵活，类似正则匹配，使用Exchange类型”topic”。多个匹配的key用点号分隔，*(星号)表示匹配任意一个单词；#(井号)表示匹配零个或者多个单词。</p>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ机制5.jpg" alt="RabbitMQ机制5.jpg"></p>
+<ol>
+<li><p>消息生产者</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">namespace EmitLogTopic</span><br><span class="line">&#123;</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        public static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            var factory = new ConnectionFactory() &#123; HostName = &quot;localhost&quot; &#125;;</span><br><span class="line">            using (var connection = factory.CreateConnection())</span><br><span class="line">            &#123;</span><br><span class="line">                using (var channel = connection.CreateModel())</span><br><span class="line">                &#123;</span><br><span class="line">                    channel.ExchangeDeclare(exchange: &quot;topic_logs&quot;, type: &quot;topic&quot;);</span><br><span class="line"></span><br><span class="line">                    var message = &quot;Hello World&quot;;</span><br><span class="line">                    var body = Encoding.UTF8.GetBytes(message);</span><br><span class="line"></span><br><span class="line">                    var routingKey = &quot;chc.com&quot;;</span><br><span class="line"></span><br><span class="line">                    channel.BasicPublish(</span><br><span class="line">                        exchange: &quot;topic_logs&quot;,</span><br><span class="line">                        routingKey: routingKey,</span><br><span class="line">                        basicProperties: null,</span><br><span class="line">                        body: body</span><br><span class="line">                        );</span><br><span class="line"></span><br><span class="line">                    Console.WriteLine(&quot; [x] Sent &apos;&#123;0&#125;&apos;:&apos;&#123;1&#125;&apos;&quot;, routingKey, message);</span><br><span class="line">                &#125;</span><br><span class="line">                Console.WriteLine(&quot; Press [enter] to exit.&quot;);</span><br><span class="line">                Console.ReadLine();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>消息接收者</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">namespace ReceiveLogTopic</span><br><span class="line">&#123;</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        public static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            var factory = new ConnectionFactory() &#123; HostName = &quot;localhost&quot; &#125;;</span><br><span class="line">            using (var connection = factory.CreateConnection())</span><br><span class="line">            &#123;</span><br><span class="line">                using (var channel = connection.CreateModel())</span><br><span class="line">                &#123;</span><br><span class="line">                    channel.ExchangeDeclare(exchange: &quot;topic_logs&quot;, type: &quot;topic&quot;);</span><br><span class="line"></span><br><span class="line">                    var queueName = channel.QueueDeclare().QueueName;</span><br><span class="line">                    var bindingKey = &quot;*.com&quot;;</span><br><span class="line">                    //var bindingKey=&quot;chc.*&quot;;</span><br><span class="line"></span><br><span class="line">                    channel.QueueBind(</span><br><span class="line">                        exchange: &quot;topic_logs&quot;,</span><br><span class="line">                        queue: queueName,</span><br><span class="line">                        routingKey: bindingKey</span><br><span class="line">                        );</span><br><span class="line"></span><br><span class="line">                    Console.WriteLine(&quot; [*] Waiting for messages. To exit press CTRL+C&quot;);</span><br><span class="line"></span><br><span class="line">                    var consumer = new EventingBasicConsumer(channel);</span><br><span class="line">                    consumer.Received += (model, ea) =&gt;</span><br><span class="line">                    &#123;</span><br><span class="line">                        var body = ea.Body;</span><br><span class="line">                        var message = Encoding.UTF8.GetString(body);</span><br><span class="line"></span><br><span class="line">                        var routingKey = ea.RoutingKey;</span><br><span class="line">                        Console.WriteLine(&quot; [x] Received &apos;&#123;0&#125;&apos;:&apos;&#123;1&#125;&apos;&quot;, routingKey, message);</span><br><span class="line">                    &#125;;</span><br><span class="line"></span><br><span class="line">                    channel.BasicConsume(</span><br><span class="line">                        queue: queueName,</span><br><span class="line">                        autoAck: true,</span><br><span class="line">                        consumer: consumer</span><br><span class="line">                        );</span><br><span class="line"></span><br><span class="line">                    Console.WriteLine(&quot; Press [enter] to exit.&quot;);</span><br><span class="line">                    Console.ReadLine();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行</p>
+</li>
+</ol>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ-topics.jpg" alt="RabbitMQ-topics.jpg"></p>
+<h2 id="RPC"><a href="#RPC" class="headerlink" title="RPC"></a>RPC</h2><p>RPC:远程过程调用，请求远程服务器上的数据，并等待返回的过程。</p>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ机制6.jpg" alt="RabbitMQ机制6.jpg"></p>
+<p>工作原理：</p>
+<ul>
+<li>客户端启动，创建一个匿名的回调队列</li>
+<li>RPC请求，客户端发送消息：ReplyTo指示回调队列，CorrelationId指示每个请求的唯一值，与回调队列相匹配</li>
+<li>请求发送到指定队列rpc_queue;</li>
+<li>服务端接收请求，根据ReplyTo队列的属性将结果发送给客户端</li>
+<li>客户端接收回调队列的数据，匹配CorrelationId,输出响应</li>
+</ul>
+<ol>
+<li><p>RPC服务端</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">namespace RPCServer</span><br><span class="line">&#123;</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        public static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            var factory = new ConnectionFactory() &#123; HostName = &quot;localhost&quot; &#125;;</span><br><span class="line">            using (var connection = factory.CreateConnection())</span><br><span class="line">            &#123;</span><br><span class="line">                using (var channel = connection.CreateModel())</span><br><span class="line">                &#123;</span><br><span class="line">                    channel.QueueDeclare(</span><br><span class="line">                        queue: &quot;rpc_queue&quot;,</span><br><span class="line">                        durable: false,</span><br><span class="line">                        exclusive: false,</span><br><span class="line">                        autoDelete: false,</span><br><span class="line">                        arguments: null</span><br><span class="line">                        );</span><br><span class="line"></span><br><span class="line">                    //多个服务进程平均分配负载</span><br><span class="line">                    channel.BasicQos(0, 1, false);</span><br><span class="line">                    </span><br><span class="line">                    var consumer = new EventingBasicConsumer(channel);</span><br><span class="line"></span><br><span class="line">                    channel.BasicConsume(</span><br><span class="line">                        queue: &quot;rpc_queue&quot;,</span><br><span class="line">                        autoAck: false,</span><br><span class="line">                        consumer: consumer</span><br><span class="line">                        );</span><br><span class="line">                    Console.WriteLine(&quot; [x] Awaiting RPC requests&quot;);</span><br><span class="line"></span><br><span class="line">                    //接收请求消息</span><br><span class="line">                    consumer.Received += (model, ea) =&gt;</span><br><span class="line">                    &#123;</span><br><span class="line">                        string response = null;</span><br><span class="line"></span><br><span class="line">                        var body = ea.Body;</span><br><span class="line">                        var props = ea.BasicProperties;</span><br><span class="line"></span><br><span class="line">                        var replyProps = channel.CreateBasicProperties();</span><br><span class="line">                        replyProps.CorrelationId = props.CorrelationId;</span><br><span class="line">                        try</span><br><span class="line">                        &#123;</span><br><span class="line">                            var message = Encoding.UTF8.GetString(body);</span><br><span class="line">                            int n = int.Parse(message);</span><br><span class="line"></span><br><span class="line">                            Console.WriteLine(&quot;[.] fib(&#123;0&#125;)&quot;, message);</span><br><span class="line">                            response = fib(n).ToString();</span><br><span class="line">                        &#125;</span><br><span class="line">                        catch (Exception e)</span><br><span class="line">                        &#123;</span><br><span class="line">                            Console.WriteLine(&quot;[.]&quot; + e.Message);</span><br><span class="line">                            response = &quot;&quot;;</span><br><span class="line">                        &#125;</span><br><span class="line">                        finally</span><br><span class="line">                        &#123;</span><br><span class="line">                            //发送响应消息</span><br><span class="line">                            var responseBytes = Encoding.UTF8.GetBytes(response);</span><br><span class="line">                            channel.BasicPublish(</span><br><span class="line">                                exchange: &quot;&quot;,</span><br><span class="line">                                routingKey: props.ReplyTo,</span><br><span class="line">                                basicProperties: replyProps,</span><br><span class="line">                                body: responseBytes</span><br><span class="line">                                );</span><br><span class="line">                            channel.BasicAck(</span><br><span class="line">                                deliveryTag: ea.DeliveryTag,</span><br><span class="line">                                multiple: false</span><br><span class="line">                                );</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;;</span><br><span class="line">                    Console.WriteLine(&quot; Press [enter] to exit.&quot;);</span><br><span class="line">                    Console.ReadLine();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public static int fib(int n)</span><br><span class="line">        &#123;</span><br><span class="line">            if (n == 0 || n == 1) return n;</span><br><span class="line">            return fib(n - 1) + fib(n - 2);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>PRC客户端</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line">namespace RPCClient</span><br><span class="line">&#123;</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        public static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            var rpcClient = new RPCClient();</span><br><span class="line">            Console.WriteLine(&quot; [x] Requesting fib(30)&quot;);</span><br><span class="line"></span><br><span class="line">            var response = rpcClient.Call(&quot;30&quot;);</span><br><span class="line">            Console.WriteLine(&quot; [.] Got &apos;&#123;0&#125;&apos;&quot;, response);</span><br><span class="line"></span><br><span class="line">            rpcClient.Close();</span><br><span class="line"></span><br><span class="line">            Console.WriteLine(&quot; Press [enter] to exit.&quot;);</span><br><span class="line">            Console.ReadLine();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">namespace RPCClient</span><br><span class="line">&#123;</span><br><span class="line">    public class RPCClient</span><br><span class="line">    &#123;</span><br><span class="line">        private readonly IConnection connection;</span><br><span class="line">        private readonly IModel channel;</span><br><span class="line">        private readonly string replyQueueName;</span><br><span class="line">        private readonly EventingBasicConsumer consumer;</span><br><span class="line">        private readonly BlockingCollection&lt;string&gt; respQueue = new BlockingCollection&lt;string&gt;();</span><br><span class="line">        private readonly IBasicProperties props;</span><br><span class="line"></span><br><span class="line">        public RPCClient()</span><br><span class="line">        &#123;</span><br><span class="line">            var factory = new ConnectionFactory() &#123; HostName = &quot;localhost&quot; &#125;;</span><br><span class="line"></span><br><span class="line">            connection = factory.CreateConnection();</span><br><span class="line">            channel = connection.CreateModel();</span><br><span class="line"></span><br><span class="line">            replyQueueName = channel.QueueDeclare().QueueName;</span><br><span class="line"></span><br><span class="line">            consumer = new EventingBasicConsumer(channel);</span><br><span class="line"></span><br><span class="line">            props = channel.CreateBasicProperties();</span><br><span class="line">            var correlationId = Guid.NewGuid().ToString();</span><br><span class="line">            props.CorrelationId = correlationId;//RPC请求与响应关连--确定是哪个客户端发出的请求</span><br><span class="line">            props.ReplyTo = replyQueueName;//回调队列</span><br><span class="line"></span><br><span class="line">            //接收响应</span><br><span class="line">            consumer.Received += (model, ea) =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                var body = ea.Body;</span><br><span class="line">                var response = Encoding.UTF8.GetString(body);</span><br><span class="line">                if (ea.BasicProperties.CorrelationId == correlationId)</span><br><span class="line">                &#123;</span><br><span class="line">                    respQueue.Add(response);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;</span><br><span class="line">        public string Call(string message)</span><br><span class="line">        &#123;</span><br><span class="line">            var messageBytes = Encoding.UTF8.GetBytes(message);</span><br><span class="line">            //客户端向服务端发送请求</span><br><span class="line">            channel.BasicPublish(</span><br><span class="line">                exchange: &quot;&quot;,</span><br><span class="line">                routingKey: &quot;rpc_queue&quot;,</span><br><span class="line">                basicProperties: props,</span><br><span class="line">                body: messageBytes</span><br><span class="line">                );</span><br><span class="line">            //客户端接收服务端的响应</span><br><span class="line">            channel.BasicConsume(</span><br><span class="line">                consumer: consumer,</span><br><span class="line">                queue: replyQueueName,</span><br><span class="line">                autoAck: true</span><br><span class="line">                );</span><br><span class="line"></span><br><span class="line">            return respQueue.Take();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public void Close()</span><br><span class="line">        &#123;</span><br><span class="line">            connection.Close();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行</p>
+</li>
+</ol>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/RabbitMQ-RPC.jpg" alt="RabbitMQ-RPC.jpg"></p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2018年09月23日 14:29</p>
+        <p>原始链接： <a class="post-url" href="/2018/09/20/RabbitMQ/" title="RabbitMQ">https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/20/RabbitMQ/</a></p>
+        <footer>
+            <a href="https://www.github.com/ChangHub/BlogImages/raw/master">
+                <img src="/images/logo.png" alt="HongChangCui">
+                HongChangCui
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/20/RabbitMQ/&title=《RabbitMQ》 — ChangKe&pic=RabbitMQ.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/20/RabbitMQ/&title=《RabbitMQ》 — ChangKe&source=RabbitMQ是AMQP（Advanced Message Queuing Protocol）的开源实现，由以高性能、健壮以及可伸缩出名的Erlang写..." data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/20/RabbitMQ/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《RabbitMQ》 — ChangKe&url=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/20/RabbitMQ/&via=https://www.github.com/ChangHub/BlogImages/raw/master" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/20/RabbitMQ/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/20/RabbitMQ/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/MQ/" class="color3">MQ</a>
+      
+    <a href="/tags/消息队列/" class="color5">消息队列</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#RabbitMQ安装"><span class="post-toc-text">RabbitMQ安装</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装Erlang"><span class="post-toc-text">安装Erlang</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装RabbitMQ"><span class="post-toc-text">安装RabbitMQ</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#RabbitMQ节点"><span class="post-toc-text">RabbitMQ节点</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#RabbitMQ可视化"><span class="post-toc-text">RabbitMQ可视化</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#RabbitMQ实践"><span class="post-toc-text">RabbitMQ实践</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#HelloWorld"><span class="post-toc-text">HelloWorld</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Work-Queues"><span class="post-toc-text">Work Queues</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Publish-Subscribe"><span class="post-toc-text">Publish/Subscribe</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Routing"><span class="post-toc-text">Routing</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Topics"><span class="post-toc-text">Topics</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#RPC"><span class="post-toc-text">RPC</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+  
+    <a href="/2018/09/11/ASP.NET SignalR/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">ASP.NET SignalR</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+		<section id="comments" class="comments">
+			<style>
+			  .comments{margin:30px;padding:10px;background:#fff}
+			  @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+			</style>
+			<div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage@latest/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js'></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "hrqbaUF8km11bv4h31Rhiyco-gzGzoHsz",
+            app_key: "nm5to078TvS7MzkXnO78DHpI",
+            placeholder: "~(≧▽≦)/~来呀！快活呀！",
+            avatar: "mm",
+            pageSize: 10
+    });
+	
+	$('#comments .info').css({"display":"none"});
+	
+</script>
+		</section>
+	
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2018 HongChangCui<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://www.github.com/ChangHub/BlogImages/raw/master",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/ASP-NET/">ASP.NET</a><a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/JavaScript/">JavaScript</a><a class="category-link" href="/categories/MQ/">MQ</a><a class="category-link" href="/categories/MySQL/">MySQL</a><a class="category-link" href="/categories/便捷工具/">便捷工具</a><a class="category-link" href="/categories/原理/">原理</a><a class="category-link" href="/categories/基础知识/">基础知识</a><a class="category-link" href="/categories/年会/">年会</a><a class="category-link" href="/categories/年度总结/">年度总结</a><a class="category-link" href="/categories/开源项目/">开源项目</a><a class="category-link" href="/categories/插件/">插件</a><a class="category-link" href="/categories/软件使用/">软件使用</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/NET/" style="font-size: 10px;">.NET</a> <a href="/tags/ASP-NET/" style="font-size: 20px;">ASP.NET</a> <a href="/tags/CEF/" style="font-size: 10px;">CEF</a> <a href="/tags/CefSharp/" style="font-size: 10px;">CefSharp</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Jquery/" style="font-size: 10px;">Jquery</a> <a href="/tags/MQ/" style="font-size: 10px;">MQ</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/SignalR/" style="font-size: 10px;">SignalR</a> <a href="/tags/WebAPI/" style="font-size: 10px;">WebAPI</a> <a href="/tags/年会/" style="font-size: 10px;">年会</a> <a href="/tags/总结/" style="font-size: 20px;">总结</a> <a href="/tags/文件夹/" style="font-size: 10px;">文件夹</a> <a href="/tags/消息队列/" style="font-size: 10px;">消息队列</a> <a href="/tags/软件使用/" style="font-size: 10px;">软件使用</a> <a href="/tags/软件安装/" style="font-size: 10px;">软件安装</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/NET/" style="font-size: 10px;">.NET</a> <a href="/tags/ASP-NET/" style="font-size: 20px;">ASP.NET</a> <a href="/tags/CEF/" style="font-size: 10px;">CEF</a> <a href="/tags/CefSharp/" style="font-size: 10px;">CefSharp</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Jquery/" style="font-size: 10px;">Jquery</a> <a href="/tags/MQ/" style="font-size: 10px;">MQ</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/SignalR/" style="font-size: 10px;">SignalR</a> <a href="/tags/WebAPI/" style="font-size: 10px;">WebAPI</a> <a href="/tags/年会/" style="font-size: 10px;">年会</a> <a href="/tags/总结/" style="font-size: 20px;">总结</a> <a href="/tags/文件夹/" style="font-size: 10px;">文件夹</a> <a href="/tags/消息队列/" style="font-size: 10px;">消息队列</a> <a href="/tags/软件使用/" style="font-size: 10px;">软件使用</a> <a href="/tags/软件安装/" style="font-size: 10px;">软件安装</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>
