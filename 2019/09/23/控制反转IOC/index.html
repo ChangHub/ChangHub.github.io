@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>控制反转IOC | ChangKe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="ChangKe,ChangKe's Blog" />
+  
+  <meta name="description" content="IOC(Inversion of Control) 控制反转，是一种设计原则，意味者将设计好的对象交给容器控制，而不是传统的在对象内部直接控制。控制反转是为了解耦，方便测试和功能复用。由对象主动控制去获取依赖对象，变成由容器创建依赖对象，并注入到对象，对象被动接收依赖对象，即为反转。">
+<meta name="keywords" content="设计原则,控制反转">
+<meta property="og:type" content="article">
+<meta property="og:title" content="控制反转IOC">
+<meta property="og:url" content="https://www.github.com/ChangHub/BlogImages/raw/master/2019/09/23/控制反转IOC/index.html">
+<meta property="og:site_name" content="ChangKe">
+<meta property="og:description" content="IOC(Inversion of Control) 控制反转，是一种设计原则，意味者将设计好的对象交给容器控制，而不是传统的在对象内部直接控制。控制反转是为了解耦，方便测试和功能复用。由对象主动控制去获取依赖对象，变成由容器创建依赖对象，并注入到对象，对象被动接收依赖对象，即为反转。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/IOC概念.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/IOC区别.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/IOC流程.jpg">
+<meta property="og:updated_time" content="2018-09-24T15:26:25.406Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="控制反转IOC">
+<meta name="twitter:description" content="IOC(Inversion of Control) 控制反转，是一种设计原则，意味者将设计好的对象交给容器控制，而不是传统的在对象内部直接控制。控制反转是为了解耦，方便测试和功能复用。由对象主动控制去获取依赖对象，变成由容器创建依赖对象，并注入到对象，对象被动接收依赖对象，即为反转。">
+<meta name="twitter:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/IOC概念.jpg">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">ChangKe&#39;s Blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        ChangKe&#39;s Blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        一个专注 WEB 开发的技术博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="ChangKe" target="_blank" href="//changkehome.top">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/ChangHub">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" ">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" ">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-控制反转IOC" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      控制反转IOC
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/IOC/">IOC</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-09-23
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p><a href="https://en.wikipedia.org/wiki/Inversion_of_control" target="_blank" rel="noopener">IOC(Inversion of Control)</a> 控制反转，是一种设计原则，意味者将设计好的对象交给容器控制，而不是传统的在对象内部直接控制。控制反转是为了解耦，方便测试和功能复用。由对象主动控制去获取依赖对象，变成由容器创建依赖对象，并注入到对象，对象被动接收依赖对象，即为反转。</p>
+<a id="more"></a>
+<h1 id="IOC-Introduction"><a href="#IOC-Introduction" class="headerlink" title="IOC Introduction"></a>IOC Introduction</h1><h2 id="概念区分"><a href="#概念区分" class="headerlink" title="概念区分"></a>概念区分</h2><p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/IOC概念.jpg" alt="IOC概念.jpg"></p>
+<ul>
+<li><strong>IOC:Inversion of Control：设计原则</strong></li>
+</ul>
+<p>IOC是一种设计原则，建议在面向对象设计中反转不同类型的控件，以实现应用程序之间的松散耦合。如果想进行测试驱动开发（TDD），必须使用IOC原则。</p>
+<ul>
+<li><strong>DIP:Dependency Injection Principle：设计原则</strong></li>
+</ul>
+<p>DIP原则有助于实现类之间的松散耦合，DIP与IOC一起使用。</p>
+<p>DIP建议高级模块不应该依赖于低级模块，两者都取决于抽象。</p>
+<ul>
+<li><strong>DI:Dependency Injection：设计模式</strong></li>
+</ul>
+<p>DI依赖注入，是一种设计模式，它实现了IOC原则来反转对象的创建。</p>
+<ul>
+<li><strong>IOC Container：框架</strong></li>
+</ul>
+<p>IOC容器是一个管理整个应用程序中自动依赖注入的框架，.NET的IOC容器，如：Unity,Ninject,StructureMap,Autofac等。</p>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/IOC区别.jpg" alt="IOC区别.jpg"></p>
+<h2 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h2><p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/IOC流程.jpg" alt="IOC流程.jpg"></p>
+<ol>
+<li><p>使用工厂模式实现IOC</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">namespace IOC</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 业务逻辑层</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class CustomerBusinessLogic</span><br><span class="line">    &#123;</span><br><span class="line">        DataAccess _dataAccess;</span><br><span class="line"></span><br><span class="line">        public CustomerBusinessLogic()</span><br><span class="line">        &#123;</span><br><span class="line">            _dataAccess = new DataAccess();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public string GetCustomerName(int id)</span><br><span class="line">        &#123;</span><br><span class="line">            return _dataAccess.GetCustomerName(id);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace IOC</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 数据访问层</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class DataAccess</span><br><span class="line">    &#123;</span><br><span class="line">        public string GetCustomerName(int id)</span><br><span class="line">        &#123;</span><br><span class="line">            return &quot;Customer Name&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//业务逻辑层CustomerBusinessLogic依赖于数据访问层DataAccess，它们之间就是紧耦合，CustomerBusinessLogic包含DataAccess的引用，创建一个DataAccess对象并管理对象的声明周期</span><br><span class="line">//使用工厂模式创建DataAccess，实现松散耦合第一步</span><br><span class="line"></span><br><span class="line">namespace IOC</span><br><span class="line">&#123;</span><br><span class="line">    //工厂模式创建数据访问层</span><br><span class="line">    public class DataAccessFactory</span><br><span class="line">    &#123;</span><br><span class="line">        public static DataAccess GetDataAccessObj()</span><br><span class="line">        &#123;</span><br><span class="line">            return new DataAccess();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace IOC</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 业务逻辑层</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class CustomerBusinessLogic</span><br><span class="line">    &#123;</span><br><span class="line">        public string GetCustomerName(int id)</span><br><span class="line">        &#123;</span><br><span class="line">            DataAccess _dataAccess = DataAccessFactory.GetDataAccessObj();</span><br><span class="line"></span><br><span class="line">            return _dataAccess.GetCustomerName(id);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//将数据访问层DataAccess的创建由业务逻辑层CustomerBusinessLogic反转到DataAccessFactory，实现BusineesLogic与DataAccess之间的耦合</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用抽象实现DIP</p>
+<ul>
+<li>高级模块不应该依赖于低级模块，两者依赖于抽象</li>
+<li>抽象不应该依赖于细节，细节取决于抽象</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">namespace IOC</span><br><span class="line">&#123;</span><br><span class="line">    public interface ICustomerDataAccess</span><br><span class="line">    &#123;</span><br><span class="line">        string GetCustomerName(int id);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">namespace IOC</span><br><span class="line">&#123;</span><br><span class="line">    public class CustomerDataAccess : ICustomerDataAccess</span><br><span class="line">    &#123;</span><br><span class="line">        public string GetCustomerName(int id)</span><br><span class="line">        &#123;</span><br><span class="line">            return &quot;Customer Name&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//数据访问层DataAccess依赖于接口</span><br><span class="line"></span><br><span class="line">namespace IOC</span><br><span class="line">&#123;</span><br><span class="line">    public class DataAccessFactory</span><br><span class="line">    &#123;  </span><br><span class="line">        public static ICustomerDataAccess GetCustomerDataAccessObj()</span><br><span class="line">        &#123;</span><br><span class="line">            return new CustomerDataAccess();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//数据访问层DataAccess控制反转</span><br><span class="line"></span><br><span class="line">namespace IOC</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 业务逻辑层</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class CustomerBusinessLogic</span><br><span class="line">    &#123;</span><br><span class="line">        ICustomerDataAccess _customerDataAccess;</span><br><span class="line">        public CustomerBusinessLogic()</span><br><span class="line">        &#123;</span><br><span class="line">            _customerDataAccess = DataAccessFactory.GetCustomerDataAccessObj();</span><br><span class="line">        &#125;</span><br><span class="line">        public string GetCustomerName(int id)</span><br><span class="line">        &#123;</span><br><span class="line">            return _customerDataAccess.GetCustomerName(id);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//业务逻辑层BusinessLogic依赖于接口</span><br><span class="line">//上述，实现了依赖注入原则DIP</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>实现依赖注入DI</p>
+<p>将创建服务类对象的责任分离到客户端类</p>
+<p>依赖注入涉及类：三种</p>
+<ul>
+<li>Client Class：一个依赖与服务类的客户端类</li>
+<li>Service Class：一个为客户端提供服务的服务类</li>
+<li>Injector Class：将服务类对象注入到客户端类</li>
+</ul>
+<p>依赖注入类型：三种</p>
+<ul>
+<li><p>Constructor Injection：构造函数注入，注入客户端类的构造函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">namespace IOC</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 业务逻辑层</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class CustomerBusinessLogic</span><br><span class="line">    &#123;</span><br><span class="line">        //构造函数注入</span><br><span class="line">        ICustomerDataAccess _dataAccess;</span><br><span class="line">        public CustomerBusinessLogic(ICustomerDataAccess customerDataAccess)</span><br><span class="line">        &#123;</span><br><span class="line">            _dataAccess = customerDataAccess;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public string GetCustomerName(int id)</span><br><span class="line">        &#123;</span><br><span class="line">            return _dataAccess.GetCustomerName(id);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace IOC</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 服务层</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class CustomerService</span><br><span class="line">    &#123;</span><br><span class="line">        CustomerBusinessLogic _customerBL;</span><br><span class="line">        public CustomerService()</span><br><span class="line">        &#123;</span><br><span class="line">            _customerBL = new CustomerBusinessLogic(new CustomerDataAccess());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public string GetCustomerName(int id)</span><br><span class="line">        &#123;</span><br><span class="line">            return _customerBL.GetCustomerName(id);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//通过构造函数，将数据访问层注入到业务逻辑层，由服务层调用，实现业务逻辑层和数据访问层更松散耦合</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Property Injection：属性注入，注入客户端类的公共属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">namespace IOC</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 业务逻辑层</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class CustomerBusinessLogic</span><br><span class="line">    &#123;</span><br><span class="line">        //属性注入</span><br><span class="line">        public ICustomerDataAccess DataAccess &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">        public string GetCustomerName(int id)</span><br><span class="line">        &#123;</span><br><span class="line">            return DataAccess.GetCustomerName(id);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace IOC</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 服务层</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class CustomerService</span><br><span class="line">    &#123;</span><br><span class="line">        CustomerBusinessLogic _customerBL;</span><br><span class="line">        public CustomerService()</span><br><span class="line">        &#123;</span><br><span class="line">            _customerBL = new CustomerBusinessLogic();</span><br><span class="line">            _customerBL.DataAccess = new CustomerDataAccess();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public string GetCustomerName(int id)</span><br><span class="line">        &#123;</span><br><span class="line">            return _customerBL.GetCustomerName(id);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Method Injection：方法注入，客户端类实现一个接口，接口方法提供依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">namespace IOC</span><br><span class="line">&#123;</span><br><span class="line">    public interface IDataAccessDependency</span><br><span class="line">    &#123;</span><br><span class="line">        void SetDependency(ICustomerDataAccess dataAccess);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace IOC</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 业务逻辑层</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class CustomerBusinessLogic : IDataAccessDependency</span><br><span class="line">    &#123;</span><br><span class="line">        //方法注入</span><br><span class="line">        ICustomerDataAccess _dataAccess;</span><br><span class="line"></span><br><span class="line">        public string GetCustomerName(int id)</span><br><span class="line">        &#123;</span><br><span class="line">            return _dataAccess.GetCustomerName(id);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public void SetDependency(ICustomerDataAccess dataAccess)</span><br><span class="line">        &#123;</span><br><span class="line">            _dataAccess = dataAccess;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">namespace IOC</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 服务层</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class CustomerService</span><br><span class="line">    &#123;</span><br><span class="line">        CustomerBusinessLogic _customerBL;</span><br><span class="line">        public CustomerService()</span><br><span class="line">        &#123;</span><br><span class="line">            _customerBL = new CustomerBusinessLogic();</span><br><span class="line">            _customerBL.SetDependency(new CustomerDataAccess());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public string GetCustomerName(int id)</span><br><span class="line">        &#123;</span><br><span class="line">            return _customerBL.GetCustomerName(id);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//上面通过DI实现DIP及IOC,实际项目中依赖类很多，实现这些模式很耗时，可以使用IOC容器</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>使用IOC容器实现耦合</p>
+<p>IOC容器又称DI Container，是一个用于实现自动依赖注入的框架，它管理对象的创建和生命周期，并为类注入依赖项。</p>
+<p>DI生命周期：</p>
+<ul>
+<li>Register:容器必须知道在遇到特定类型时要实例化的依赖项，一般，包含一些注册类型映射的方法</li>
+<li>Resolve:使用IOC容器，不需要手动创建对象，容器必须包含一些方法来解析指定的类型</li>
+<li>Dispose:容器管理依赖对象的生命周期</li>
+</ul>
+<p>常用IOC容器：</p>
+<ul>
+<li>Unity</li>
+<li>StructureMap</li>
+<li>Castle Windsor</li>
+<li>Ninject</li>
+<li>Autofac</li>
+<li>DryIoc</li>
+<li>Simple Injector</li>
+<li>Light Inject</li>
+</ul>
+</li>
+</ol>
+<h1 id="Unity-Container"><a href="#Unity-Container" class="headerlink" title="Unity Container"></a>Unity Container</h1><p>   <a href="https://github.com/unitycontainer/unity" target="_blank" rel="noopener">Unity Container</a>是一个支持.NET应用程序的开源IOC容器，它是一个轻量可扩展的IOC容器。</p>
+<ul>
+<li>接口类型或基本类型的简化类型映射注册</li>
+<li>支持现有的实例的注册</li>
+<li>支持基于代码的注册及设计时注册</li>
+<li>通过构造函数，属性或方法在运行时自动注入注册</li>
+<li>支持延迟解决方案</li>
+<li>基于生命周期管理器自动处理实例</li>
+<li>支持类型拦截和实例拦截</li>
+</ul>
+<ol>
+<li><p>创建控制台应用程序，安装Unity </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">//接口定义</span><br><span class="line">namespace UnityContainer</span><br><span class="line">&#123;</span><br><span class="line">    //车辆接口类：ICar</span><br><span class="line">    public interface ICar</span><br><span class="line">    &#123;</span><br><span class="line">        int Run();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//接口实现1</span><br><span class="line">namespace UnityContainer</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 接口实现类：宝马</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class BMW : ICar</span><br><span class="line">    &#123;</span><br><span class="line">        private int _miles = 0;</span><br><span class="line">        public int Run()</span><br><span class="line">        &#123;</span><br><span class="line">            return ++_miles;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//接口实现2</span><br><span class="line">namespace UnityContainer</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 接口实现类：福特</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class Ford : ICar</span><br><span class="line">    &#123;</span><br><span class="line">        private int _miles = 0;</span><br><span class="line">        public int Run()</span><br><span class="line">        &#123;</span><br><span class="line">            return ++_miles;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//接口调用</span><br><span class="line">namespace UnityContainer</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 接口调用</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class Driver</span><br><span class="line">    &#123;</span><br><span class="line">        private ICar _car = null;</span><br><span class="line"></span><br><span class="line">        public Driver(ICar car)</span><br><span class="line">        &#123;</span><br><span class="line">            _car = car;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public void RunCar()</span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(&quot;Running &#123;0&#125;-&#123;1&#125; mile&quot;, _car.GetType().Name, _car.Run());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//输出</span><br><span class="line">namespace UnityContainerTest</span><br><span class="line">&#123;</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            Driver driver = new Driver(new BMW());</span><br><span class="line">            driver.RunCar();</span><br><span class="line"></span><br><span class="line">            Console.Read();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//上述，Driver类依赖于ICar接口，创建Driver类时，需要手动注入Car类型的依赖</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用UnityContainer自动注册依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">namespace UnityContainerTest</span><br><span class="line">&#123;</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            //创建UnityContainer实例</span><br><span class="line">            IUnityContainer container = new UnityContainer();</span><br><span class="line">            //注册类型映射--注册多个相同类型的映射，将注入最后一个</span><br><span class="line">            container.RegisterType&lt;ICar, BMW&gt;();</span><br><span class="line">            container.RegisterType&lt;ICar, Ford&gt;();</span><br><span class="line">            //自动注入依赖项</span><br><span class="line">            Driver drv = container.Resolve&lt;Driver&gt;();</span><br><span class="line"></span><br><span class="line">            drv.RunCar();</span><br><span class="line"></span><br><span class="line">            Console.Read();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>构造函数注入实现</p>
+<p>上述，Resolve()方法默认在解析类型时执行构造函数注入。</p>
+<ul>
+<li><p>多个参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line">namespace UnityContainerTest</span><br><span class="line">&#123;</span><br><span class="line">    //车辆接口类：ICar</span><br><span class="line">    public interface ICar</span><br><span class="line">    &#123;</span><br><span class="line">        int Run();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace UnityContainerTest</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 接口实现类：宝马</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class BMW : ICar</span><br><span class="line">    &#123;</span><br><span class="line">        private int _miles = 0;</span><br><span class="line">        public int Run()</span><br><span class="line">        &#123;</span><br><span class="line">            return ++_miles;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace UnityContainerTest</span><br><span class="line">&#123;</span><br><span class="line">    public interface ICarKey</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace UnityContainerTest</span><br><span class="line">&#123;</span><br><span class="line">    public class BMWKey : ICarKey</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">namespace UnityContainerTest</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 接口调用</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class Driver</span><br><span class="line">    &#123;</span><br><span class="line">        private ICar _car = null;</span><br><span class="line">        private ICarKey _key = null;</span><br><span class="line">	    //多个参数构造</span><br><span class="line">        public Driver(ICar car, ICarKey key)</span><br><span class="line">        &#123;</span><br><span class="line">            _car = car;</span><br><span class="line">            _key = key;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public void RunCar()</span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(&quot;Running &#123;0&#125;-&#123;1&#125; mile&quot;, _car.GetType().Name, _car.Run());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">namespace UnityContainerTest</span><br><span class="line">&#123;</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            //创建UnityContainer实例</span><br><span class="line">            IUnityContainer container = new UnityContainer();</span><br><span class="line">            //注册类型映射--将每个参数类型都注册</span><br><span class="line">            container.RegisterType&lt;ICar, BMW&gt;();</span><br><span class="line">            container.RegisterType&lt;ICar, Ford&gt;();</span><br><span class="line">            container.RegisterType&lt;ICarKey, BMWKey&gt;();</span><br><span class="line"></span><br><span class="line">            //自动注入依赖项</span><br><span class="line">            Driver drv = container.Resolve&lt;Driver&gt;();</span><br><span class="line"></span><br><span class="line">            drv.RunCar();</span><br><span class="line"></span><br><span class="line">            Console.Read();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>多个构造函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">//1.在构造函数上使用[InjectionConstructor]属性注解，指示要用于构造注入的构造函数</span><br><span class="line">namespace UnityContainerTest</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 接口调用</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class Driver</span><br><span class="line">    &#123;</span><br><span class="line">        private ICar _car = null;</span><br><span class="line">        private ICarKey _key = null;</span><br><span class="line">        </span><br><span class="line">        //该构造方法会被调用注入依赖类，创建Driver对象</span><br><span class="line">        [InjectionConstructor]</span><br><span class="line">        public Driver(ICar car)</span><br><span class="line">        &#123;</span><br><span class="line">            _car = car;</span><br><span class="line">        &#125;</span><br><span class="line">        public Driver(ICar car, ICarKey key)</span><br><span class="line">        &#123;</span><br><span class="line">            _car = car;</span><br><span class="line">            _key = key;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public void RunCar()</span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(&quot;Running &#123;0&#125;-&#123;1&#125; mile&quot;, _car.GetType().Name, _car.Run());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//2.在运行时配置，通过在RegisterType()方法中传递InjectionConstructor实例</span><br><span class="line"></span><br><span class="line">namespace UnityContainerTest</span><br><span class="line">&#123;</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            //创建UnityContainer实例</span><br><span class="line">            IUnityContainer container = new UnityContainer();</span><br><span class="line">            //注册类型映射</span><br><span class="line">            //会调用具有一个ICar参数的构造函数</span><br><span class="line">            container.RegisterType&lt;Driver&gt;(new InjectionConstructor(new BMW()));</span><br><span class="line">            //或者</span><br><span class="line">            //container.RegisterType&lt;ICar, BMW&gt;();</span><br><span class="line">            //container.RegisterType&lt;Driver&gt;(new InjectionConstructor(container.Resolve&lt;ICar&gt;()));</span><br><span class="line">            //自动注入依赖项</span><br><span class="line">            Driver drv = container.Resolve&lt;Driver&gt;();</span><br><span class="line"></span><br><span class="line">            drv.RunCar();</span><br><span class="line"></span><br><span class="line">            Console.Read();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>属性注入实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">//1.在属性上使用[Dependency]属性注解</span><br><span class="line">namespace UnityContainerTest</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 接口调用</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class Driver</span><br><span class="line">    &#123;</span><br><span class="line">        //属性自动注入实例化Car，默认时container调用RegisterType注册的最后一个类型</span><br><span class="line">        [Dependency]</span><br><span class="line">        public ICar Car &#123; get; set; &#125;</span><br><span class="line">        //也可以设置名称，指定注册类</span><br><span class="line">        //[Dependency(&quot;CHCCar&quot;)]</span><br><span class="line">        //public ICar Car &#123; get; set; &#125;</span><br><span class="line">        </span><br><span class="line">        public void RunCar()</span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(&quot;Running &#123;0&#125;-&#123;1&#125; mile&quot;, this.Car.GetType().Name, Car.Run());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace UnityContainerTest</span><br><span class="line">&#123;</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            //创建UnityContainer实例</span><br><span class="line">            IUnityContainer container = new UnityContainer();</span><br><span class="line">            //注册类型映射</span><br><span class="line">            container.RegisterType&lt;ICar, BMW&gt;();</span><br><span class="line">            //container.RegisterType&lt;ICar, BMW&gt;(&quot;CHCCar&quot;);</span><br><span class="line">            container.RegisterType&lt;ICar, Ford&gt;();</span><br><span class="line">           </span><br><span class="line">            //自动注入依赖项</span><br><span class="line">            Driver drv = container.Resolve&lt;Driver&gt;();</span><br><span class="line"></span><br><span class="line">            drv.RunCar();</span><br><span class="line"></span><br><span class="line">            Console.Read();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//2.在运行时配置，RegisterType()方法中是传递InjectionProperty实例</span><br><span class="line">namespace UnityContainerTest</span><br><span class="line">&#123;</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            //创建UnityContainer实例</span><br><span class="line">            IUnityContainer container = new UnityContainer();</span><br><span class="line">            //注册类型映射</span><br><span class="line">            container.RegisterType&lt;Driver&gt;(new InjectionProperty(&quot;Car&quot;, new BMW()));</span><br><span class="line">		   //或者</span><br><span class="line">            //container.RegisterType&lt;ICar, Ford&gt;();</span><br><span class="line">            //container.RegisterType&lt;Driver&gt;(new InjectionProperty(&quot;Car&quot;, container.Resolve&lt;ICar&gt;()));</span><br><span class="line">            //自动注入依赖项</span><br><span class="line">            Driver drv = container.Resolve&lt;Driver&gt;();</span><br><span class="line"></span><br><span class="line">            drv.RunCar();</span><br><span class="line"></span><br><span class="line">            Console.Read();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方法注入实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">//1.通过在方法上使用[InjectionMethod]注解属性</span><br><span class="line">namespace UnityContainerTest</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 接口调用</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class Driver</span><br><span class="line">    &#123;</span><br><span class="line">        private ICar _car = null;</span><br><span class="line"></span><br><span class="line">        [InjectionMethod]</span><br><span class="line">        public void UseCar(ICar car)</span><br><span class="line">        &#123;</span><br><span class="line">            _car = car;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public void RunCar()</span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(&quot;Running &#123;0&#125;-&#123;1&#125; mile&quot;, _car.GetType().Name, _car.Run());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace UnityContainerTest</span><br><span class="line">&#123;</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            //创建UnityContainer实例</span><br><span class="line">            IUnityContainer container = new UnityContainer();</span><br><span class="line">            //注册类型映射</span><br><span class="line">            container.RegisterType&lt;ICar, Ford&gt;();</span><br><span class="line">            //自动注入依赖项</span><br><span class="line">            Driver drv = container.Resolve&lt;Driver&gt;();</span><br><span class="line"></span><br><span class="line">            drv.RunCar();</span><br><span class="line"></span><br><span class="line">            Console.Read();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//2.通过运行时配置，在RegisterType()方法中传递InjetionMethod实例</span><br><span class="line">namespace UnityContainerTest</span><br><span class="line">&#123;</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            //创建UnityContainer实例</span><br><span class="line">            IUnityContainer container = new UnityContainer();</span><br><span class="line">            //注册类型映射</span><br><span class="line">            container.RegisterType&lt;Driver&gt;(new InjectionMethod(&quot;UseCar&quot;, new BMW()));</span><br><span class="line">            //或者</span><br><span class="line">            //container.RegisterType&lt;ICar, Ford&gt;();</span><br><span class="line">            //container.RegisterType&lt;Driver&gt;(new InjectionMethod(&quot;UseCar&quot;, container.Resolve&lt;ICar&gt;()));</span><br><span class="line"></span><br><span class="line">            //自动注入依赖项</span><br><span class="line">            Driver drv = container.Resolve&lt;Driver&gt;();</span><br><span class="line"></span><br><span class="line">            drv.RunCar();</span><br><span class="line"></span><br><span class="line">            Console.Read();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ResolverOvrride</p>
+<p>Unity容器允许使用ResolverOverride覆盖已注册的类型。ResolverOverride是一个抽象类，提供覆盖注册的实现。</p>
+<ul>
+<li><p>ParameterOverride:覆盖构造函数参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">namespace UnityContainerTest</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 接口调用</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class Driver</span><br><span class="line">    &#123;</span><br><span class="line">        private ICar _car = null;</span><br><span class="line">        public Driver(ICar car)</span><br><span class="line">        &#123;</span><br><span class="line">            _car = car;</span><br><span class="line">        &#125;</span><br><span class="line">        public void RunCar()</span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(&quot;Running &#123;0&#125;-&#123;1&#125; mile&quot;, _car.GetType().Name, _car.Run());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">namespace UnityContainerTest</span><br><span class="line">&#123;</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            //创建UnityContainer实例</span><br><span class="line">            IUnityContainer container = new UnityContainer();</span><br><span class="line">            //注册类型映射</span><br><span class="line">            container.RegisterType&lt;ICar, Ford&gt;();//默认注册：Ford</span><br><span class="line">            //自动注入依赖项</span><br><span class="line">            Driver drv = container.Resolve&lt;Driver&gt;();</span><br><span class="line">            drv.RunCar();</span><br><span class="line"></span><br><span class="line">            Driver drv2 = container.Resolve&lt;Driver&gt;(new ParameterOverride(&quot;car&quot;, new BMW()));//重写注册：BMW</span><br><span class="line">            drv2.RunCar();</span><br><span class="line"></span><br><span class="line">            Console.Read();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>PropertyOverride:覆盖指定属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">namespace UnityContainerTest</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 接口调用</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class Driver</span><br><span class="line">    &#123;</span><br><span class="line">        public ICar Car &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">        public void RunCar()</span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(&quot;running &#123;0&#125;-&#123;1&#125; mile&quot;, this.Car.GetType().Name, Car.Run());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace UnityContainerTest</span><br><span class="line">&#123;</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        &#123;       </span><br><span class="line">            //创建UnityContainer实例</span><br><span class="line">            IUnityContainer container = new UnityContainer();</span><br><span class="line">            //注册类型映射</span><br><span class="line">            container.RegisterType&lt;Driver&gt;(new InjectionProperty(&quot;Car&quot;, new BMW()));</span><br><span class="line">            //自动注入依赖项</span><br><span class="line">            Driver drv = container.Resolve&lt;Driver&gt;();</span><br><span class="line">            drv.RunCar();</span><br><span class="line">            </span><br><span class="line">            Driver drv2 = container.Resolve&lt;Driver&gt;(new PropertyOverride(&quot;Car&quot;, new Ford()));</span><br><span class="line">            drv2.RunCar();</span><br><span class="line"></span><br><span class="line">            Console.Read();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>DependencyOverride:覆盖依赖项</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">namespace UnityContainerTest</span><br><span class="line">&#123;</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            //创建UnityContainer实例</span><br><span class="line">            IUnityContainer container = new UnityContainer();</span><br><span class="line">            //注册类型映射</span><br><span class="line">            container.RegisterType&lt;ICar, Ford&gt;();</span><br><span class="line">            //自动注入依赖项</span><br><span class="line">            Driver drv = container.Resolve&lt;Driver&gt;();</span><br><span class="line">            drv.RunCar();</span><br><span class="line"></span><br><span class="line">            Driver drv3 = container.Resolve&lt;Driver&gt;(new DependencyOverride&lt;ICar&gt;(new BMW()));</span><br><span class="line">            drv3.RunCar();</span><br><span class="line"></span><br><span class="line">            Console.Read();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2018年09月24日 23:26</p>
+        <p>原始链接： <a class="post-url" href="/2019/09/23/控制反转IOC/" title="控制反转IOC">https://www.github.com/ChangHub/BlogImages/raw/master/2019/09/23/控制反转IOC/</a></p>
+        <footer>
+            <a href="https://www.github.com/ChangHub/BlogImages/raw/master">
+                <img src="/images/logo.png" alt="HongChangCui">
+                HongChangCui
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.github.com/ChangHub/BlogImages/raw/master/2019/09/23/控制反转IOC/&title=《控制反转IOC》 — ChangKe&pic=IOC.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.github.com/ChangHub/BlogImages/raw/master/2019/09/23/控制反转IOC/&title=《控制反转IOC》 — ChangKe&source=IOC(Inversion of Control) 控制反转，是一种设计原则，意味者将设计好的对象交给容器控制，而不是传统的在对象内部直接控制。控制反转是..." data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.github.com/ChangHub/BlogImages/raw/master/2019/09/23/控制反转IOC/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《控制反转IOC》 — ChangKe&url=https://www.github.com/ChangHub/BlogImages/raw/master/2019/09/23/控制反转IOC/&via=https://www.github.com/ChangHub/BlogImages/raw/master" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.github.com/ChangHub/BlogImages/raw/master/2019/09/23/控制反转IOC/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.github.com/ChangHub/BlogImages/raw/master/2019/09/23/控制反转IOC/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/设计原则/" class="color5">设计原则</a>
+      
+    <a href="/tags/控制反转/" class="color5">控制反转</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#IOC-Introduction"><span class="post-toc-text">IOC Introduction</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#概念区分"><span class="post-toc-text">概念区分</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#流程控制"><span class="post-toc-text">流程控制</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Unity-Container"><span class="post-toc-text">Unity Container</span></a></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+  
+    <a href="/2018/09/20/RabbitMQ/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">RabbitMQ</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+		<section id="comments" class="comments">
+			<style>
+			  .comments{margin:30px;padding:10px;background:#fff}
+			  @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+			</style>
+			<div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage@latest/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js'></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "hrqbaUF8km11bv4h31Rhiyco-gzGzoHsz",
+            app_key: "nm5to078TvS7MzkXnO78DHpI",
+            placeholder: "~(≧▽≦)/~来呀！快活呀！",
+            avatar: "mm",
+            pageSize: 10
+    });
+	
+	$('#comments .info').css({"display":"none"});
+	
+</script>
+		</section>
+	
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2018 HongChangCui<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://www.github.com/ChangHub/BlogImages/raw/master",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/ASP-NET/">ASP.NET</a><a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/IOC/">IOC</a><a class="category-link" href="/categories/JavaScript/">JavaScript</a><a class="category-link" href="/categories/MQ/">MQ</a><a class="category-link" href="/categories/MySQL/">MySQL</a><a class="category-link" href="/categories/便捷工具/">便捷工具</a><a class="category-link" href="/categories/原理/">原理</a><a class="category-link" href="/categories/基础知识/">基础知识</a><a class="category-link" href="/categories/年会/">年会</a><a class="category-link" href="/categories/年度总结/">年度总结</a><a class="category-link" href="/categories/开源项目/">开源项目</a><a class="category-link" href="/categories/插件/">插件</a><a class="category-link" href="/categories/软件使用/">软件使用</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/NET/" style="font-size: 10px;">.NET</a> <a href="/tags/ASP-NET/" style="font-size: 20px;">ASP.NET</a> <a href="/tags/CEF/" style="font-size: 10px;">CEF</a> <a href="/tags/CefSharp/" style="font-size: 10px;">CefSharp</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Jquery/" style="font-size: 10px;">Jquery</a> <a href="/tags/MQ/" style="font-size: 10px;">MQ</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/SignalR/" style="font-size: 10px;">SignalR</a> <a href="/tags/WebAPI/" style="font-size: 10px;">WebAPI</a> <a href="/tags/年会/" style="font-size: 10px;">年会</a> <a href="/tags/总结/" style="font-size: 20px;">总结</a> <a href="/tags/控制反转/" style="font-size: 10px;">控制反转</a> <a href="/tags/文件夹/" style="font-size: 10px;">文件夹</a> <a href="/tags/消息队列/" style="font-size: 10px;">消息队列</a> <a href="/tags/设计原则/" style="font-size: 10px;">设计原则</a> <a href="/tags/软件使用/" style="font-size: 10px;">软件使用</a> <a href="/tags/软件安装/" style="font-size: 10px;">软件安装</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/NET/" style="font-size: 10px;">.NET</a> <a href="/tags/ASP-NET/" style="font-size: 20px;">ASP.NET</a> <a href="/tags/CEF/" style="font-size: 10px;">CEF</a> <a href="/tags/CefSharp/" style="font-size: 10px;">CefSharp</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Jquery/" style="font-size: 10px;">Jquery</a> <a href="/tags/MQ/" style="font-size: 10px;">MQ</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/SignalR/" style="font-size: 10px;">SignalR</a> <a href="/tags/WebAPI/" style="font-size: 10px;">WebAPI</a> <a href="/tags/年会/" style="font-size: 10px;">年会</a> <a href="/tags/总结/" style="font-size: 20px;">总结</a> <a href="/tags/控制反转/" style="font-size: 10px;">控制反转</a> <a href="/tags/文件夹/" style="font-size: 10px;">文件夹</a> <a href="/tags/消息队列/" style="font-size: 10px;">消息队列</a> <a href="/tags/设计原则/" style="font-size: 10px;">设计原则</a> <a href="/tags/软件使用/" style="font-size: 10px;">软件使用</a> <a href="/tags/软件安装/" style="font-size: 10px;">软件安装</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>
