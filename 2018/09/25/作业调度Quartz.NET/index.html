@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>作业调度Quartz.NET | ChangKe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="ChangKe,ChangKe's Blog" />
+  
+  <meta name="description" content="Quartz.NET是一个功能齐全的作业调度系统，可用于小型应用程序，也可用于大型企业系统。Quartz.NET是用C#编写的.NET库，移植于开源的Java作业调度框架Quartz。">
+<meta name="keywords" content="作业调度,定时任务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="作业调度Quartz.NET">
+<meta property="og:url" content="https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/25/作业调度Quartz.NET/index.html">
+<meta property="og:site_name" content="ChangKe">
+<meta property="og:description" content="Quartz.NET是一个功能齐全的作业调度系统，可用于小型应用程序，也可用于大型企业系统。Quartz.NET是用C#编写的.NET库，移植于开源的Java作业调度框架Quartz。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/QuartzStart.jpg">
+<meta property="og:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/QuartzJobDataMap.jpg">
+<meta property="og:updated_time" content="2018-09-28T16:06:03.827Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="作业调度Quartz.NET">
+<meta name="twitter:description" content="Quartz.NET是一个功能齐全的作业调度系统，可用于小型应用程序，也可用于大型企业系统。Quartz.NET是用C#编写的.NET库，移植于开源的Java作业调度框架Quartz。">
+<meta name="twitter:image" content="https://www.github.com/ChangHub/BlogImages/raw/master/QuartzStart.jpg">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">ChangKe&#39;s Blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        ChangKe&#39;s Blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        一个专注 WEB 开发的技术博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="ChangKe" target="_blank" href="//changkehome.top">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/ChangHub">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" ">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" ">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-作业调度Quartz.NET" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      作业调度Quartz.NET
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/Quartz.NET/">Quartz.NET</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2018-09-25
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p><a href="https://www.quartz-scheduler.net/" target="_blank" rel="noopener">Quartz.NET</a>是一个功能齐全的作业调度系统，可用于小型应用程序，也可用于大型企业系统。Quartz.NET是用C#编写的.NET库，移植于开源的Java作业调度框架Quartz。</p>
+<a id="more"></a>
+<h1 id="Quartz简介"><a href="#Quartz简介" class="headerlink" title="Quartz简介"></a>Quartz简介</h1><p>Quartz是一个作业调度系统，作业调度程序是一个负责在执行前执行（或者通知）其他软件组件的系统。</p>
+<p>Quartz具有容错能力，可以在系统重启之间依然保持作业任务。</p>
+<p>Quartz主要接口是Scheduler接口，它提供了简单的操作，如调度作业，启动/停止/暂停调度程序。</p>
+<p>如果安排自己的软件组件执行，必须实现Job接口，执行Execute方法。</p>
+<p>如果希望在触发时间前通知组件，必须实现TriggerListener或JobListener接口。</p>
+<h1 id="Quartz与Timer"><a href="#Quartz与Timer" class="headerlink" title="Quartz与Timer"></a>Quartz与Timer</h1><p>.NET Framework具有内置计时器功能，System.Timers.Timer类，但与Quartz比较，不足之处：</p>
+<ul>
+<li>定时器没有持久性机制</li>
+<li>定时器灵活度低（仅能够设置开始时间和重复间隔）</li>
+<li>定时器不使用线程池（每个定时器一个线程）</li>
+<li>计时器没有真正的管理方案，需要自己编写机制</li>
+</ul>
+<h1 id="Quartz-3-X"><a href="#Quartz-3-X" class="headerlink" title="Quartz 3.X"></a>Quartz 3.X</h1><h2 id="Quartz使用"><a href="#Quartz使用" class="headerlink" title="Quartz使用"></a>Quartz使用</h2><ol>
+<li><p>创建控制台应用程序，安装Quartz</p>
+<p><code>Install-Package Quartz</code></p>
+</li>
+<li><p>创建自定义任务HelloJob</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">namespace QuartzStart</span><br><span class="line">&#123;</span><br><span class="line">    public class HelloJob : IJob</span><br><span class="line">    &#123;</span><br><span class="line">        public async Task Execute(IJobExecutionContext context)</span><br><span class="line">        &#123;</span><br><span class="line">            await Console.Out.WriteLineAsync(&quot;Hello World&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//自定义任务HelloJOb，需要实现IJob接口，实现接口的唯一方法Excute</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置记录日志ConsoleLogProvider</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">namespace QuartzStart</span><br><span class="line">&#123;</span><br><span class="line">    public class ConsoleLogProvider : ILogProvider</span><br><span class="line">    &#123;</span><br><span class="line">        public Logger GetLogger(string name)</span><br><span class="line">        &#123;</span><br><span class="line">            return (level, func, exception, parameters) =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                if (level &gt;= LogLevel.Info &amp;&amp; func != null)</span><br><span class="line">                &#123;</span><br><span class="line">                    Console.WriteLine(&quot;[&quot; + DateTime.Now.ToLongTimeString() + &quot;] [&quot; + level + &quot;] &quot; + func(), parameters);</span><br><span class="line">                &#125;</span><br><span class="line">                return true;</span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public IDisposable OpenMappedContext(string key, string value)</span><br><span class="line">        &#123;</span><br><span class="line">            throw new NotImplementedException();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public IDisposable OpenNestedContext(string message)</span><br><span class="line">        &#123;</span><br><span class="line">            throw new NotImplementedException();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//Quartz默认的日志框架是LibLog，当然可以设置其他日志框架，如Log4NET,NLog和Serilog</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建调度(Scheduler) 触发(Trigger)任务(JobDetail)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">namespace QuartzStart</span><br><span class="line">&#123;</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        public static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            //记录日志：使用默认日志框架LibLog</span><br><span class="line">            LogProvider.SetCurrentLogProvider(new ConsoleLogProvider());</span><br><span class="line"></span><br><span class="line">            //异步求值</span><br><span class="line">            RunProgram().GetAwaiter().GetResult();</span><br><span class="line">            Console.Read();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        private static async Task RunProgram()</span><br><span class="line">        &#123;</span><br><span class="line">            try</span><br><span class="line">            &#123;</span><br><span class="line">                NameValueCollection props = new NameValueCollection &#123; </span><br><span class="line">                    &#123;&quot;quartz.serializer.type&quot;,&quot;binary&quot;&#125;</span><br><span class="line">                &#125;;</span><br><span class="line"></span><br><span class="line">                StdSchedulerFactory factory = new StdSchedulerFactory(props);</span><br><span class="line"></span><br><span class="line">                //通过工厂获取Scheduler实例</span><br><span class="line">                IScheduler scheduler = await factory.GetScheduler();</span><br><span class="line"></span><br><span class="line">                //启动调度Scheduler</span><br><span class="line">                await scheduler.Start();</span><br><span class="line"></span><br><span class="line">                //通过JobBuilder创建任务JobDetail实例，并与自定义任务HelloJob关连</span><br><span class="line">                IJobDetail job = JobBuilder.Create&lt;HelloJob&gt;().WithIdentity(&quot;job1&quot;, &quot;group1&quot;).Build();</span><br><span class="line"></span><br><span class="line">                //通过TriggerBulider创建触发器实例Trigger,并设置立即触发任务，且每10秒重复一次</span><br><span class="line">                ITrigger trigger = TriggerBuilder.Create().WithIdentity(&quot;trigger1&quot;, &quot;group1&quot;).StartNow()</span><br><span class="line">                    .WithSimpleSchedule(x =&gt; x.WithIntervalInSeconds(10).RepeatForever()).Build();</span><br><span class="line"></span><br><span class="line">                //通过Trigger执行调度任务Job</span><br><span class="line">                await scheduler.ScheduleJob(job, trigger);</span><br><span class="line"></span><br><span class="line">                //等待一分钟</span><br><span class="line">                await Task.Delay(TimeSpan.FromSeconds(60));</span><br><span class="line">                //关闭调度 当你关闭应用程序</span><br><span class="line">                await scheduler.Shutdown();</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">            catch (SchedulerException se)</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(se);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行结果</p>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/QuartzStart.jpg" alt="QuartzStart.jpg"></p>
+</li>
+</ol>
+<h2 id="Job和Trigger"><a href="#Job和Trigger" class="headerlink" title="Job和Trigger"></a>Job和Trigger</h2><p>Quartz API关键的接口和类：</p>
+<ul>
+<li>IScheduler：与调度程序交互的主要接口</li>
+<li>IJob：调度程序执行的任务实现的接口</li>
+<li>IJobDetail：定义任务实例接口</li>
+<li>ITrigger：定义执行任务的触发器（计划）</li>
+<li>JobBuilder：创建JobDetail实例</li>
+<li>TriggerBuilder：创建触发器实例</li>
+</ul>
+<h2 id="Job和JobDetail"><a href="#Job和JobDetail" class="headerlink" title="Job和JobDetail"></a>Job和JobDetail</h2><p>自定义的任务类型需要实现IJob接口，通过JobBuilder创建JobDetail实例。</p>
+<p>JobBuilder每次触发都会创建新的实例，这就要求：</p>
+<ul>
+<li>自定义任务类具有一个无参的构造函数</li>
+<li>在任务类上定义数据字段没有意义，它们的值不会在作业之间保留</li>
+</ul>
+<p>如果想为Job实例提供属性或者执行作业跟踪作业状态，就要用到JobDataMap。</p>
+<p>JobDataMap可用于保存在作业实例执行时可用的任意数量的（可序列化）对象。JobDataMap是IDictionary接口的一个实现。注意：JobDataMap存入复杂对象，序列化可能出现类版本问题。</p>
+<ul>
+<li><p>JobDataMap设置值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//为JobDetail的JobDataMap属性添加数据</span><br><span class="line">IJobDetail job = JobBuilder.Create&lt;HelloJob&gt;().WithIdentity(&quot;job1&quot;, &quot;group1&quot;)</span><br><span class="line">                    .UsingJobData(&quot;jobSay&quot;, &quot;HelloWorld&quot;)</span><br><span class="line">                    .UsingJobData(&quot;myAge&quot;, 18)</span><br><span class="line">                    .Build();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>JobDataMap获取值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">namespace QuartzStart</span><br><span class="line">&#123;</span><br><span class="line">    public class HelloJob : IJob</span><br><span class="line">    &#123;</span><br><span class="line">        public async Task Execute(IJobExecutionContext context)</span><br><span class="line">        &#123;</span><br><span class="line">            JobKey key = context.JobDetail.Key;</span><br><span class="line">		   //读取JobDetail属性JobDataMap存储的值</span><br><span class="line">            JobDataMap dataMap = context.JobDetail.JobDataMap;</span><br><span class="line">            string jobSay = dataMap.GetString(&quot;jobSay&quot;);</span><br><span class="line">            int myAge = dataMap.GetInt(&quot;myAge&quot;);</span><br><span class="line"></span><br><span class="line">            await Console.Out.WriteLineAsync(&quot;Instance &quot; + key + &quot; of HelloJob says: &quot; + jobSay + &quot;, and age is: &quot; + myAge);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//在作业类中添加与JobDataMap键名称相对应的属性，则Quartz在实现作业类实例化时会自动为属性赋值。</span><br><span class="line">namespace QuartzStart</span><br><span class="line">&#123;</span><br><span class="line">    public class HelloJob : IJob</span><br><span class="line">    &#123;</span><br><span class="line">        //同名属性首字母大写</span><br><span class="line">        public string JobSay &#123; private get; set; &#125;</span><br><span class="line">        public int MyAge &#123; private get; set; &#125;</span><br><span class="line">        public async Task Execute(IJobExecutionContext context)</span><br><span class="line">        &#123;</span><br><span class="line">            JobKey key = context.JobDetail.Key;</span><br><span class="line">            await Console.Out.WriteLineAsync(&quot;Instance &quot; + key + &quot; of HelloJob says: &quot; + JobSay + &quot;, and age is: &quot; + MyAge);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;s</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行结果</p>
+<p><img src="https://www.github.com/ChangHub/BlogImages/raw/master/QuartzJobDataMap.jpg" alt="QuartzJobDataMap.jpg"></p>
+</li>
+</ul>
+<h2 id="Trigger"><a href="#Trigger" class="headerlink" title="Trigger"></a>Trigger</h2><ul>
+<li>TriggerKey：触发器身份</li>
+<li>Prioroty：触发器优先级</li>
+<li>Calendars：实现ICalendar接口的类可以与触发器关连</li>
+</ul>
+<h3 id="SimpleTrigger"><a href="#SimpleTrigger" class="headerlink" title="SimpleTrigger"></a>SimpleTrigger</h3><ul>
+<li>特定时刻执行一次作业，如22点49分触发</li>
+<li>特定时刻执行作业，然后按特定时间间隔重复，如10秒触发一次<ul>
+<li>开始时间：StartAt</li>
+<li>结束时间：EndAt</li>
+<li>重复计数：WithRepeatCount</li>
+<li>重复间隔：WithIntervalIn….</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">//1.在当前时间触发一次</span><br><span class="line">ISimpleTrigger trigger = (ISimpleTrigger)TriggerBuilder.Create()</span><br><span class="line">                    .WithIdentity(&quot;trigger1&quot;, &quot;group1&quot;)</span><br><span class="line">                    .StartAt(DateTime.UtcNow)</span><br><span class="line">                    .ForJob(&quot;job1&quot;, &quot;group1&quot;)</span><br><span class="line">                    .Build();</span><br><span class="line"></span><br><span class="line"> //2.在当前时间触发，并且每10秒触发一次，重复10次，一共触发11次</span><br><span class="line">ITrigger trigger = TriggerBuilder.Create()</span><br><span class="line">    .WithIdentity(&quot;trigger2&quot;, &quot;group1&quot;)</span><br><span class="line">    .StartNow()</span><br><span class="line">    .WithSimpleSchedule(x =&gt; x.WithIntervalInSeconds(10).WithRepeatCount(10))</span><br><span class="line">    .ForJob(&quot;job1&quot;, &quot;group1&quot;)</span><br><span class="line">    .Build();</span><br><span class="line"></span><br><span class="line"> //3.在未来一分钟内触发一次</span><br><span class="line">ITrigger trigger = TriggerBuilder.Create()</span><br><span class="line">    .WithIdentity(&quot;trigger3&quot;, &quot;group1&quot;)</span><br><span class="line">    .StartAt(DateBuilder.FutureDate(1, IntervalUnit.Minute))</span><br><span class="line">    .ForJob(&quot;job1&quot;, &quot;group1&quot;)</span><br><span class="line">    .Build();</span><br><span class="line"></span><br><span class="line">//4.每5秒重复触发一次，直到23：25：00</span><br><span class="line">ITrigger trigger = TriggerBuilder.Create()</span><br><span class="line">   .WithIdentity(&quot;trigger4&quot;, &quot;group1&quot;)</span><br><span class="line">   .WithSimpleSchedule(x =&gt; x.WithIntervalInSeconds(5).RepeatForever())</span><br><span class="line">   .EndAt(DateBuilder.DateOf(23, 25, 0))</span><br><span class="line">   .Build();</span><br><span class="line"></span><br><span class="line"> //5.从下一个小时的0分0秒开始触发，每2小时触发一次，直到永远</span><br><span class="line">ITrigger trigger = TriggerBuilder.Create()</span><br><span class="line">    .WithIdentity(&quot;trigger5&quot;, &quot;group1&quot;)</span><br><span class="line">    .StartAt(DateBuilder.EvenHourDate(null))</span><br><span class="line">    .WithSimpleSchedule(x =&gt; x.WithIntervalInHours(2).RepeatForever())</span><br><span class="line">    .Build();</span><br></pre></td></tr></table></figure>
+<h3 id="CronTrigger"><a href="#CronTrigger" class="headerlink" title="CronTrigger"></a>CronTrigger</h3><p>基于日历设置作业计划，如每周五上午9：00</p>
+<ul>
+<li>开始时间</li>
+<li>结束时间</li>
+<li>Corn表达式<ul>
+<li>Corn表达式由七个子表达式组成，用空格分隔</li>
+<li>秒 分 时 日 月 周 年，如0 0 12 ? * WED 表示“每周三中午12点”</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> //每天23点到0点之间，每隔一分钟触发一次</span><br><span class="line">ITrigger trigger = TriggerBuilder.Create()</span><br><span class="line">    .WithIdentity(&quot;trigger5&quot;, &quot;group1&quot;)</span><br><span class="line">    .WithCronSchedule(&quot;0 0/2 23-0 * * ?&quot;)</span><br><span class="line">    .ForJob(&quot;job1&quot;, &quot;group1&quot;)</span><br><span class="line">    .Build();</span><br></pre></td></tr></table></figure>
+<h2 id="TriggerListeners"><a href="#TriggerListeners" class="headerlink" title="TriggerListeners"></a>TriggerListeners</h2><p>接收与触发器相关的事件，可以创建自己的监听器，通过实现ITriggerListener接口,方便起见，可以扩展TriggerListenerSupport类,覆盖相应的事件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public interface ITriggerListener</span><br><span class="line">&#123;</span><br><span class="line">	 string Name &#123; get; &#125;</span><br><span class="line">	 //触发器触发</span><br><span class="line">	 Task TriggerFired(ITrigger trigger, IJobExecutionContext context);</span><br><span class="line">	 //触发器触发的作业完成</span><br><span class="line">	 Task&lt;bool&gt; VetoJobExecution(ITrigger trigger, IJobExecutionContext context);</span><br><span class="line">	 //触发器错误触发</span><br><span class="line">	 Task TriggerMisfired(ITrigger trigger);</span><br><span class="line">	 //触发器完成</span><br><span class="line">	 Task TriggerComplete(ITrigger trigger, IJobExecutionContext context, int triggerInstructionCode);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="JobListeners"><a href="#JobListeners" class="headerlink" title="JobListeners"></a>JobListeners</h2><p>接收与作业相关的事件，可以创建自己的监听器，通过实现IJobListener接口,方便起见，可以扩展JobListenerSupport类,覆盖相应的事件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public interface IJobListener</span><br><span class="line">&#123;</span><br><span class="line">	string Name &#123; get; &#125;</span><br><span class="line">    //作业即将执行的通知</span><br><span class="line">	Task JobToBeExecuted(IJobExecutionContext context);</span><br><span class="line"></span><br><span class="line">	Task JobExecutionVetoed(IJobExecutionContext context);</span><br><span class="line">    //作业完成执行时通知</span><br><span class="line">	Task JobWasExecuted(IJobExecutionContext context, JobExecutionException jobException);</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">//添加对所有作业的JobListener</span><br><span class="line">scheduler.ListenerManager.AddJobListener(myJobListener, GroupMatcher&lt;JobKey&gt;.AnyGroup());</span><br></pre></td></tr></table></figure>
+<h2 id="SchedulerListeners"><a href="#SchedulerListeners" class="headerlink" title="SchedulerListeners"></a>SchedulerListeners</h2><p>接收调度程序相关的事件，SchedulerListeners在ListenerManager中注册。</p>
+<ul>
+<li>新增SchedulerListener：<code>scheduler.ListenerManager.AddSchedulerListener(mySchedListener);</code> </li>
+<li>删除SchedulerListener：<code>scheduler.ListenerManager.RemoveSchedulerListener(mySchedListener);</code></li>
+</ul>
+<h2 id="JobStores"><a href="#JobStores" class="headerlink" title="JobStores"></a>JobStores</h2><p>负责根据你为调度程序提供的所有工作数据：作业、触发器、日历等，切勿在代码中直接使用JobStore实例。</p>
+<ul>
+<li><p>RAMJobStore</p>
+<p><code>quartz.jobStore.type = Quartz.Simpl.RAMJobStore, Quartz</code> </p>
+</li>
+<li><p>ADO.NET JobStore(ADOJobStore)</p>
+<p><code>quartz.jobStore.type = Quartz.Impl.AdoJobStore.JobStoreTX, Quartz</code> </p>
+</li>
+</ul>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2018年09月29日 00:06</p>
+        <p>原始链接： <a class="post-url" href="/2018/09/25/作业调度Quartz.NET/" title="作业调度Quartz.NET">https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/25/作业调度Quartz.NET/</a></p>
+        <footer>
+            <a href="https://www.github.com/ChangHub/BlogImages/raw/master">
+                <img src="/images/logo.png" alt="HongChangCui">
+                HongChangCui
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/25/作业调度Quartz.NET/&title=《作业调度Quartz.NET》 — ChangKe&pic=QuartzNet.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/25/作业调度Quartz.NET/&title=《作业调度Quartz.NET》 — ChangKe&source=Quartz.NET是一个功能齐全的作业调度系统，可用于小型应用程序，也可用于大型企业系统。Quartz.NET是用C#编写的.NET库，移植于开源的Ja..." data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/25/作业调度Quartz.NET/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《作业调度Quartz.NET》 — ChangKe&url=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/25/作业调度Quartz.NET/&via=https://www.github.com/ChangHub/BlogImages/raw/master" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/25/作业调度Quartz.NET/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/25/作业调度Quartz.NET/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/作业调度/" class="color5">作业调度</a>
+      
+    <a href="/tags/定时任务/" class="color5">定时任务</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Quartz简介"><span class="post-toc-text">Quartz简介</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Quartz与Timer"><span class="post-toc-text">Quartz与Timer</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Quartz-3-X"><span class="post-toc-text">Quartz 3.X</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Quartz使用"><span class="post-toc-text">Quartz使用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Job和Trigger"><span class="post-toc-text">Job和Trigger</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Job和JobDetail"><span class="post-toc-text">Job和JobDetail</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Trigger"><span class="post-toc-text">Trigger</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#SimpleTrigger"><span class="post-toc-text">SimpleTrigger</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CronTrigger"><span class="post-toc-text">CronTrigger</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#TriggerListeners"><span class="post-toc-text">TriggerListeners</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#JobListeners"><span class="post-toc-text">JobListeners</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SchedulerListeners"><span class="post-toc-text">SchedulerListeners</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#JobStores"><span class="post-toc-text">JobStores</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+  
+    <a href="/2018/09/23/控制反转IOC/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">控制反转IOC</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+		<section id="comments" class="comments">
+			<style>
+			  .comments{margin:30px;padding:10px;background:#fff}
+			  @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+			</style>
+			<div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage@latest/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js'></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "hrqbaUF8km11bv4h31Rhiyco-gzGzoHsz",
+            app_key: "nm5to078TvS7MzkXnO78DHpI",
+            placeholder: "~(≧▽≦)/~来呀！快活呀！",
+            avatar: "mm",
+            pageSize: 10
+    });
+	
+	$('#comments .info').css({"display":"none"});
+	
+</script>
+		</section>
+	
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2018 HongChangCui<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://www.github.com/ChangHub/BlogImages/raw/master",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/ASP-NET/">ASP.NET</a><a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/IOC/">IOC</a><a class="category-link" href="/categories/JavaScript/">JavaScript</a><a class="category-link" href="/categories/MQ/">MQ</a><a class="category-link" href="/categories/MySQL/">MySQL</a><a class="category-link" href="/categories/Quartz-NET/">Quartz.NET</a><a class="category-link" href="/categories/便捷工具/">便捷工具</a><a class="category-link" href="/categories/原理/">原理</a><a class="category-link" href="/categories/基础知识/">基础知识</a><a class="category-link" href="/categories/年会/">年会</a><a class="category-link" href="/categories/年度总结/">年度总结</a><a class="category-link" href="/categories/开源项目/">开源项目</a><a class="category-link" href="/categories/插件/">插件</a><a class="category-link" href="/categories/软件使用/">软件使用</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/NET/" style="font-size: 10px;">.NET</a> <a href="/tags/ASP-NET/" style="font-size: 20px;">ASP.NET</a> <a href="/tags/CEF/" style="font-size: 10px;">CEF</a> <a href="/tags/CefSharp/" style="font-size: 10px;">CefSharp</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Jquery/" style="font-size: 10px;">Jquery</a> <a href="/tags/MQ/" style="font-size: 10px;">MQ</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/SignalR/" style="font-size: 10px;">SignalR</a> <a href="/tags/WebAPI/" style="font-size: 10px;">WebAPI</a> <a href="/tags/作业调度/" style="font-size: 10px;">作业调度</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/年会/" style="font-size: 10px;">年会</a> <a href="/tags/总结/" style="font-size: 20px;">总结</a> <a href="/tags/控制反转/" style="font-size: 10px;">控制反转</a> <a href="/tags/文件夹/" style="font-size: 10px;">文件夹</a> <a href="/tags/消息队列/" style="font-size: 10px;">消息队列</a> <a href="/tags/设计原则/" style="font-size: 10px;">设计原则</a> <a href="/tags/软件使用/" style="font-size: 10px;">软件使用</a> <a href="/tags/软件安装/" style="font-size: 10px;">软件安装</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/NET/" style="font-size: 10px;">.NET</a> <a href="/tags/ASP-NET/" style="font-size: 20px;">ASP.NET</a> <a href="/tags/CEF/" style="font-size: 10px;">CEF</a> <a href="/tags/CefSharp/" style="font-size: 10px;">CefSharp</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Jquery/" style="font-size: 10px;">Jquery</a> <a href="/tags/MQ/" style="font-size: 10px;">MQ</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/SignalR/" style="font-size: 10px;">SignalR</a> <a href="/tags/WebAPI/" style="font-size: 10px;">WebAPI</a> <a href="/tags/作业调度/" style="font-size: 10px;">作业调度</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/年会/" style="font-size: 10px;">年会</a> <a href="/tags/总结/" style="font-size: 20px;">总结</a> <a href="/tags/控制反转/" style="font-size: 10px;">控制反转</a> <a href="/tags/文件夹/" style="font-size: 10px;">文件夹</a> <a href="/tags/消息队列/" style="font-size: 10px;">消息队列</a> <a href="/tags/设计原则/" style="font-size: 10px;">设计原则</a> <a href="/tags/软件使用/" style="font-size: 10px;">软件使用</a> <a href="/tags/软件安装/" style="font-size: 10px;">软件安装</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>
