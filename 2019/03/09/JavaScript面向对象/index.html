@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>JavaScript面向对象 | ChangKe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="ChangKe,ChangKe's Blog" />
+  
+  <meta name="description" content="Web领域三剑客：HTML[服务于内容]；CSS[服务于表现]；JavaScript[服务于行为]；">
+<meta name="keywords" content="JavaScript,面向对象">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript面向对象">
+<meta property="og:url" content="https://www.github.com/ChangHub/BlogImages/raw/master/2019/03/09/JavaScript面向对象/index.html">
+<meta property="og:site_name" content="ChangKe">
+<meta property="og:description" content="Web领域三剑客：HTML[服务于内容]；CSS[服务于表现]；JavaScript[服务于行为]；">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-29T15:08:14.932Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript面向对象">
+<meta name="twitter:description" content="Web领域三剑客：HTML[服务于内容]；CSS[服务于表现]；JavaScript[服务于行为]；">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">ChangKe&#39;s Blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        ChangKe&#39;s Blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        一个专注 WEB 开发的技术博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="ChangKe" target="_blank" href="//changkehome.top">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/ChangHub">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" ">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" ">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-JavaScript面向对象" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      JavaScript面向对象
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/读书笔记/">读书笔记</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-03-09
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p>Web领域三剑客：HTML[服务于内容]；CSS[服务于表现]；JavaScript[服务于行为]；<br><a id="more"></a></p>
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>JavaScirpt通常涵盖三个部分：</p>
+<h2 id="ECMAScript"><a href="#ECMAScript" class="headerlink" title="ECMAScript"></a>ECMAScript</h2><p>语言的核心，独立于浏览器只为，可以在其他环境中使用，是一种规范。</p>
+<h2 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h2><p>文档对象模型，实际上是提供了一种于HTML，XML文档交互的方式。</p>
+<h2 id="BOM"><a href="#BOM" class="headerlink" title="BOM"></a>BOM</h2><p>浏览器对象模型，实际上是一个与浏览器环境有关的对象集合。</p>
+<h1 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h1><h2 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h2><p>对象名词表示，属性动词表示，方法形容词表示。</p>
+<h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><p>类是一种模板，对象是在模板基础上创建的实体。</p>
+<p>JavaScript语言没有类，一切都是基于对象的，依靠的是一套原型（prototype）系统，而原型本身也是一种对象。</p>
+<h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><p>通常有两部分组成：</p>
+<ul>
+<li>相关的数据（用于存储属性）</li>
+<li>基于这些数据能做的事（所能调用的方法）</li>
+</ul>
+<p>封装，只需要知道所操作对象的接口，而不必关系他的具体实现。</p>
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>通过继续，可以优雅的实现对现有代码的重用。</p>
+<p>传统的OOP环境中，继承通常指类与类之间的关系，但由于JavaScript中没有类，因此它的继承只能发生在对象之间。</p>
+<h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><p>不同对象通过相同的方法调用来实现各自行为的能力，（同一接口，不同实现）即为多态。</p>
+<h1 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h1><p>JavaScript是通过函数来实现面向对象特性的。</p>
+<p>函数通常会有返回值，如果没有显示的返回值，就会默认返回undefined。</p>
+<p>一个函数只能有一个返回值，如果要返回多个值，可以返回一个数组。</p>
+<p>在函数名后面加个括号，就可以调用函数。</p>
+<p>函数对于参数来者不拒，多余的参数会自动忽略掉，少的参数默认赋值undefined。</p>
+<p>JavaScript中，不是以代码块作为作用域，而是以函数作为作用域。</p>
+<p>当JavaScript执行过程进入新的函数时，这个函数内所有声明的变量会被移动或者提升到函数最开始的地方，被提升的只有变量的声明。</p>
+<p>函数也是一种数据，即函数可以像其他数据一样，赋值给一个变量。</p>
+<h2 id="内建函数"><a href="#内建函数" class="headerlink" title="内建函数"></a>内建函数</h2><ul>
+<li><p>parseInt();</p>
+<p>将输入的值，转成整数型输出，转换失败返回NaN。</p>
+</li>
+<li><p>parseFloat();</p>
+<p>将输入的值，转换成十进制数，转换失败返回NaN。</p>
+</li>
+<li><p>isNaN();</p>
+<p>判断一个输入值，是否是一个可以参与算术运算的数字。</p>
+</li>
+<li><p>isFinite();</p>
+<p>判断一个输入值，是否是一个非Infinity非NaN的数字 。</p>
+</li>
+<li><p>encodeURI();</p>
+</li>
+<li><p>decodeURI();</p>
+</li>
+<li><p>encodeURIComponent();</p>
+</li>
+<li><p>decodeURIComponent();</p>
+</li>
+<li><p>eval();</p>
+<p>将输入的字符串当做JavaScript代码执行。<strong>Eval is evail</strong></p>
+</li>
+</ul>
+<h2 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> f = <span class="function"><span class="keyword">function</span> (<span class="params">a</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>匿名函数用法：</p>
+<ul>
+<li>作为参数传递给其他函数</li>
+<li>执行一次性任务</li>
+</ul>
+<h2 id="回调函数"><a href="#回调函数" class="headerlink" title="回调函数"></a>回调函数</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">invokeAdd</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a() + b();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">one</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">two</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">invokeAdd(one, two);<span class="comment">//3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//使用匿名函数</span></span><br><span class="line">invokeAdd(</span><br><span class="line">    <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">2</span></span><br><span class="line">    &#125;</span><br><span class="line">);<span class="comment">//3</span></span><br></pre></td></tr></table></figure>
+<p>将函数A传递给函数B,并有函数B来执行A时，A就成了一个回调函数（callback functions）。如果A是一个匿名函数，就是匿名回调函数。</p>
+<p>回调函数优势：</p>
+<ul>
+<li>可以在不做命名的情况下传递函数，意味着节省变量名的使用</li>
+<li>将一个函数调用委托给另一个函数，意味着节省代码</li>
+<li>提升性能</li>
+</ul>
+<h2 id="即时函数"><a href="#即时函数" class="headerlink" title="即时函数"></a>即时函数</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">'Hello'</span> + name);</span><br><span class="line">&#125;)(<span class="string">'CHC'</span>);</span><br></pre></td></tr></table></figure>
+<p>将一个匿名函数定义在一个括号里面，在跟一个括号，就是即时函数。第二个括号是<strong><em>立即调用</em></strong>的意思，同时也是向匿名函数<strong><em>传递参数</em></strong>的地方。</p>
+<p>即时函数好处是不会产生任何全局变量，缺点无法重复执行，因此适合执行一些一次性的或者初始化的任务。</p>
+<h2 id="内嵌函数"><a href="#内嵌函数" class="headerlink" title="内嵌函数"></a>内嵌函数</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">outer</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">inner</span>(<span class="params">input</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> input;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> inner(name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用内嵌函数，也称私有函数，优势：</p>
+<ul>
+<li>确保全局名字空间的纯净性，意味着命名冲突的机会变小</li>
+<li>确保私有性</li>
+</ul>
+<h2 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h2><h3 id="作用域链"><a href="#作用域链" class="headerlink" title="作用域链"></a>作用域链</h3><p>子作用域，可以访问父级作用域，这就形成了一个作用域链（scope chain）。但是，父级作用域却不能访问子作用域。</p>
+<h3 id="突破链"><a href="#突破链" class="headerlink" title="突破链"></a>突破链</h3><p>闭包，突破了作用域链，使得父级作用域也可以访问子级作用域。</p>
+<p>如何突破？–挂到全局上</p>
+<ul>
+<li>升级为全局变量</li>
+<li>返回给全局空间</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1.赋给全局</span></span><br><span class="line"><span class="keyword">var</span> inner;</span><br><span class="line"><span class="keyword">var</span> F = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> b = <span class="string">"local variable"</span>;</span><br><span class="line">    <span class="keyword">var</span> N = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> b;</span><br><span class="line">    &#125;</span><br><span class="line">    inner = N;</span><br><span class="line">&#125;</span><br><span class="line">F();</span><br><span class="line">inner();<span class="comment">//local variable</span></span><br><span class="line"><span class="comment">//2.返回全局</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="string">"global variable"</span>;</span><br><span class="line"><span class="keyword">var</span> F = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> b = <span class="string">"local variable"</span>;</span><br><span class="line">    <span class="keyword">var</span> N = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> c = <span class="string">"inner variable"</span>;</span><br><span class="line">        <span class="keyword">return</span> b;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> N;</span><br><span class="line">&#125;</span><br><span class="line">b;<span class="comment">//ReferenceError: b is not defined</span></span><br><span class="line"><span class="keyword">var</span> inner = F();</span><br><span class="line">inner();<span class="comment">//loacl variable</span></span><br></pre></td></tr></table></figure>
+<p>闭包典型案例</p>
+<ul>
+<li>循环</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> arr = [],</span><br><span class="line">        i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">        arr[i] = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr = F();</span><br><span class="line"></span><br><span class="line">arr[<span class="number">0</span>]();<span class="comment">//3</span></span><br><span class="line">arr[<span class="number">1</span>]();<span class="comment">//3</span></span><br><span class="line">arr[<span class="number">2</span>]();<span class="comment">//3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//这里创建了三个闭包，而他们指向了一个共同的局部变量i</span></span><br><span class="line"><span class="comment">//但是，闭包不会记录它们的值，它们拥有的是一个连接（引用）</span></span><br><span class="line"><span class="comment">//当闭包去获取某个变量时，会从所在域开始逐级寻找那个i，而循环结束时，i已经是3。</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> arr = [],</span><br><span class="line">        i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">        arr[i] = (<span class="function"><span class="keyword">function</span> (<span class="params">x</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> x;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)(i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr = F();</span><br><span class="line"></span><br><span class="line">arr[<span class="number">0</span>]();<span class="comment">//0</span></span><br><span class="line">arr[<span class="number">1</span>]();<span class="comment">//1</span></span><br><span class="line">arr[<span class="number">2</span>]();<span class="comment">//2</span></span><br><span class="line"><span class="comment">//通过中间函数将i的值本地化</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>getter/setter</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> getValue, setValue;</span><br><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> secret = <span class="number">0</span>;</span><br><span class="line">    getValue = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> secret;</span><br><span class="line">    &#125;</span><br><span class="line">    setValue = <span class="function"><span class="keyword">function</span> (<span class="params">v</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> v === <span class="string">"number"</span>) &#123;</span><br><span class="line">            secret = v;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<h1 id="对象-1"><a href="#对象-1" class="headerlink" title="对象"></a>对象</h1><p>对象的情况跟数据相似，唯一不同的是对象的键值类型是有自己定义的。</p>
+<p>除基本类型（number,string,boolean,null,undefined）意外的任何数据都属于对象。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> hero = &#123;</span><br><span class="line">    name: <span class="string">'chc'</span>,</span><br><span class="line">    age: <span class="number">18</span>,</span><br><span class="line">    say: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        alert(<span class="string">'I Can Fly'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//1.定义数组用中括号[]，定义对象使用大括号&#123;&#125;；</span></span><br><span class="line"><span class="comment">//2.组成对象的元素，称为属性，是用逗号分割</span></span><br><span class="line"><span class="comment">//3.键/值对之间用冒号分割，Key:Value</span></span><br></pre></td></tr></table></figure>
+<p>##对象组成</p>
+<p>说到数组，其中包含的称为元素，说到对象，其中包含的称为属性。</p>
+<p>对象的属性也可以是函数，因为函数本身也是一种数据，这种属性称为方法。</p>
+<p>在JavaScript中，通常用数组来表示索引型数组（枚举型数组、索引型数组），用对象来表示关联型数组（哈希表、字典）。</p>
+<p>拷贝某个对象或者将对象传递给某个函数，传递的都是对象的引用；引用上做的修改，会影响原有对象。</p>
+<p>通过instanceof操作符，可以测试某个对象是不是由某个构造器创建的。</p>
+<h2 id="对象访问"><a href="#对象访问" class="headerlink" title="对象访问"></a>对象访问</h2><p>访问属性方式：访问方法一样</p>
+<ul>
+<li><p>中括号表示法</p>
+</li>
+<li><p>点号表示法；</p>
+<p>如果所访问的属性不符合变量命名规范，就不能通过点号表示法访问。</p>
+<p>如果访问的属性不存在，就会返回undefined。</p>
+<p>如果访问的属性名是不确定的，可以使用中括号法允许在运行时通过变量来实现相关属性的动态存取。</p>
+</li>
+</ul>
+<h2 id="对象的修改"><a href="#对象的修改" class="headerlink" title="对象的修改"></a>对象的修改</h2><p>由于JavaScript是一种动态语言，所以允许我们随时对对象的属性和方法进行修改。</p>
+<p>ES5允许创建不可改变的对象。</p>
+<h2 id="构造器函数"><a href="#构造器函数" class="headerlink" title="构造器函数"></a>构造器函数</h2><p>对象的创建方式：</p>
+<ul>
+<li>对象字面量：使用大括号{}</li>
+<li>构造器函数：使用new</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Hero</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = <span class="string">'chc'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> hero = <span class="keyword">new</span> Hero();</span><br><span class="line">hero.name;</span><br></pre></td></tr></table></figure>
+<p>使用构造器函数的好处之一就是它可以在创建函数时，传一些参数。</p>
+<p>依照惯例，将构造器函数的首字母大写，以区别其他函数。</p>
+<p>使用new,创建的是一个对象，this，指向该对象；没有new，就是函数调用，返回值，this，指向全局对象。对于web浏览器，全局对象就是window。</p>
+<p>五种基本类型，除了undefined和null外，其他三个都有自己的构造器函数，分别是Number(),String(),Boolean();</p>
+<h2 id="构造器属性"><a href="#构造器属性" class="headerlink" title="构造器属性"></a>构造器属性</h2><p>创建对象的同时，就赋予了该对象一种特殊的属性，即构造器属性（constructor property）。该属性实际上指向用于创建对象的构造器函数的引用。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">hero.constructor;</span><br><span class="line">ƒ Hero() &#123;</span><br><span class="line">    <span class="keyword">this</span>.name = <span class="string">'chc'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//由于构造器属性引用的是一个函数，我们可以利用它创建一个新的对象。</span></span><br><span class="line"><span class="keyword">var</span> h = <span class="keyword">new</span> hero.constructor();</span><br></pre></td></tr></table></figure>
+<p>对于通过对象字面量生成的对象，实际上是由内建构造器Object()函数创建的。</p>
+<h2 id="返回对象的函数"><a href="#返回对象的函数" class="headerlink" title="返回对象的函数"></a>返回对象的函数</h2><p>除了使用new,还可以使用一般函数，来创建对象，就是通过函数返回一个对象。</p>
+<h1 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h1><p>##prototype</p>
+<p>每个函数，在创建时，都会生产一个原型属性prototype,原型属性对函数本身不会有什么影响，只有当函数作为构造器使用时，属性才会有作用。</p>
+<p>可以利用原型，对构造器生产的对象添加属性和方法。</p>
+<p>对于原型来说，最重要的一点是要理解它的实时性。在JavaScript中，几乎所有的对象都是通过引用传值，因此，所创建的每个新对象并没有一分属于自己的原型副本。意味着修改原型，会对所有的对象产生影响。</p>
+<p>如果一个对象自身属性中没有找到指定的属性，就会在原型链中查找相关的属性，对象自身属性要优于原型属性。</p>
+<p>判断一个属性是自身属性还是原型属性？<strong><em>hasOwnProperty();</em></strong></p>
+<p>判断一个属性是否可枚举？<strong><em>propertyIsEnumerable();</em></strong></p>
+<p>判断一个对象是否是另一个对象的原型？<strong><em>isPrototypeof();</em></strong></p>
+<p>获取一个对象的原型？<strong><em>Object.getPrototypeof();</em></strong></p>
+<h2 id="proto-连接"><a href="#proto-连接" class="headerlink" title="_proto__连接"></a>_proto__连接</h2><p>在JavaScript环境中，对象存在一个指向原型的链接，这个神秘的链接，就是对象的<strong><strong><strong>proto</strong></strong></strong>属性。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> monkey = &#123;</span><br><span class="line">    feeds: <span class="string">'bananas'</span>,</span><br><span class="line">    breathes: <span class="string">'air'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Human</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">Human.prototype = monkey;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> developer = <span class="keyword">new</span> Human();</span><br><span class="line">developer.feeds = <span class="string">'pizza'</span>;</span><br><span class="line">developer.hacks = <span class="string">'JavaScript'</span>;</span><br><span class="line"></span><br><span class="line">developer.__proto__ === monkey;<span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<p>##原型扩展</p>
+<p>在JavaScript中，内建的构造器函数（如，Array,String,Object和Function）都可以通过原型来进行扩展的。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.inArray = <span class="function"><span class="keyword">function</span> (<span class="params">needle</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = <span class="keyword">this</span>.length; i &lt; len; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>[i] === needle) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//扩展Array，查找数据是否存在某个值。</span></span><br><span class="line"><span class="keyword">var</span> colors = [<span class="string">'red'</span>, <span class="string">'black'</span>];</span><br><span class="line">colors.inArray(<span class="string">'red'</span>);<span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<p>扩展原型，最常用来实现让老式浏览器支持新功能。</p>
+<p>扩展原型，首先要检查方法是否已经存在，避免覆盖。</p>
+<h2 id="原型陷阱"><a href="#原型陷阱" class="headerlink" title="原型陷阱"></a>原型陷阱</h2><p>处理原型问题，需要注意：</p>
+<ul>
+<li>对原型对象执行完全替换时，可能触发原型链的异常</li>
+<li>prototype.constructor属性是不可靠的</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Hero</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = <span class="string">'chc'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> zhangsan = <span class="keyword">new</span> Hero();</span><br><span class="line"><span class="keyword">var</span> wangwu = <span class="keyword">new</span> Hero();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Hero.prototype.say = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'Hello'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">zhangsan.say();<span class="comment">//Hello</span></span><br><span class="line">wangwu.say();<span class="comment">//Hello</span></span><br><span class="line"></span><br><span class="line">zhangsan.constructor === Hero;</span><br><span class="line">wangwu.constructor === Hero;</span><br><span class="line"></span><br><span class="line"><span class="comment">//原型覆盖</span></span><br><span class="line">Hero.prototype = &#123;</span><br><span class="line">    age: <span class="number">18</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">zhangsan.age;<span class="comment">//undefined</span></span><br><span class="line">zhangsan.say();<span class="comment">//Hello</span></span><br><span class="line"></span><br><span class="line">zhangsan.__proto__.say();<span class="comment">//Hello</span></span><br><span class="line">zhangsan.__proto__.age;<span class="comment">//undefined</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//重新生成对象</span></span><br><span class="line"><span class="keyword">var</span> lisi = <span class="keyword">new</span> Hero();</span><br><span class="line">lisi.say();<span class="comment">//Uncaught TypeError: lisi.say is not a function</span></span><br><span class="line">lisi.age;<span class="comment">//18</span></span><br><span class="line"></span><br><span class="line">lisi.constructor;<span class="comment">//ƒ Object() &#123; [native code] &#125;</span></span><br><span class="line"><span class="comment">//新对象的constructor不能保持正确了，应该是Hero的引用，却指向了Object;</span></span><br><span class="line"><span class="comment">//可以通过重置constructor属性</span></span><br></pre></td></tr></table></figure>
+<p>当我们重写某对象的prototype时，需要重置相应的constructor属性。</p>
+<h1 id="继承-1"><a href="#继承-1" class="headerlink" title="继承"></a>继承</h1><h2 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h2><p><strong>默认的继承模式，即通过原型来实现继承关系。</strong></p>
+<p>继承的作用，可以使每个对象都能访问其继承链上的任何一个属性。</p>
+<p>在JavaScript中，每个函数都有一个指向某一对象的prototype属性。</p>
+<p>函数在被new操作符调用时，会创建一个对象，该对象会有一个指向原型对象的秘密链接，链接名为<code>_proto_</code>,因此，对象可以调用原型对象的属性和方法。</p>
+<p>原型链末端是Object对象，该对象是JavaScript中最高级父对象，语言中所有对象必须继承它。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Shape</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = <span class="string">'Shape'</span>;</span><br><span class="line">    <span class="keyword">this</span>.toString = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Circle</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = <span class="string">'Circle'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Triangle</span>(<span class="params">side, height</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = <span class="string">'Triangle'</span>;</span><br><span class="line">    <span class="keyword">this</span>.side = side;</span><br><span class="line">    <span class="keyword">this</span>.height = height;</span><br><span class="line">    <span class="keyword">this</span>.getArea = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.side * <span class="keyword">this</span>.height / <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Circle.prototype = <span class="keyword">new</span> Shape();</span><br><span class="line">Triangle.prototype = <span class="keyword">new</span> Circle();</span><br><span class="line"><span class="comment">//重置constructor</span></span><br><span class="line">Circle.prototype.constructor = Circle;</span><br><span class="line">Triangle.prototype.constructor = Triangle;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> my = <span class="keyword">new</span> Triangle(<span class="number">5</span>, <span class="number">10</span>);</span><br><span class="line">my.getArea();</span><br><span class="line">my.toString();<span class="comment">//Triangle，这里调用的是继承Shape里面的toString()</span></span><br></pre></td></tr></table></figure>
+<p>![1][原型链.jpg]</p>
+<h2 id="原型共享"><a href="#原型共享" class="headerlink" title="原型共享"></a>原型共享</h2><p>当用某一个构造器创建对象时，其属性就会被添加到this中去，并且被添加的属性实际上不会随着实体对象改变，如果将属性添加到原型上，就可以在对象之间共享，即该属性不在是私有属性。</p>
+<p>注意必须在扩展原型对象之前，就完成继承关系的构建，因为继承本身就是对原型对象的一种覆盖。</p>
+<p>出于效率考虑，尽可能将一些可重用的属性和方法添加到原型中去。</p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年03月29日 23:08</p>
+        <p>原始链接： <a class="post-url" href="/2019/03/09/JavaScript面向对象/" title="JavaScript面向对象">https://www.github.com/ChangHub/BlogImages/raw/master/2019/03/09/JavaScript面向对象/</a></p>
+        <footer>
+            <a href="https://www.github.com/ChangHub/BlogImages/raw/master">
+                <img src="/images/logo.png" alt="HongChangCui">
+                HongChangCui
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.github.com/ChangHub/BlogImages/raw/master/2019/03/09/JavaScript面向对象/&title=《JavaScript面向对象》 — ChangKe&pic=JavaScript OOP.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.github.com/ChangHub/BlogImages/raw/master/2019/03/09/JavaScript面向对象/&title=《JavaScript面向对象》 — ChangKe&source=Web领域三剑客：HTML[服务于内容]；CSS[服务于表现]；JavaScript[服务于行为]；" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.github.com/ChangHub/BlogImages/raw/master/2019/03/09/JavaScript面向对象/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript面向对象》 — ChangKe&url=https://www.github.com/ChangHub/BlogImages/raw/master/2019/03/09/JavaScript面向对象/&via=https://www.github.com/ChangHub/BlogImages/raw/master" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.github.com/ChangHub/BlogImages/raw/master/2019/03/09/JavaScript面向对象/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.github.com/ChangHub/BlogImages/raw/master/2019/03/09/JavaScript面向对象/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/JavaScript/" class="color1">JavaScript</a>
+      
+    <a href="/tags/面向对象/" class="color5">面向对象</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#介绍"><span class="post-toc-text">介绍</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ECMAScript"><span class="post-toc-text">ECMAScript</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#DOM"><span class="post-toc-text">DOM</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#BOM"><span class="post-toc-text">BOM</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#面向对象"><span class="post-toc-text">面向对象</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#对象"><span class="post-toc-text">对象</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#类"><span class="post-toc-text">类</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#封装"><span class="post-toc-text">封装</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#继承"><span class="post-toc-text">继承</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#多态"><span class="post-toc-text">多态</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#函数"><span class="post-toc-text">函数</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#内建函数"><span class="post-toc-text">内建函数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#匿名函数"><span class="post-toc-text">匿名函数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#回调函数"><span class="post-toc-text">回调函数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#即时函数"><span class="post-toc-text">即时函数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#内嵌函数"><span class="post-toc-text">内嵌函数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#闭包"><span class="post-toc-text">闭包</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#作用域链"><span class="post-toc-text">作用域链</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#突破链"><span class="post-toc-text">突破链</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#对象-1"><span class="post-toc-text">对象</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#对象访问"><span class="post-toc-text">对象访问</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#对象的修改"><span class="post-toc-text">对象的修改</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#构造器函数"><span class="post-toc-text">构造器函数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#构造器属性"><span class="post-toc-text">构造器属性</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#返回对象的函数"><span class="post-toc-text">返回对象的函数</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#原型"><span class="post-toc-text">原型</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#proto-连接"><span class="post-toc-text">_proto__连接</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#原型陷阱"><span class="post-toc-text">原型陷阱</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#继承-1"><span class="post-toc-text">继承</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#原型链"><span class="post-toc-text">原型链</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#原型共享"><span class="post-toc-text">原型共享</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2019/03/11/JavaScript设计模式/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          JavaScript设计模式
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2018/11/01/Angular2/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">Angular2</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+		<section id="comments" class="comments">
+			<style>
+			  .comments{margin:30px;padding:10px;background:#fff}
+			  @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+			</style>
+			<div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage@latest/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js'></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "hrqbaUF8km11bv4h31Rhiyco-gzGzoHsz",
+            app_key: "nm5to078TvS7MzkXnO78DHpI",
+            placeholder: "~(≧▽≦)/~来呀！快活呀！",
+            avatar: "mm",
+            pageSize: 10
+    });
+	
+	$('#comments .info').css({"display":"none"});
+	
+</script>
+		</section>
+	
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 HongChangCui<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://www.github.com/ChangHub/BlogImages/raw/master",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/ASP-NET/">ASP.NET</a><a class="category-link" href="/categories/Angular2/">Angular2</a><a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/IOC/">IOC</a><a class="category-link" href="/categories/JavaScript/">JavaScript</a><a class="category-link" href="/categories/JavaScript-Framework/">JavaScript Framework</a><a class="category-link" href="/categories/MQ/">MQ</a><a class="category-link" href="/categories/MySQL/">MySQL</a><a class="category-link" href="/categories/Quartz-NET/">Quartz.NET</a><a class="category-link" href="/categories/xxxx/">xxxx</a><a class="category-link" href="/categories/便捷工具/">便捷工具</a><a class="category-link" href="/categories/原理/">原理</a><a class="category-link" href="/categories/基础知识/">基础知识</a><a class="category-link" href="/categories/年会/">年会</a><a class="category-link" href="/categories/年度总结/">年度总结</a><a class="category-link" href="/categories/开源项目/">开源项目</a><a class="category-link" href="/categories/插件/">插件</a><a class="category-link" href="/categories/读书笔记/">读书笔记</a><a class="category-link" href="/categories/软件使用/">软件使用</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/NET/" style="font-size: 10px;">.NET</a> <a href="/tags/ASP-NET/" style="font-size: 20px;">ASP.NET</a> <a href="/tags/ASP-NET-MVC/" style="font-size: 10px;">ASP.NET MVC</a> <a href="/tags/AngularJS/" style="font-size: 10px;">AngularJS</a> <a href="/tags/CEF/" style="font-size: 10px;">CEF</a> <a href="/tags/CefSharp/" style="font-size: 10px;">CefSharp</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/JavaScript-Framework/" style="font-size: 10px;">JavaScript Framework</a> <a href="/tags/Jquery/" style="font-size: 10px;">Jquery</a> <a href="/tags/MQ/" style="font-size: 10px;">MQ</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/SignalR/" style="font-size: 10px;">SignalR</a> <a href="/tags/WebAPI/" style="font-size: 10px;">WebAPI</a> <a href="/tags/xxx/" style="font-size: 10px;">xxx</a> <a href="/tags/作业调度/" style="font-size: 10px;">作业调度</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/年会/" style="font-size: 10px;">年会</a> <a href="/tags/总结/" style="font-size: 20px;">总结</a> <a href="/tags/控制反转/" style="font-size: 10px;">控制反转</a> <a href="/tags/文件夹/" style="font-size: 10px;">文件夹</a> <a href="/tags/消息队列/" style="font-size: 10px;">消息队列</a> <a href="/tags/设计原则/" style="font-size: 10px;">设计原则</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a> <a href="/tags/软件使用/" style="font-size: 10px;">软件使用</a> <a href="/tags/软件安装/" style="font-size: 10px;">软件安装</a> <a href="/tags/面向对象/" style="font-size: 10px;">面向对象</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/NET/" style="font-size: 10px;">.NET</a> <a href="/tags/ASP-NET/" style="font-size: 20px;">ASP.NET</a> <a href="/tags/ASP-NET-MVC/" style="font-size: 10px;">ASP.NET MVC</a> <a href="/tags/AngularJS/" style="font-size: 10px;">AngularJS</a> <a href="/tags/CEF/" style="font-size: 10px;">CEF</a> <a href="/tags/CefSharp/" style="font-size: 10px;">CefSharp</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/JavaScript-Framework/" style="font-size: 10px;">JavaScript Framework</a> <a href="/tags/Jquery/" style="font-size: 10px;">Jquery</a> <a href="/tags/MQ/" style="font-size: 10px;">MQ</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/SignalR/" style="font-size: 10px;">SignalR</a> <a href="/tags/WebAPI/" style="font-size: 10px;">WebAPI</a> <a href="/tags/xxx/" style="font-size: 10px;">xxx</a> <a href="/tags/作业调度/" style="font-size: 10px;">作业调度</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/年会/" style="font-size: 10px;">年会</a> <a href="/tags/总结/" style="font-size: 20px;">总结</a> <a href="/tags/控制反转/" style="font-size: 10px;">控制反转</a> <a href="/tags/文件夹/" style="font-size: 10px;">文件夹</a> <a href="/tags/消息队列/" style="font-size: 10px;">消息队列</a> <a href="/tags/设计原则/" style="font-size: 10px;">设计原则</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a> <a href="/tags/软件使用/" style="font-size: 10px;">软件使用</a> <a href="/tags/软件安装/" style="font-size: 10px;">软件安装</a> <a href="/tags/面向对象/" style="font-size: 10px;">面向对象</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>ASP.NET MVC 工作原理 | ChangKe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="ChangKe,ChangKe's Blog" />
+  
+  <meta name="description" content="ASP.NET 是一个使用HTML、CSS、Javascript和服务器脚本创建网页和网站的开发框架。MVC是ASP.NET编程模式的一种。">
+<meta name="keywords" content="ASP.NET MVC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ASP.NET MVC 工作原理">
+<meta property="og:url" content="https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/03/ASP.NET MVC/index.html">
+<meta property="og:site_name" content="ChangKe">
+<meta property="og:description" content="ASP.NET 是一个使用HTML、CSS、Javascript和服务器脚本创建网页和网站的开发框架。MVC是ASP.NET编程模式的一种。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-09-03T15:04:39.520Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ASP.NET MVC 工作原理">
+<meta name="twitter:description" content="ASP.NET 是一个使用HTML、CSS、Javascript和服务器脚本创建网页和网站的开发框架。MVC是ASP.NET编程模式的一种。">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">ChangKe&#39;s Blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        ChangKe&#39;s Blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        一个专注 WEB 开发的技术博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="ChangKe" target="_blank" href="//changkehome.top">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/ChangHub">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" ">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" ">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-ASP.NET MVC" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      ASP.NET MVC 工作原理
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/原理/">原理</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2018-09-03
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p>ASP.NET 是一个使用HTML、CSS、Javascript和服务器脚本创建网页和网站的开发框架。MVC是ASP.NET编程模式的一种。</p>
+<a id="more"></a>
+<h1 id="ASP-NET-MVC"><a href="#ASP-NET-MVC" class="headerlink" title="ASP.NET + MVC"></a>ASP.NET + MVC</h1><ol>
+<li><strong>ASP.NET MVC运行原理</strong></li>
+<li><strong>ASP.NET MVC运行原理：URL路由</strong></li>
+<li><strong>ASP.NET MVC运行原理：Controller激活</strong></li>
+<li><strong>ASP.NET MVC运行原理：Action执行</strong></li>
+</ol>
+<h1 id="URL路由"><a href="#URL路由" class="headerlink" title="URL路由"></a>URL路由</h1><ol>
+<li><strong>ASP.NET路由系统：URL与物理文件分离</strong></li>
+<li><strong>ASP.NET路由系统：路由映射</strong></li>
+<li><strong>ASP.NET路由系统：路由规则生成URL</strong></li>
+<li><strong>ASP.NET MVC路由扩展：路由映射</strong></li>
+<li><strong>ASP.NET MVC路由扩展：URL生成</strong></li>
+<li><strong>ASP.NET路由系统实现：HttpHandler动态映射</strong></li>
+<li><strong>ASP.NET MVC实现多语言</strong></li>
+</ol>
+<h1 id="Controller激活"><a href="#Controller激活" class="headerlink" title="Controller激活"></a>Controller激活</h1><ol>
+<li><strong>ASP.NET MVC Controller激活：总体设计</strong></li>
+<li><strong>ASP.NET MVC Controller激活：默认实现</strong></li>
+<li><strong>ASP.NET MVC Controller激活：IOC应用</strong></li>
+</ol>
+<h1 id="Model元数据"><a href="#Model元数据" class="headerlink" title="Model元数据"></a>Model元数据</h1><ol>
+<li><strong>ASP.NET MVC Model元数据：初识</strong></li>
+<li><strong>ASP.NET MVC Model元数据：Model元数据定制</strong></li>
+<li><strong>ASP.NET MVC Model元数据：IMetadataAware接口</strong></li>
+<li><strong>ASP.NET MVC Model元数据：预定义模版</strong></li>
+<li><strong>ASP.NET MVC Model元数据：模版获取与执行</strong></li>
+<li><strong>ASP.NET MVC Model元数据：ListControl</strong></li>
+<li><strong>ASP.NET MVC Model元数据实现</strong></li>
+</ol>
+<h1 id="Model绑定"><a href="#Model绑定" class="headerlink" title="Model绑定"></a>Model绑定</h1><ol>
+<li><strong>ASP.NET MVC三个描述对象：ControllerDescriptor</strong></li>
+<li><strong>ASP.NET MVC三个描述对象：ActionDescriptor</strong></li>
+<li><strong>ASP.NET MVC三个描述对象：ParameterDescriptor</strong></li>
+<li><strong>ASP.NET MVC ValuProvider：NameValueCollectionValueProvider</strong></li>
+<li><strong>ASP.NET MVC ValuProvider：DictionaryValueProvider</strong></li>
+<li><strong>ASP.NET MVC ValuProvider：ValueProviderFactory</strong></li>
+<li><strong>ASP.NET MVC ModeBinder机制</strong></li>
+<li><strong>模拟ASP.NET MVC Model绑定机制</strong></li>
+</ol>
+<h1 id="Model验证"><a href="#Model验证" class="headerlink" title="Model验证"></a>Model验证</h1><ol>
+<li><strong>ASP.NET MVC ModelValidator：ModelValidator</strong></li>
+<li><strong>ASP.NET MVC ModelValidator：ModelValidatorProvider</strong></li>
+<li><strong>ASP.NET MVC ModelValidator：ModelValidatorProviders</strong></li>
+<li><strong>ASP.NET MVC基于标注的验证：ValidationAttribute</strong></li>
+<li><strong>ASP.NET MVC基于标注的验证：DataAnnotationsModelValidator</strong></li>
+<li><strong>ASP.NET MVC基于标注的验证：DataAnnotationsModelValidatorProvider</strong></li>
+<li><strong>ASP.NET MVC基于标注的验证：多种验证规则</strong></li>
+<li><strong>ASP.NET MVC客户端验证：jQuery验证</strong></li>
+<li><strong>ASP.NET MVC客户端验证：jQuery验证的实现</strong></li>
+<li><strong>ASP.NET MVC客户端验证：自定义验证</strong></li>
+</ol>
+<h1 id="Action执行"><a href="#Action执行" class="headerlink" title="Action执行"></a>Action执行</h1><ol>
+<li><strong>ASP.NET MVC异步Action定义和执行原理</strong></li>
+<li><strong>ASP.NET MVC 涉及5个同步和异步</strong></li>
+<li><strong>ASP.NET MVC筛选器</strong></li>
+<li><strong>ASP.NET MVC 涉及5中AuthorzationFilter</strong></li>
+<li><strong>ASP.NET MVC 中ActionFilter实现</strong></li>
+<li><strong>ASP.NET MVC 集成EntLib实现自动化异常处理</strong></li>
+</ol>
+<h1 id="View呈现"><a href="#View呈现" class="headerlink" title="View呈现"></a>View呈现</h1><ol>
+<li><strong>ASP.NET MVC 中ActionResult本质：EmptyResult和ContentResult</strong></li>
+<li><strong>ASP.NET MVC 中ActionResult本质：FileResult</strong></li>
+<li><strong>ASP.NET MVC 中ActionResult本质：JavaScriptResult和JsonResult</strong></li>
+<li><strong>ASP.NET MVC 中ActionResult本质：HttpStatusCodeResult、RedirectResult和RedirectToRouteResult</strong></li>
+<li><strong>ASP.NET MVC 中View呈现</strong></li>
+<li><strong>ASP.NET MVC 的Razor引擎：View编译原理</strong></li>
+<li><strong>ASP.NET MVC 的Razor引擎：RazorView</strong></li>
+<li><strong>ASP.NET MVC 的Razor引擎：IOC在View激活的应用</strong></li>
+<li><strong>ASP.NET MVC 的Razor引擎：RazorViewEngine</strong></li>
+</ol>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2018年09月03日 23:04</p>
+        <p>原始链接： <a class="post-url" href="/2018/09/03/ASP.NET MVC/" title="ASP.NET MVC 工作原理">https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/03/ASP.NET MVC/</a></p>
+        <footer>
+            <a href="https://www.github.com/ChangHub/BlogImages/raw/master">
+                <img src="/images/logo.png" alt="HongChangCui">
+                HongChangCui
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/03/ASP.NET MVC/&title=《ASP.NET MVC 工作原理》 — ChangKe&pic=ASP.NET.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/03/ASP.NET MVC/&title=《ASP.NET MVC 工作原理》 — ChangKe&source=ASP.NET 是一个使用HTML、CSS、Javascript和服务器脚本创建网页和网站的开发框架。MVC是ASP.NET编程模式的一种。" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/03/ASP.NET MVC/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ASP.NET MVC 工作原理》 — ChangKe&url=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/03/ASP.NET MVC/&via=https://www.github.com/ChangHub/BlogImages/raw/master" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/03/ASP.NET MVC/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.github.com/ChangHub/BlogImages/raw/master/2018/09/03/ASP.NET MVC/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/ASP.NETMVC/" class="color2">ASP.NET MVC</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#ASP-NET-MVC"><span class="post-toc-text">ASP.NET + MVC</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#URL路由"><span class="post-toc-text">URL路由</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Controller激活"><span class="post-toc-text">Controller激活</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Model元数据"><span class="post-toc-text">Model元数据</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Model绑定"><span class="post-toc-text">Model绑定</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Model验证"><span class="post-toc-text">Model验证</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Action执行"><span class="post-toc-text">Action执行</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#View呈现"><span class="post-toc-text">View呈现</span></a></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2018/09/04/NET知识点：Global.asax/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          .NET知识点：Global.asax
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2018/08/29/Jquery插件/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">Jquery插件</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+		<section id="comments" class="comments">
+			<style>
+			  .comments{margin:30px;padding:10px;background:#fff}
+			  @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+			</style>
+			<div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage@latest/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js'></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "hrqbaUF8km11bv4h31Rhiyco-gzGzoHsz",
+            app_key: "nm5to078TvS7MzkXnO78DHpI",
+            placeholder: "~(≧▽≦)/~来呀！快活呀！",
+            avatar: "mm",
+            pageSize: 10
+    });
+	
+	$('#comments .info').css({"display":"none"});
+	
+</script>
+		</section>
+	
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 HongChangCui<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://www.github.com/ChangHub/BlogImages/raw/master",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/ASP-NET/">ASP.NET</a><a class="category-link" href="/categories/Angular2/">Angular2</a><a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/IOC/">IOC</a><a class="category-link" href="/categories/JavaScript/">JavaScript</a><a class="category-link" href="/categories/JavaScript-Framework/">JavaScript Framework</a><a class="category-link" href="/categories/MQ/">MQ</a><a class="category-link" href="/categories/MySQL/">MySQL</a><a class="category-link" href="/categories/Quartz-NET/">Quartz.NET</a><a class="category-link" href="/categories/xxxx/">xxxx</a><a class="category-link" href="/categories/便捷工具/">便捷工具</a><a class="category-link" href="/categories/原理/">原理</a><a class="category-link" href="/categories/基础知识/">基础知识</a><a class="category-link" href="/categories/年会/">年会</a><a class="category-link" href="/categories/年度总结/">年度总结</a><a class="category-link" href="/categories/开源项目/">开源项目</a><a class="category-link" href="/categories/插件/">插件</a><a class="category-link" href="/categories/读书笔记/">读书笔记</a><a class="category-link" href="/categories/软件使用/">软件使用</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/NET/" style="font-size: 10px;">.NET</a> <a href="/tags/ASP-NET/" style="font-size: 20px;">ASP.NET</a> <a href="/tags/ASP-NET-MVC/" style="font-size: 10px;">ASP.NET MVC</a> <a href="/tags/AngularJS/" style="font-size: 10px;">AngularJS</a> <a href="/tags/CEF/" style="font-size: 10px;">CEF</a> <a href="/tags/CefSharp/" style="font-size: 10px;">CefSharp</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/JavaScript-Framework/" style="font-size: 10px;">JavaScript Framework</a> <a href="/tags/Jquery/" style="font-size: 10px;">Jquery</a> <a href="/tags/MQ/" style="font-size: 10px;">MQ</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/SignalR/" style="font-size: 10px;">SignalR</a> <a href="/tags/WebAPI/" style="font-size: 10px;">WebAPI</a> <a href="/tags/xxx/" style="font-size: 10px;">xxx</a> <a href="/tags/作业调度/" style="font-size: 10px;">作业调度</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/年会/" style="font-size: 10px;">年会</a> <a href="/tags/总结/" style="font-size: 20px;">总结</a> <a href="/tags/控制反转/" style="font-size: 10px;">控制反转</a> <a href="/tags/文件夹/" style="font-size: 10px;">文件夹</a> <a href="/tags/消息队列/" style="font-size: 10px;">消息队列</a> <a href="/tags/设计原则/" style="font-size: 10px;">设计原则</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a> <a href="/tags/软件使用/" style="font-size: 10px;">软件使用</a> <a href="/tags/软件安装/" style="font-size: 10px;">软件安装</a> <a href="/tags/面向对象/" style="font-size: 10px;">面向对象</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/NET/" style="font-size: 10px;">.NET</a> <a href="/tags/ASP-NET/" style="font-size: 20px;">ASP.NET</a> <a href="/tags/ASP-NET-MVC/" style="font-size: 10px;">ASP.NET MVC</a> <a href="/tags/AngularJS/" style="font-size: 10px;">AngularJS</a> <a href="/tags/CEF/" style="font-size: 10px;">CEF</a> <a href="/tags/CefSharp/" style="font-size: 10px;">CefSharp</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/JavaScript-Framework/" style="font-size: 10px;">JavaScript Framework</a> <a href="/tags/Jquery/" style="font-size: 10px;">Jquery</a> <a href="/tags/MQ/" style="font-size: 10px;">MQ</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/SignalR/" style="font-size: 10px;">SignalR</a> <a href="/tags/WebAPI/" style="font-size: 10px;">WebAPI</a> <a href="/tags/xxx/" style="font-size: 10px;">xxx</a> <a href="/tags/作业调度/" style="font-size: 10px;">作业调度</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/年会/" style="font-size: 10px;">年会</a> <a href="/tags/总结/" style="font-size: 20px;">总结</a> <a href="/tags/控制反转/" style="font-size: 10px;">控制反转</a> <a href="/tags/文件夹/" style="font-size: 10px;">文件夹</a> <a href="/tags/消息队列/" style="font-size: 10px;">消息队列</a> <a href="/tags/设计原则/" style="font-size: 10px;">设计原则</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a> <a href="/tags/软件使用/" style="font-size: 10px;">软件使用</a> <a href="/tags/软件安装/" style="font-size: 10px;">软件安装</a> <a href="/tags/面向对象/" style="font-size: 10px;">面向对象</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>
